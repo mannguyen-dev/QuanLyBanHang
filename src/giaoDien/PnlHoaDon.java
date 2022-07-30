@@ -14,6 +14,8 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 import java.util.Locale;
@@ -30,6 +32,7 @@ public class PnlHoaDon extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienThem;
 	private JLabel lblChuyenCTHD;
+	JPanel jpnView;
 	/**
 	 * Create the panel.
 	 */
@@ -424,6 +427,12 @@ public class PnlHoaDon extends JPanel {
 		pnlThemHD.add(cboKhachHang_1);
 		
 		JButton btnThem2 = new JButton("Thêm và chuyển tới CTHD");
+		btnThem2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ChuyenPanelTheoDanhMuc controller = new ChuyenPanelTheoDanhMuc(jpnView);
+				controller.setViewCTHD();
+			}
+		});
 		btnThem2.setForeground(Color.WHITE);
 		btnThem2.setFont(new Font("Arial", Font.BOLD, 18));
 		btnThem2.setFocusable(false);
@@ -432,6 +441,7 @@ public class PnlHoaDon extends JPanel {
 		btnThem2.setBounds(10, 112, 361, 48);
 		pnlThemHD.add(btnThem2);
 		
+		
 		JPanel panel_4 = new JPanel();
 		panel_4.setBackground(Color.WHITE);
 		panel_4.setBounds(10, 330, 381, 49);
@@ -439,11 +449,19 @@ public class PnlHoaDon extends JPanel {
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		lblChuyenCTHD = new JLabel("   Xem chi tiết hóa đơn");
+		lblChuyenCTHD.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				ChuyenPanelTheoDanhMuc controller = new ChuyenPanelTheoDanhMuc(jpnView);
+				controller.setViewCTHD();
+				
+			}
+		});
+
 		panel_4.add(lblChuyenCTHD);
 		lblChuyenCTHD.setBackground(Color.WHITE);
 		lblChuyenCTHD.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconCTHDMauDen.png")));
 		lblChuyenCTHD.setHorizontalAlignment(SwingConstants.CENTER);
 		lblChuyenCTHD.setFont(new Font("Arial", Font.BOLD, 18));
-
 	}
 }

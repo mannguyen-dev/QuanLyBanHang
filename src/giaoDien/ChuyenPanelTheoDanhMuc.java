@@ -34,6 +34,18 @@ public class ChuyenPanelTheoDanhMuc {
 		root.repaint();
 	}
 	
+	public void setViewCTHD() {
+		kindSelected = "CTHD";
+//		jpnItem.setBackground(new Color(AppConstants.MAU_TIM));
+//		jlbItem.setBackground(new Color(AppConstants.MAU_TIM));
+		
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+		root.add(new PnlCTHD());
+		root.validate();
+		root.repaint();
+	}
+	
 	public void setEvent(List<DanhMucBean> listItem) {
 		this.listItem = listItem;
 		for (DanhMucBean item: listItem) {
@@ -98,6 +110,8 @@ public class ChuyenPanelTheoDanhMuc {
 					break;
 				case AppConstants.HOA_DON:
 					node = new PnlHoaDon();
+					PnlHoaDon nodeHD = (PnlHoaDon) node;
+					nodeHD.jpnView = root;
 					break;
 				case AppConstants.CTHD:
 					node = new PnlCTHD();

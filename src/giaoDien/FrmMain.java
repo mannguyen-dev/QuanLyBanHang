@@ -51,6 +51,7 @@ public class FrmMain extends JFrame {
 	private JLabel lblNhanVien;
 	private JLabel lblThoat;
 	private JPanel pnlThoat;
+	JPanel pnlMenu;
 
 	/**
 	 * Launch the application.
@@ -84,7 +85,7 @@ public class FrmMain extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JPanel pnlMenu = new JPanel();
+		pnlMenu = new JPanel();
 		pnlMenu.setBounds(0, 0, 283, 814);
 		pnlMenu.setBackground(new Color(AppConstants.MAU_XAM));
 		contentPane.add(pnlMenu);

@@ -9,8 +9,6 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import tienIch.AppConstants;
-import xuLyNghiepVu.NhanVienBL;
-
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField.AbstractFormatter;
@@ -411,9 +409,9 @@ public class PnlTrangChu extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 //					txtHoTen.setText(txtNgayVL.getDate().toString());
-					NhanVienBL nvBL = new NhanVienBL();
-					NhanVien nv = nvBL.timTheoMaNV("NV01");
-					txtHoTen.setText(nv.getHoTen());
+//					NhanVienBL nvBL = new NhanVienBL();
+//					NhanVien nv = nvBL.timTheoMaNV("NV01");
+//					txtHoTen.setText(nv.getHoTen());
 					
 				}catch (Exception e1) {
 					JOptionPane.showMessageDialog(getRootPane(), "Lỗi... Thông tin vừa nhập không hợp lệ");
