@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -44,6 +45,11 @@ public class NhanVien {
 
     public Date getNgVL() {
         return ngVL;
+    }
+    
+    public String getNgayVLToString() {
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+    	return formatter.format(ngVL);
     }
 
     public String getMatKhau() {

@@ -1,6 +1,10 @@
 package tienIch;
 
 public class AppConstants {
+	//tai khoan ket noi database
+	public final static String DB_NAME			= "QLBH4";
+	public final static String DB_USERNAME		= "sa";
+	public final static String DB_PASSWORD		= "sa";
 	
 	//Colors
 	public final static int MAU_TIM		 	= Integer.parseInt("4C6EF5",16);
@@ -25,6 +29,7 @@ public class AppConstants {
 	public final static String KHACH_HANG 	= "KhachHang";
 	public final static String CTHD 		= "CTHD";
 	public final static String NHAN_VIEN 	= "NhanVien";
-	public final static String XEM_CTHD 	= "XemCTHD";
 	
+	//Menh de
+	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
 }

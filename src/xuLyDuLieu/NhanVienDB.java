@@ -65,6 +65,23 @@ public class NhanVienDB {
         return list;
     }
     
+    public NhanVien timTheoMaNV(String maNV){
+        NhanVien nv = null;
+        String query = "select * from nhanvien where manv = '"+ maNV + "'"; 
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                nv = getNhanVien(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return nv;
+    }
+    
     public void themNhanVien(NhanVien nv){
         String query = "insert into nhanvien (manv,hoten,sodt,ngvl,matkhau,vaitro) values "
 	+ "('"+nv.getMaNV()+"',N'"+nv.getHoTen()+"','"+nv.getSoDT()+"','"+nv.getNgVL()+"','"+nv.getMatKhau()+"',N'"+nv.getVaiTro()+"')";
@@ -83,9 +100,9 @@ public class NhanVienDB {
         csdl.setDuLieu(query);
     }
     
-//    public static void main(String[] args) {
-//		NhanVienDB nvBL = new NhanVienDB();
-//    	List<NhanVien> nv = nvBL.timNhanVien("NV01");
-//    	nv.forEach(s->System.out.println(s.getHoTen()));
-//	}
+    public static void main(String[] args) {
+		NhanVienDB nvBL = new NhanVienDB();
+    	NhanVien nv = nvBL.timTheoMaNV("NV02");
+    	System.out.println(nv.getHoTen());
+	}
 }

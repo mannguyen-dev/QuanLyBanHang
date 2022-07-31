@@ -42,7 +42,7 @@ public class ChiTietHoaDonDB {
     }
     
     public ArrayList<ChiTietHoaDon> timCTHD(int thongtin){
-        ArrayList<ChiTietHoaDon> list = new ArrayList();
+        ArrayList<ChiTietHoaDon> list = new ArrayList<>();
         String query = "select * from cthd where sohd = '"
                 + thongtin + "'";
         ResultSet rs = csdl.getDuLieu(query);

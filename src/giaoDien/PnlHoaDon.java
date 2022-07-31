@@ -32,7 +32,15 @@ public class PnlHoaDon extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienThem;
 	private JLabel lblChuyenCTHD;
-	JPanel jpnView;
+	private JPanel jpnView;
+	private ChuyenPanelTheoDanhMuc controller;
+
+	public void setJpnView(JPanel jpnView) {
+		this.jpnView = jpnView;
+	}
+	public void setController(ChuyenPanelTheoDanhMuc controller) {
+		this.controller = controller;
+	}
 	/**
 	 * Create the panel.
 	 */
@@ -54,27 +62,28 @@ public class PnlHoaDon extends JPanel {
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setFont(new Font("Arial", Font.PLAIN, 20));
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Mã hóa đơn", "Ngày tạo (dd-MM-yyyy)", "Tháng (MM-yyyy)", "Năm (yyyy)", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng", "Tên khách hàng"}));
-		comboBox_2.setBounds(346, 11, 245, 43);
+		comboBox_2.setBounds(346, 11, 227, 43);
 		panel.add(comboBox_2);
 		
 		JButton btnTm = new JButton("Tìm kiếm");
+		btnTm.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconTimKiem.png")));
 		btnTm.setForeground(Color.WHITE);
 		btnTm.setFont(new Font("Arial", Font.BOLD, 22));
 		btnTm.setFocusable(false);
 		btnTm.setBorder(null);
 		btnTm.setBackground(new Color(73, 80, 87));
-		btnTm.setBounds(601, 11, 132, 43);
+		btnTm.setBounds(583, 11, 150, 43);
 		panel.add(btnTm);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 65, 723, 443);
+		scrollPane.setBounds(10, 65, 723, 393);
 		panel.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 519, 316, 284);
+		panel_2.setBounds(10, 469, 316, 334);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
@@ -91,7 +100,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC.setBorder(null);
 		btnHC.setBackground(new Color(AppConstants.VIOLET));
 		btnHC.setAlignmentX(0.5f);
-		btnHC.setBounds(10, 44, 296, 49);
+		btnHC.setBounds(10, 106, 296, 46);
 		panel_2.add(btnHC);
 		
 		JButton btnHC_2 = new JButton("10 HĐ có trị giá cao nhất ");
@@ -102,7 +111,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2.setBorder(null);
 		btnHC_2.setBackground(new Color(54, 79, 199));
 		btnHC_2.setAlignmentX(0.5f);
-		btnHC_2.setBounds(10, 164, 296, 49);
+		btnHC_2.setBounds(10, 220, 296, 46);
 		panel_2.add(btnHC_2);
 		
 		JButton btnHC_2_1 = new JButton("10 HĐ có trị giá thấp nhất");
@@ -117,7 +126,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2_1.setBorder(null);
 		btnHC_2_1.setBackground(new Color(54, 79, 199));
 		btnHC_2_1.setAlignmentX(0.5f);
-		btnHC_2_1.setBounds(10, 224, 296, 49);
+		btnHC_2_1.setBounds(10, 277, 296, 46);
 		panel_2.add(btnHC_2_1);
 		
 		JButton btnHC_2_2 = new JButton("HĐ có trị giá thấp nhất     ");
@@ -128,11 +137,22 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2_2.setBorder(null);
 		btnHC_2_2.setBackground(new Color(AppConstants.VIOLET));
 		btnHC_2_2.setAlignmentX(0.5f);
-		btnHC_2_2.setBounds(10, 104, 296, 49);
+		btnHC_2_2.setBounds(10, 163, 296, 46);
 		panel_2.add(btnHC_2_2);
 		
+		JButton btnHanCa = new JButton("Hóa đơn của tôi                ");
+		btnHanCa.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconNhanVienNho.png")));
+		btnHanCa.setForeground(Color.WHITE);
+		btnHanCa.setFont(new Font("Arial", Font.BOLD, 18));
+		btnHanCa.setFocusable(false);
+		btnHanCa.setBorder(null);
+		btnHanCa.setBackground(new Color(112, 72, 232));
+		btnHanCa.setAlignmentX(0.5f);
+		btnHanCa.setBounds(10, 49, 296, 46);
+		panel_2.add(btnHanCa);
+		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(336, 519, 397, 284);
+		panel_3.setBounds(336, 469, 397, 334);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -143,56 +163,56 @@ public class PnlHoaDon extends JPanel {
 		
 		JLabel lblNewLabel_2_1_2 = new JLabel("Số HĐ tìm thấy: ");
 		lblNewLabel_2_1_2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2.setBounds(20, 43, 149, 33);
+		lblNewLabel_2_1_2.setBounds(20, 54, 149, 33);
 		panel_3.add(lblNewLabel_2_1_2);
 		
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("TỔNG TRỊ GIÁ:");
 		lblNewLabel_2_1_2_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_1.setBounds(20, 240, 141, 33);
+		lblNewLabel_2_1_2_1.setBounds(20, 287, 141, 33);
 		panel_3.add(lblNewLabel_2_1_2_1);
 		
 		JLabel lblNewLabel_2_1_2_2 = new JLabel("HD có trị giá cao nhất:");
 		lblNewLabel_2_1_2_2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2.setBounds(20, 74, 209, 33);
+		lblNewLabel_2_1_2_2.setBounds(20, 96, 209, 33);
 		panel_3.add(lblNewLabel_2_1_2_2);
 		
 		JLabel lblNewLabel_2_1_2_2_1 = new JLabel("HD có trị giá thấp nhất:");
 		lblNewLabel_2_1_2_2_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2_1.setBounds(20, 142, 209, 33);
+		lblNewLabel_2_1_2_2_1.setBounds(20, 168, 209, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1);
 		
 		JLabel lblNewLabel_2_1_2_3 = new JLabel("10");
 		lblNewLabel_2_1_2_3.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3.setBounds(171, 43, 216, 33);
+		lblNewLabel_2_1_2_3.setBounds(171, 54, 216, 33);
 		panel_3.add(lblNewLabel_2_1_2_3);
 		
 		JLabel lblNewLabel_2_1_2_3_1 = new JLabel("10.000.000 VNĐ");
 		lblNewLabel_2_1_2_3_1.setForeground(new Color(AppConstants.MAU_DO));
 		lblNewLabel_2_1_2_3_1.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_1_2_3_1.setBounds(171, 239, 216, 33);
+		lblNewLabel_2_1_2_3_1.setBounds(171, 289, 216, 33);
 		panel_3.add(lblNewLabel_2_1_2_3_1);
 		
 		JLabel lblNewLabel_2_1_2_3_2 = new JLabel("1000 - 1.000.000 VNĐ");
 		lblNewLabel_2_1_2_3_2.setForeground(Color.BLACK);
 		lblNewLabel_2_1_2_3_2.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2.setBounds(102, 106, 285, 33);
+		lblNewLabel_2_1_2_3_2.setBounds(102, 133, 285, 33);
 		panel_3.add(lblNewLabel_2_1_2_3_2);
 		
 		JLabel lblNewLabel_2_1_2_3_2_1 = new JLabel("1000 - 1.200.000 VNĐ");
 		lblNewLabel_2_1_2_3_2_1.setForeground(Color.BLACK);
 		lblNewLabel_2_1_2_3_2_1.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2_1.setBounds(102, 173, 285, 33);
+		lblNewLabel_2_1_2_3_2_1.setBounds(102, 207, 285, 33);
 		panel_3.add(lblNewLabel_2_1_2_3_2_1);
 		
 		JLabel lblNewLabel_2_1_2_2_1_1 = new JLabel("Trị giá trung bình:");
 		lblNewLabel_2_1_2_2_1_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2_1_1.setBounds(20, 205, 149, 33);
+		lblNewLabel_2_1_2_2_1_1.setBounds(20, 247, 149, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1_1);
 		
 		JLabel lblNewLabel_2_1_2_3_2_2 = new JLabel("1.000.000 VNĐ");
 		lblNewLabel_2_1_2_3_2_2.setForeground(new Color(54, 79, 199));
 		lblNewLabel_2_1_2_3_2_2.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2_2.setBounds(171, 205, 216, 33);
+		lblNewLabel_2_1_2_3_2_2.setBounds(171, 247, 216, 33);
 		panel_3.add(lblNewLabel_2_1_2_3_2_2);
 		
 		JPanel panel_1 = new JPanel();
@@ -429,7 +449,6 @@ public class PnlHoaDon extends JPanel {
 		JButton btnThem2 = new JButton("Thêm và chuyển tới CTHD");
 		btnThem2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ChuyenPanelTheoDanhMuc controller = new ChuyenPanelTheoDanhMuc(jpnView);
 				controller.setViewCTHD();
 			}
 		});
@@ -452,9 +471,7 @@ public class PnlHoaDon extends JPanel {
 		lblChuyenCTHD.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				ChuyenPanelTheoDanhMuc controller = new ChuyenPanelTheoDanhMuc(jpnView);
 				controller.setViewCTHD();
-				
 			}
 		});
 

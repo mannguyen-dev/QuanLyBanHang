@@ -58,16 +58,17 @@ public class PnlSanPham extends JPanel {
 		JComboBox comboBox_2 = new JComboBox();
 		comboBox_2.setFont(new Font("Arial", Font.PLAIN, 20));
 		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Mã sản phẩm", "Tên sản phẩm", "ĐVT (cây, hộp, cái, quyển, chục)", "Nước sản xuất", "Giá thấp hơn", "Giá cao hơn"}));
-		comboBox_2.setBounds(346, 11, 245, 43);
+		comboBox_2.setBounds(346, 11, 227, 43);
 		panel.add(comboBox_2);
 		
 		JButton btnTm = new JButton("Tìm kiếm");
+		btnTm.setIcon(new ImageIcon(PnlSanPham.class.getResource("/hinhAnh/IconTimKiem.png")));
 		btnTm.setForeground(Color.WHITE);
 		btnTm.setFont(new Font("Arial", Font.BOLD, 22));
 		btnTm.setFocusable(false);
 		btnTm.setBorder(null);
 		btnTm.setBackground(new Color(73, 80, 87));
-		btnTm.setBounds(601, 11, 132, 43);
+		btnTm.setBounds(583, 11, 150, 43);
 		panel.add(btnTm);
 		
 		JScrollPane scrollPane = new JScrollPane();

@@ -58,6 +58,23 @@ public class KhachHangDB {
         }
         return list;
     }
+    
+    public KhachHang timTheoMaKH(String maKH){
+    	KhachHang kh = null;
+        String query = "select * from khachhang where makh = '" + maKH + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+                kh = getKhachHang(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return kh;
+    }
    
     public void themKhachHang(KhachHang kh){
         String query = "insert into khachhang (makh,hoten,dchi,sodt,ngsinh,ngdk,doanhso,loaikh) values "

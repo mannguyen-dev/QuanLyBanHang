@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -68,5 +69,8 @@ public class HoaDon {
         this.triGia = triGia;
     }
     
-    
+    public String getNgayHoaDonToString() {
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+    	return formatter.format(ngayHoaDon);
+    }
 }

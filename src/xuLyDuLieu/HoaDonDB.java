@@ -21,7 +21,7 @@ public class HoaDonDB {
     }
     
     private HoaDon getHoaDon(ResultSet rs)throws Exception{
-        return new HoaDon(rs.getInt("sohd"), rs.getDate("nghd"), rs.getString("makh"), rs.getString("makh"), rs.getDouble("trigia"));
+        return new HoaDon(rs.getInt("sohd"), rs.getDate("nghd"), rs.getString("makh"), rs.getString("manv"), rs.getDouble("trigia"));
     }
     
     public ArrayList<HoaDon> tatCa(){
@@ -40,21 +40,21 @@ public class HoaDonDB {
         return list;
     }
     
-    public ArrayList<HoaDon> timHoaDon(int thongtin){
-        ArrayList<HoaDon> list = new ArrayList();
+    public HoaDon timTheoSoHD(int soHD){
+        HoaDon hd = null;
         String query = "select * from hoadon where sohd = '"
-                + thongtin + "'";
+                + soHD + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getHoaDon(rs));
+                hd = getHoaDon(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally{
             csdl.offStatement();
         }
-        return list;
+        return hd;
     }
     
     public ArrayList<HoaDon> timHoaDon(Date thongtin){
@@ -93,7 +93,7 @@ public class HoaDonDB {
     }
     
 //    public static void main(String[] args) {
-//        HoaDonBL kh = new HoaDonBL();
+//        HoaDonDB kh = new HoaDonDB();
 //        HoaDon p = new HoaDon(1111, java.sql.Date.valueOf("2010-10-10"), "KH01", "NV01", 10210.25);
 //        //kh.themHoaDon(p);
 //        //kh.xoaHoaDon(1111);

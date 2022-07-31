@@ -8,6 +8,7 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import model.DanhMucBean;
+import model.NhanVien;
 
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -51,7 +52,25 @@ public class FrmMain extends JFrame {
 	private JLabel lblNhanVien;
 	private JLabel lblThoat;
 	private JPanel pnlThoat;
-	JPanel pnlMenu;
+	private JPanel pnlMenu;
+	private ChuyenPanelTheoDanhMuc controller;
+	private NhanVien user;
+	
+	public ChuyenPanelTheoDanhMuc getController() {
+		return controller;
+	}
+	
+	public JPanel getJpnView() {
+		return jpnView;
+	}
+	
+	public void setUser(NhanVien user) {
+		this.user = user;
+	}
+	
+	public NhanVien getUser() {
+		return user;
+	}
 
 	/**
 	 * Launch the application.
@@ -60,9 +79,10 @@ public class FrmMain extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					FrmMain frame = new FrmMain();
-					frame.setVisible(true);
-					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//					FrmMain frame = new FrmMain();
+//					System.out.println("DEBUG");
+//					frame.setVisible(true);
+//					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -73,7 +93,7 @@ public class FrmMain extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public FrmMain() {
+	public FrmMain(NhanVien user) {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FrmMain.class.getResource("/hinhAnh/LogoApp.jpg")));
 		setTitle("QUẢN LÝ BÁN HÀNG");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -241,6 +261,7 @@ public class FrmMain extends JFrame {
 		lblNewLabel_2.setHorizontalAlignment(SwingConstants.CENTER);
 		pnlThoat.add(lblNewLabel_2, BorderLayout.CENTER);
 		
+		this.user =user;
 		initFrame();
 	}
 	
@@ -248,7 +269,7 @@ public class FrmMain extends JFrame {
 		changeBackgroundDanhMuc(8818326);
 		changeFontColorDanhMuc(16777215);
 
-		ChuyenPanelTheoDanhMuc controller = new ChuyenPanelTheoDanhMuc(jpnView);
+		controller = new ChuyenPanelTheoDanhMuc(this);
 		controller.setView(pnlTrangChu, lblTrangChu);
 		
 		List<DanhMucBean> listItem = new ArrayList<DanhMucBean>();

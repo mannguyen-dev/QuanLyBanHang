@@ -10,23 +10,45 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.ChiTietHoaDon;
+import model.HoaDon;
+import model.KhachHang;
+import model.NhanVien;
 import tienIch.AppConstants;
+import xuLyDuLieu.ChiTietHoaDonDB;
+import xuLyDuLieu.HoaDonDB;
+import xuLyDuLieu.KhachHangDB;
+import xuLyDuLieu.NhanVienDB;
 
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 import java.util.Locale;
 
 import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
 
 public class PnlCTHD extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienThem;
 	private JTable table;
 	private JTextField textField;
+	private HoaDon hoaDon = null;
+	private List<HoaDon> listAllHD = null;
+	private List<ChiTietHoaDon> listCTHD = null;
+	private JComboBox<String> cboChonHD;
+	private JLabel lblMaHD;
+	private JLabel lblNgHD;
+	private JLabel lblTenKH;
+	private JLabel lblTenNV;
 
 	/**
 	 * Create the panel.
@@ -40,20 +62,26 @@ public class PnlCTHD extends JPanel {
 		panel.setBounds(0, 0, 743, 814);
 		add(panel);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"HD01", "HD02", "HD03"}));
-		comboBox_2.setFont(new Font("Arial", Font.PLAIN, 20));
-		comboBox_2.setBounds(10, 11, 501, 43);
-		panel.add(comboBox_2);
-		
-		JButton btnTm = new JButton("Chọn hóa đơn");
-		btnTm.setForeground(Color.WHITE);
-		btnTm.setFont(new Font("Arial", Font.BOLD, 22));
-		btnTm.setFocusable(false);
-		btnTm.setBorder(null);
-		btnTm.setBackground(new Color(73, 80, 87));
-		btnTm.setBounds(521, 11, 212, 43);
-		panel.add(btnTm);
+		cboChonHD = new JComboBox();
+		cboChonHD.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				String selected = (String) cboChonHD.getSelectedItem();
+				HoaDonDB hdDB = new HoaDonDB();
+				KhachHangDB khDB = new KhachHangDB();
+				NhanVienDB nvDB = new NhanVienDB();
+				hoaDon = hdDB.timTheoSoHD(Integer.parseInt(selected.substring(0, 4)));
+				lblMaHD.setText(String.valueOf(hoaDon.getSoHoaDon()));
+				lblNgHD.setText(hoaDon.getNgayHoaDonToString());
+				KhachHang kh = khDB.timTheoMaKH(hoaDon.getMaKhachKhang());
+				lblTenKH.setText((kh==null?"<trống>":kh.getHoTen()));
+				NhanVien nv = nvDB.timTheoMaNV(hoaDon.getMaNhanVien());
+				lblTenNV.setText((nv==null?"<trống>":nv.getHoTen()));
+			}
+		});
+		cboChonHD.setModel(new DefaultComboBoxModel(new String[] {"HD01", "HD02", "HD03"}));
+		cboChonHD.setFont(new Font("Arial", Font.PLAIN, 20));
+		cboChonHD.setBounds(264, 11, 469, 43);
+		panel.add(cboChonHD);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 148, 723, 488);
@@ -67,40 +95,40 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_2_2.setBounds(20, 65, 107, 33);
 		panel.add(lblNewLabel_2_2);
 		
-		JLabel lblNewLabel_2_2_1 = new JLabel("1000");
-		lblNewLabel_2_2_1.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_2_1.setBounds(137, 65, 144, 33);
-		panel.add(lblNewLabel_2_2_1);
+		lblMaHD = new JLabel("...");
+		lblMaHD.setFont(new Font("Arial", Font.BOLD, 22));
+		lblMaHD.setBounds(137, 65, 144, 33);
+		panel.add(lblMaHD);
 		
 		JLabel lblNewLabel_2_2_2 = new JLabel("Tên KH:");
 		lblNewLabel_2_2_2.setFont(new Font("Arial", Font.PLAIN, 22));
 		lblNewLabel_2_2_2.setBounds(309, 66, 94, 33);
 		panel.add(lblNewLabel_2_2_2);
 		
-		JLabel lblNewLabel_2_2_1_1 = new JLabel("Nguyễn Văn B");
-		lblNewLabel_2_2_1_1.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_2_1_1.setBounds(413, 104, 303, 33);
-		panel.add(lblNewLabel_2_2_1_1);
+		lblTenNV = new JLabel("...");
+		lblTenNV.setFont(new Font("Arial", Font.BOLD, 22));
+		lblTenNV.setBounds(413, 104, 303, 33);
+		panel.add(lblTenNV);
 		
 		JLabel lblNewLabel_2_2_2_1 = new JLabel("Ngày tạo:");
 		lblNewLabel_2_2_2_1.setFont(new Font("Arial", Font.PLAIN, 22));
 		lblNewLabel_2_2_2_1.setBounds(20, 103, 106, 33);
 		panel.add(lblNewLabel_2_2_2_1);
 		
-		JLabel lblNewLabel_2_2_1_1_1 = new JLabel("29-07-2022");
-		lblNewLabel_2_2_1_1_1.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_2_1_1_1.setBounds(137, 103, 144, 33);
-		panel.add(lblNewLabel_2_2_1_1_1);
+		lblNgHD = new JLabel("...");
+		lblNgHD.setFont(new Font("Arial", Font.BOLD, 22));
+		lblNgHD.setBounds(137, 103, 144, 33);
+		panel.add(lblNgHD);
 		
 		JLabel lblNewLabel_2_2_2_2 = new JLabel("Tên NV:");
 		lblNewLabel_2_2_2_2.setFont(new Font("Arial", Font.PLAIN, 22));
 		lblNewLabel_2_2_2_2.setBounds(309, 104, 94, 33);
 		panel.add(lblNewLabel_2_2_2_2);
 		
-		JLabel lblNewLabel_2_2_1_1_2 = new JLabel("Nguyễn Văn A");
-		lblNewLabel_2_2_1_1_2.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_2_1_1_2.setBounds(413, 65, 303, 33);
-		panel.add(lblNewLabel_2_2_1_1_2);
+		lblTenKH = new JLabel("...");
+		lblTenKH.setFont(new Font("Arial", Font.BOLD, 22));
+		lblTenKH.setBounds(413, 65, 303, 33);
+		panel.add(lblTenKH);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBounds(10, 647, 723, 156);
@@ -114,7 +142,7 @@ public class PnlCTHD extends JPanel {
 		
 		JLabel lblNewLabel_2_2_4 = new JLabel("20.000.000 VNĐ");
 		lblNewLabel_2_2_4.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2_2_4.setFont(new Font("Arial", Font.PLAIN, 22));
+		lblNewLabel_2_2_4.setFont(new Font("Arial", Font.BOLD, 22));
 		lblNewLabel_2_2_4.setBounds(379, 11, 334, 33);
 		panel_2.add(lblNewLabel_2_2_4);
 		
@@ -125,7 +153,7 @@ public class PnlCTHD extends JPanel {
 		
 		JLabel lblNewLabel_2_2_4_1 = new JLabel("2.000.000 VNĐ");
 		lblNewLabel_2_2_4_1.setHorizontalAlignment(SwingConstants.RIGHT);
-		lblNewLabel_2_2_4_1.setFont(new Font("Arial", Font.PLAIN, 22));
+		lblNewLabel_2_2_4_1.setFont(new Font("Arial", Font.BOLD, 22));
 		lblNewLabel_2_2_4_1.setBounds(379, 55, 334, 33);
 		panel_2.add(lblNewLabel_2_2_4_1);
 		
@@ -141,6 +169,12 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_2_2_4_1_1.setFont(new Font("Arial", Font.BOLD, 32));
 		lblNewLabel_2_2_4_1_1.setBounds(379, 99, 334, 50);
 		panel_2.add(lblNewLabel_2_2_4_1_1);
+		
+		JLabel lblChnHan = new JLabel("CHỌN HÓA ĐƠN:");
+		lblChnHan.setForeground(Color.BLACK);
+		lblChnHan.setFont(new Font("Arial", Font.BOLD, 24));
+		lblChnHan.setBounds(20, 11, 234, 43);
+		panel.add(lblChnHan);
 
 		
 		JPanel panel_1 = new JPanel();
@@ -296,5 +330,27 @@ public class PnlCTHD extends JPanel {
 		btnHienThem_2.setAlignmentX(0.5f);
 		btnHienThem_2.setBounds(10, 443, 163, 65);
 		panel_1.add(btnHienThem_2);
+		
+		loadData();
+	}
+	
+	private void loadData() {
+		HoaDonDB hdDB = new HoaDonDB();
+		KhachHangDB khDB = new KhachHangDB();
+		listAllHD = hdDB.tatCa();
+		DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel<>();
+		dcm.addElement(AppConstants.CHON_HOA_DON);
+		for(int i = listAllHD.size()-1;i>=0;i--) {
+			KhachHang kh = khDB.timTheoMaKH(listAllHD.get(i).getMaKhachKhang());
+			String hoTen;
+			if (kh == null) {
+				hoTen = "<Trống>";
+			}else {
+				hoTen = kh.getHoTen();
+			}
+			dcm.addElement(listAllHD.get(i).getSoHoaDon()+" - "+hoTen+" - "+listAllHD.get(i).getNgayHoaDonToString());
+		}
+		cboChonHD.setModel(dcm);
+		
 	}
 }

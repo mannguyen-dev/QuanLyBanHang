@@ -7,6 +7,9 @@ package xuLyDuLieu;
 
 import java.sql.Connection;
 import java.sql.Statement;
+
+import tienIch.AppConstants;
+
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -16,9 +19,9 @@ import java.sql.SQLException;
  */
 public class KetNoiCSDL {
     private String dbURL = "jdbc:sqlserver://localhost:1433;"
-                + "DatabaseName=QLBH;"
-                + "user=sa;"
-                + "password=man12345;";
+                + "DatabaseName="+AppConstants.DB_NAME+";"
+                + "user="+AppConstants.DB_USERNAME+";"
+                + "password="+AppConstants.DB_PASSWORD+";";
     private Connection conn;
     private Statement stmt;
 

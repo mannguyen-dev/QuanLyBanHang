@@ -13,13 +13,15 @@ import model.DanhMucBean;
 import tienIch.AppConstants;
 
 public class ChuyenPanelTheoDanhMuc {
+	private FrmMain frmMain;
 	private JPanel root;
 	private String kindSelected = "";
 	private List<DanhMucBean> listItem = null;
 	
-	public ChuyenPanelTheoDanhMuc(JPanel jpnRoot) {
+	public ChuyenPanelTheoDanhMuc(FrmMain jpnRoot) {
 		super();
-		this.root = jpnRoot;
+		frmMain = jpnRoot;
+		this.root = jpnRoot.getJpnView();
 	}
 	
 	public void setView(JPanel jpnItem, JLabel jlbItem) {
@@ -29,15 +31,18 @@ public class ChuyenPanelTheoDanhMuc {
 		
 		root.removeAll();
 		root.setLayout(new BorderLayout());
-		root.add(new PnlTrangChu());
+		PnlTrangChu pnlTC = new PnlTrangChu(frmMain.getUser());
+		root.add(pnlTC);
 		root.validate();
 		root.repaint();
 	}
 	
 	public void setViewCTHD() {
 		kindSelected = "CTHD";
-//		jpnItem.setBackground(new Color(AppConstants.MAU_TIM));
-//		jlbItem.setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(1).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(1).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(2).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(2).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
 		
 		root.removeAll();
 		root.setLayout(new BorderLayout());
@@ -106,12 +111,15 @@ public class ChuyenPanelTheoDanhMuc {
 			kindSelected = kind;
 			switch(kind) {
 				case AppConstants.TRANG_CHU:
-					node = new PnlTrangChu();
+					node = new PnlTrangChu(frmMain.getUser());
+					PnlTrangChu nodeTC = (PnlTrangChu) node;
+					nodeTC.setUser(frmMain.getUser());
 					break;
 				case AppConstants.HOA_DON:
 					node = new PnlHoaDon();
 					PnlHoaDon nodeHD = (PnlHoaDon) node;
-					nodeHD.jpnView = root;
+					nodeHD.setJpnView(root);
+					nodeHD.setController(frmMain.getController());
 					break;
 				case AppConstants.CTHD:
 					node = new PnlCTHD();
@@ -126,7 +134,7 @@ public class ChuyenPanelTheoDanhMuc {
 					node = new PnlNhanVien();
 					break;
 				default:
-					node = new PnlTrangChu();
+					node = new PnlTrangChu(frmMain.getUser());
 					break;
 			}
 			root.removeAll();
