@@ -2,7 +2,7 @@ package tienIch;
 
 public class AppConstants {
 	//tai khoan ket noi database
-	public final static String DB_NAME			= "QLBH4";
+	public final static String DB_NAME			= "QLBH";
 	public final static String DB_USERNAME		= "sa";
 	public final static String DB_PASSWORD		= "sa";
 	
