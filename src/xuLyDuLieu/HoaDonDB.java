@@ -6,6 +6,7 @@ package xuLyDuLieu;
 
 import model.HoaDon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -75,14 +76,18 @@ public class HoaDonDB {
     }
     
     public void themHoaDon(HoaDon hd){
-        String query = "insert into hoadon (sohd,nghd,makh,manv,trigia) values "
-	+ "('"+hd.getSoHoaDon()+"','"+hd.getNgayHoaDon()+"','"+hd.getMaKhachKhang()+"','"+hd.getMaNhanVien()+"','"+hd.getTriGia()+"')";
+    	String maNV = (hd.getMaNhanVien() == null?"null":"'"+hd.getMaNhanVien()+"'");
+    	String maKH = (hd.getMaKhachKhang() == null?"null":"'"+hd.getMaKhachKhang()+"'");
+        String query = "insert into hoadon (nghd,makh,manv,trigia) values "
+        		+ "('"+hd.getNgayHoaDon()+"',"+maKH+","+maNV+",'"+hd.getTriGia()+"')";
         csdl.setDuLieu(query);
     }
     
     public void capNhatThongTin(HoaDon hd){
-        String query = "update hoadon set nghd = '" +hd.getNgayHoaDon()+"', makh = '"+hd.getMaKhachKhang()
-                +"', manv = '" + hd.getMaNhanVien()+"', trigia = '"+hd.getTriGia()+
+    	String maNV = (hd.getMaNhanVien() == null?"null":"'"+hd.getMaNhanVien()+"'");
+    	String maKH = (hd.getMaKhachKhang() == null?"null":"'"+hd.getMaKhachKhang()+"'");
+        String query = "update hoadon set nghd = '" +hd.getNgayHoaDon()+"', makh = "+ maKH
+                +", manv = " + maNV +", trigia = '"+hd.getTriGia()+
                 "' where sohd = '" +hd.getSoHoaDon()+"'";
         csdl.setDuLieu(query);
     }

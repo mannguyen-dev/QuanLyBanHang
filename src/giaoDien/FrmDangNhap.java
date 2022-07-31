@@ -79,7 +79,7 @@ public class FrmDangNhap extends JFrame {
 		contentPane.add(lblMaNV);
 		
 		txtMaNV = new JTextField();
-		txtMaNV.setText("NV01");
+		txtMaNV.setText("AD00");
 		txtMaNV.setBorder(null);
 		txtMaNV.setFont(new Font("Arial", Font.PLAIN, 18));
 		txtMaNV.setBounds(429, 85, 331, 36);
@@ -99,7 +99,7 @@ public class FrmDangNhap extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		txtMatKhau = new JPasswordField();
-		txtMatKhau.setText("123");
+		txtMatKhau.setText("AD00");
 		txtMatKhau.setBorder(null);
 		txtMatKhau.setFont(new Font("Arial", Font.PLAIN, 18));
 		txtMatKhau.setBounds(429, 170, 331, 36);

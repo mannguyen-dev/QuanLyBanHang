@@ -120,6 +120,7 @@ public class ChuyenPanelTheoDanhMuc {
 					PnlHoaDon nodeHD = (PnlHoaDon) node;
 					nodeHD.setJpnView(root);
 					nodeHD.setController(frmMain.getController());
+					nodeHD.setUser(frmMain.getUser());
 					break;
 				case AppConstants.CTHD:
 					node = new PnlCTHD();

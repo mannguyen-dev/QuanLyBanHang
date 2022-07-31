@@ -281,6 +281,9 @@ public class FrmMain extends JFrame {
 		listItem.add(new DanhMucBean(AppConstants.NHAN_VIEN, pnlNhanVien, lblNhanVien));
 		controller.setEvent(listItem);
 		
+		if (!user.getVaiTro().equals("Admin")) {
+			pnlNhanVien.setVisible(false);
+		}
 	}
 	
 	private void changeBackgroundDanhMuc(int color) {

@@ -2,7 +2,7 @@ package tienIch;
 
 public class AppConstants {
 	//tai khoan ket noi database
-	public final static String DB_NAME			= "QLBH";
+	public final static String DB_NAME			= "QLBH4";
 	public final static String DB_USERNAME		= "sa";
 	public final static String DB_PASSWORD		= "sa";
 	
@@ -32,4 +32,13 @@ public class AppConstants {
 	
 	//Menh de
 	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
+	public final static String EMPTY		= "<trống>";
+	
+	//Hoa don
+	public final static String SO_HOA_DON		= "Số hóa đơn";
+	public final static String NO_INFO		= "...";
+	
+	//Vai tro
+	public final static String VT_ADMIN		= "Admin";
+	public final static String VT_NHANVIEN	= "Nhân Viên";
 }
