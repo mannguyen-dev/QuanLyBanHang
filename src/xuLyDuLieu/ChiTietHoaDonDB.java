@@ -41,10 +41,27 @@ public class ChiTietHoaDonDB {
         return list;
     }
     
-    public ArrayList<ChiTietHoaDon> timCTHD(int thongtin){
-        ArrayList<ChiTietHoaDon> list = new ArrayList<>();
+    public ArrayList<ChiTietHoaDon> timCTHD(int sohd){
+        ArrayList<ChiTietHoaDon> list = new ArrayList();
         String query = "select * from cthd where sohd = '"
-                + thongtin + "'";
+                + sohd + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getChiTietHoaDon(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    public ArrayList<ChiTietHoaDon> timCTHD(String masp){
+        ArrayList<ChiTietHoaDon> list = new ArrayList();
+        String query = "select * from cthd where masp = '"
+                + masp + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -78,7 +95,7 @@ public class ChiTietHoaDonDB {
     
     
 //    public static void main(String[] args) {
-//        ChiTietHoaDonBL kh = new ChiTietHoaDonBL();
+//        ChiTietHoaDonDB kh = new ChiTietHoaDonDB();
 //        ChiTietHoaDon p = new ChiTietHoaDon(1023, "ST01", 222);
 //        //kh.themCTHD(p);
 //        kh.xoaCTHD(1023, "ST01");
