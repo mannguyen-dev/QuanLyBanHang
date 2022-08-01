@@ -41,7 +41,7 @@ public class PnlCTHD extends JPanel {
 	private JButton btnHienThem;
 	private JTable table;
 	private JTextField textField;
-	private HoaDon hoaDon = null;
+//	private HoaDon hoaDon = null;
 	private List<HoaDon> listAllHD = null;
 	private List<ChiTietHoaDon> listCTHD = null;
 	private JComboBox<String> cboChonHD;
@@ -49,12 +49,24 @@ public class PnlCTHD extends JPanel {
 	private JLabel lblNgHD;
 	private JLabel lblTenKH;
 	private JLabel lblTenNV;
+	
+	//data
+	private HoaDon hdHienTai = null;
+	private HoaDonDB hdDB = new HoaDonDB();
+	private KhachHangDB khDB = new KhachHangDB();
+	private NhanVienDB nvDB = new NhanVienDB();
+	private JLabel lblMaHD2;
+	
+	public void setHdHienTai(HoaDon hdHienTai) {
+		this.hdHienTai = hdHienTai;
+	}
 
 	/**
 	 * Create the panel.
 	 */
-	public PnlCTHD() {
+	public PnlCTHD(HoaDon hoaDon) {
 		setLayout(null);
+		this.hdHienTai = hoaDon;
 		
 		JPanel panel = new JPanel();
 		panel.setLayout(null);
@@ -66,16 +78,8 @@ public class PnlCTHD extends JPanel {
 		cboChonHD.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				String selected = (String) cboChonHD.getSelectedItem();
-				HoaDonDB hdDB = new HoaDonDB();
-				KhachHangDB khDB = new KhachHangDB();
-				NhanVienDB nvDB = new NhanVienDB();
-				hoaDon = hdDB.timTheoSoHD(Integer.parseInt(selected.substring(0, 4)));
-				lblMaHD.setText(String.valueOf(hoaDon.getSoHoaDon()));
-				lblNgHD.setText(hoaDon.getNgayHoaDonToString());
-				KhachHang kh = khDB.timTheoMaKH(hoaDon.getMaKhachKhang());
-				lblTenKH.setText((kh==null?"<trống>":kh.getHoTen()));
-				NhanVien nv = nvDB.timTheoMaNV(hoaDon.getMaNhanVien());
-				lblTenNV.setText((nv==null?"<trống>":nv.getHoTen()));
+				hdHienTai = hdDB.timTheoSoHD(Integer.parseInt(selected.substring(0, 4)));
+				loadInfoHoaDon();
 			}
 		});
 		cboChonHD.setModel(new DefaultComboBoxModel(new String[] {"HD01", "HD02", "HD03"}));
@@ -234,11 +238,11 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_4.setBounds(10, 11, 125, 106);
 		panel_2_1.add(lblNewLabel_4);
 		
-		JLabel lblMaNV = new JLabel("1000");
-		lblMaNV.setForeground(Color.BLACK);
-		lblMaNV.setFont(new Font("Arial", Font.BOLD, 28));
-		lblMaNV.setBounds(157, 66, 191, 51);
-		panel_2_1.add(lblMaNV);
+		lblMaHD2 = new JLabel("...");
+		lblMaHD2.setForeground(Color.BLACK);
+		lblMaHD2.setFont(new Font("Arial", Font.BOLD, 28));
+		lblMaHD2.setBounds(157, 66, 191, 51);
+		panel_2_1.add(lblMaHD2);
 		
 		JLabel lblChiTitHa = new JLabel("CHI TIẾT HÓA ĐƠN");
 		lblChiTitHa.setForeground(Color.BLACK);
@@ -335,22 +339,32 @@ public class PnlCTHD extends JPanel {
 	}
 	
 	private void loadData() {
-		HoaDonDB hdDB = new HoaDonDB();
-		KhachHangDB khDB = new KhachHangDB();
 		listAllHD = hdDB.tatCa();
 		DefaultComboBoxModel<String> dcm = new DefaultComboBoxModel<>();
 		dcm.addElement(AppConstants.CHON_HOA_DON);
 		for(int i = listAllHD.size()-1;i>=0;i--) {
 			KhachHang kh = khDB.timTheoMaKH(listAllHD.get(i).getMaKhachKhang());
-			String hoTen;
-			if (kh == null) {
-				hoTen = "<Trống>";
-			}else {
-				hoTen = kh.getHoTen();
-			}
-			dcm.addElement(listAllHD.get(i).getSoHoaDon()+" - "+hoTen+" - "+listAllHD.get(i).getNgayHoaDonToString());
+			dcm.addElement(listAllHD.get(i).getSoHoaDon()+" - "+(kh==null?AppConstants.EMPTY:kh.getHoTen())
+					+" - "+listAllHD.get(i).getNgayHoaDonToString());
 		}
 		cboChonHD.setModel(dcm);
 		
+		//load hoa don hien tai
+		if (hdHienTai != null) {
+			KhachHang kh = khDB.timTheoMaKH(hdHienTai.getMaKhachKhang());
+			cboChonHD.setSelectedItem(hdHienTai.getSoHoaDon()+" - "+(kh==null?AppConstants.EMPTY:kh.getHoTen())
+					+" - "+hdHienTai.getNgayHoaDonToString());
+			loadInfoHoaDon();
+		}
+	}
+	
+	private void loadInfoHoaDon() {
+		NhanVien nv = nvDB.timTheoMaNV(hdHienTai.getMaNhanVien());
+		KhachHang kh = khDB.timTheoMaKH(hdHienTai.getMaKhachKhang());
+		lblMaHD.setText(String.valueOf(hdHienTai.getSoHoaDon()));
+		lblMaHD2.setText(String.valueOf(hdHienTai.getSoHoaDon()));
+		lblNgHD.setText(hdHienTai.getNgayHoaDonToString());
+		lblTenKH.setText((kh==null?AppConstants.EMPTY:kh.getHoTen()));
+		lblTenNV.setText((nv==null?AppConstants.EMPTY:nv.getHoTen()));
 	}
 }

@@ -44,9 +44,11 @@ public class ChuyenPanelTheoDanhMuc {
 		listItem.get(2).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
 		listItem.get(2).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
 		
+		PnlHoaDon pnlHD = (PnlHoaDon) root.getComponent(0);
+		PnlCTHD pnlCTHD = new PnlCTHD(pnlHD.getHdHienTai());
 		root.removeAll();
 		root.setLayout(new BorderLayout());
-		root.add(new PnlCTHD());
+		root.add(pnlCTHD);
 		root.validate();
 		root.repaint();
 	}
@@ -118,12 +120,12 @@ public class ChuyenPanelTheoDanhMuc {
 				case AppConstants.HOA_DON:
 					node = new PnlHoaDon();
 					PnlHoaDon nodeHD = (PnlHoaDon) node;
-					nodeHD.setJpnView(root);
+//					nodeHD.setJpnView(root);
 					nodeHD.setController(frmMain.getController());
 					nodeHD.setUser(frmMain.getUser());
 					break;
 				case AppConstants.CTHD:
-					node = new PnlCTHD();
+					node = new PnlCTHD(null);
 					break;
 				case AppConstants.SAN_PHAM:
 					node = new PnlSanPham();

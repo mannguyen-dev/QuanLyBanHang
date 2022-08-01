@@ -51,7 +51,7 @@ public class PnlHoaDon extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienThem;
 	private JLabel lblChuyenCTHD;
-	private JPanel jpnView;
+//	private JPanel jpnView;
 	private ChuyenPanelTheoDanhMuc controller;
 	private JLabel lblSoHD;
 	private JLabel lblNgHD;
@@ -74,14 +74,20 @@ public class PnlHoaDon extends JPanel {
 	private NhanVien user;
 
 
-	public void setJpnView(JPanel jpnView) {
-		this.jpnView = jpnView;
-	}
+//	public void setJpnView(JPanel jpnView) {
+//		this.jpnView = jpnView;
+//	}
 	public void setController(ChuyenPanelTheoDanhMuc controller) {
 		this.controller = controller;
 	}
 	public void setUser(NhanVien user) {
 		this.user = user;
+	}
+	public NhanVien getUser() {
+		return user;
+	}
+	public HoaDon getHdHienTai() {
+		return hdHienTai;
 	}
 	/**
 	 * Create the panel.
@@ -102,9 +108,9 @@ public class PnlHoaDon extends JPanel {
 		panel.add(txtTiemKiem);
 		txtTiemKiem.setColumns(10);
 		
-		JComboBox cboTimKiem = new JComboBox();
+		JComboBox<String> cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {AppConstants.SO_HOA_DON, "Ngày tạo (dd-MM-yyyy)", "Tháng (MM-yyyy)", "Năm (yyyy)", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng", "Tên khách hàng"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {AppConstants.SO_HOA_DON, "Ngày tạo (dd-MM-yyyy)", "Tháng (MM-yyyy)", "Năm (yyyy)", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng", "Tên khách hàng"}));
 		cboTimKiem.setBounds(346, 11, 227, 43);
 		panel.add(cboTimKiem);
 		
@@ -487,14 +493,14 @@ public class PnlHoaDon extends JPanel {
 		btnHuyCN.setBounds(10, 150, 122, 48);
 		pnlDoiTTHD.add(btnHuyCN);
 		
-		cboNhanVienCN = new JComboBox();
-		cboNhanVienCN.setModel(new DefaultComboBoxModel(new String[] {"<Trống>"}));
+		cboNhanVienCN = new JComboBox<String>();
+		cboNhanVienCN.setModel(new DefaultComboBoxModel<String>(new String[] {"<Trống>"}));
 		cboNhanVienCN.setFont(new Font("Arial", Font.PLAIN, 16));
 		cboNhanVienCN.setBounds(142, 58, 229, 35);
 		pnlDoiTTHD.add(cboNhanVienCN);
 		
-		cboKhachHangCN = new JComboBox();
-		cboKhachHangCN.setModel(new DefaultComboBoxModel(new String[] {"<Trống>"}));
+		cboKhachHangCN = new JComboBox<String>();
+		cboKhachHangCN.setModel(new DefaultComboBoxModel<String>(new String[] {"<Trống>"}));
 		cboKhachHangCN.setFont(new Font("Arial", Font.PLAIN, 16));
 		cboKhachHangCN.setBounds(142, 104, 229, 35);
 		pnlDoiTTHD.add(cboKhachHangCN);
@@ -510,23 +516,22 @@ public class PnlHoaDon extends JPanel {
 		JButton btnHienCN_1 = new JButton(" Xóa");
 		btnHienCN_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if (hdHienTai == null) {
+					JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn hóa đơn cần xóa!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
 				try {
 					int sl = JOptionPane.showConfirmDialog(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+"?", "Xác nhận",
 							JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
 					if (sl == JOptionPane.OK_OPTION) {
-						if (hdHienTai == null) {
-							JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn hóa đơn cần xóa!","Lỗi",JOptionPane.ERROR_MESSAGE);
-						}else {
-							
-							//update database
-							hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
-							
-							//update panel
-							hdHienTai = null;
-							listHD = new ArrayList<HoaDon>();
-							resetInfo();
-							hienThi();
-						}
+						//update database
+						hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
+						
+						//update panel
+						hdHienTai = null;
+						listHD = new ArrayList<HoaDon>();
+						resetInfo();
+						hienThi();
 					}
 				} catch (Exception e2) {
 					JOptionPane.showMessageDialog(getRootPane(), "Có lỗi trong quá trình thực hiện!","Lỗi",JOptionPane.ERROR_MESSAGE);
@@ -603,8 +608,8 @@ public class PnlHoaDon extends JPanel {
 			}
 		});
 		
-		cboKhachHangThem = new JComboBox();
-		cboKhachHangThem.setModel(new DefaultComboBoxModel(new String[] {"<Trống>"}));
+		cboKhachHangThem = new JComboBox<String>();
+		cboKhachHangThem.setModel(new DefaultComboBoxModel<String>(new String[] {"<Trống>"}));
 		cboKhachHangThem.setFont(new Font("Arial", Font.PLAIN, 16));
 		cboKhachHangThem.setBounds(142, 9, 229, 35);
 		pnlThemHD.add(cboKhachHangThem);
@@ -648,7 +653,12 @@ public class PnlHoaDon extends JPanel {
 	}
 	
 	private void hienThi() {
-		DefaultTableModel dtm = new DefaultTableModel();
+		DefaultTableModel dtm = new DefaultTableModel(){
+		   @Override
+		   public boolean isCellEditable(int row, int column) {
+		       return false;
+		   }
+		};
 		dtm.addColumn("SỐ HĐ");
 		dtm.addColumn("NGÀY HĐ");
 		dtm.addColumn("TT KHÁCH HÀNG");
@@ -758,6 +768,7 @@ public class PnlHoaDon extends JPanel {
 		}
 		cboKhachHangCN.setModel(dcmKH);
 		cboKhachHangThem.setModel(dcmKH);
+		
 	}
 	
 	private boolean themHoaDon() {
