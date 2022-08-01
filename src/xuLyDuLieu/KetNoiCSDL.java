@@ -7,9 +7,6 @@ package xuLyDuLieu;
 
 import java.sql.Connection;
 import java.sql.Statement;
-
-import tienIch.AppConstants;
-
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,9 +16,9 @@ import java.sql.SQLException;
  */
 public class KetNoiCSDL {
     private String dbURL = "jdbc:sqlserver://localhost:1433;"
-                + "DatabaseName="+AppConstants.DB_NAME+";"
-                + "user="+AppConstants.DB_USERNAME+";"
-                + "password="+AppConstants.DB_PASSWORD+";";
+                + "DatabaseName=QLBH;"
+                + "user=sa;"
+                + "password=sa;";
     private Connection conn;
     private Statement stmt;
 
@@ -52,21 +49,18 @@ public class KetNoiCSDL {
         return rs;
     }
     
-    public boolean setDuLieu(String query){
-    	boolean rs = false;
+    public void setDuLieu(String query){
         try {
             stmt = conn.createStatement();
-            rs = stmt.execute(query);
+            stmt.execute(query);
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
         } finally{
             try {
                 stmt.close();
             } catch (Exception e) {
             }
         }
-        return rs;
     }
     
     public void offStatement(){

@@ -39,15 +39,83 @@ public class SanPhamDB {
         return list;
     }
     
-    public ArrayList<SanPham> timSanPham(String thongtin){
+    public SanPham timMaSanPham(String masp){
+        SanPham list = null;
+        String query = "select * from sanpham where masp = '" + masp + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list = getSanPham(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<SanPham> timTenSanPham(String ten){
         ArrayList<SanPham> list = new ArrayList();
-        String query = "select * from sanpham where masp = '"
-                + thongtin + "' or tensp like N'%" + thongtin + "%'";
+        String query = "select * from sanpham where tensp like N'%" + ten + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
                 list.add(getSanPham(rs));
             }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<SanPham> timDonViTinhSanPham(String dvt){
+        ArrayList<SanPham> list = new ArrayList();
+        String query = "select * from sanpham where dvt = N'" + dvt + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<SanPham> timNuocSXSanPham(String nuoc){
+        ArrayList<SanPham> list = new ArrayList();
+        String query = "select * from sanpham where nuocsx like N'%" + nuoc + "%'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<SanPham> timGiaSanPham(double gia){
+        ArrayList<SanPham> list = new ArrayList();
+        String query = "select * from sanpham where gia = '" + gia + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
         } catch (Exception e) {
             e.printStackTrace();
         } finally{
@@ -74,8 +142,20 @@ public class SanPhamDB {
         csdl.setDuLieu(query);
     }
     
+    public ResultSet topSanPhamBanChay(int top){
+        
+        
+        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx\n" +
+            "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp on abc.masp = sp.masp\n" +
+            "order by soluongln desc";
+        ResultSet rs = csdl.getDuLieu(query);
+        return rs;
+        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+    }
+    
 //    public static void main(String[] args) {
-//        SanPhamBL sp = new SanPhamBL();
+//        SanPhamDB sp = new SanPhamDB();
 //        //SanPham p = new SanPham("XXX", "dâcpnhat", "cây", "Việt Nam", 5000);
 //        sp.xoaSanPham("XXX");
 //        ArrayList<SanPham> list = new ArrayList<>();
