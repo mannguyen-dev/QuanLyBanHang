@@ -21,7 +21,7 @@ public class HoaDonDB {
     }
     
     private HoaDon getHoaDon(ResultSet rs)throws Exception{
-        return new HoaDon(rs.getInt("sohd"), rs.getDate("nghd"), rs.getString("makh"), rs.getString("makh"), rs.getDouble("trigia"));
+        return new HoaDon(rs.getInt("sohd"), rs.getDate("nghd"), rs.getString("makh"), rs.getString("manv"), rs.getDouble("trigia"));
     }
     
     public ArrayList<HoaDon> tatCa(){
@@ -40,25 +40,25 @@ public class HoaDonDB {
         return list;
     }
     
-    public HoaDon timHoaDon(int sohd){
-        HoaDon list = null;
+    public HoaDon timTheoSoHD(int sohd){
+        HoaDon hd = null;
         String query = "select * from hoadon where sohd = '"
                 + sohd + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            while (rs.next()) {                
-                list = getHoaDon(rs);
+            if (rs.next()) {                
+                hd = getHoaDon(rs);
             }
         } catch (Exception e) {
             e.printStackTrace();
         } finally{
             csdl.offStatement();
         }
-        return list;
+        return hd;
     }
     
-    public ArrayList<HoaDon> timHoaDon(Date date){
-        ArrayList<HoaDon> list = new ArrayList();
+    public ArrayList<HoaDon> timTheoNgHD(Date date){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
         String query = "select * from hoadon where nghd = '"
                 + date + "'";
         ResultSet rs = csdl.getDuLieu(query);
@@ -74,10 +74,10 @@ public class HoaDonDB {
         return list;
     }
     
-    public ArrayList<HoaDon> timHoaDon(String maso){
+    public ArrayList<HoaDon> timTheoMaKH(String maKH){
         ArrayList<HoaDon> list = new ArrayList();
         String query = "select * from hoadon where makh = '"
-                + maso + "'";
+                + maKH + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -91,10 +91,10 @@ public class HoaDonDB {
         return list;
     }
     
-    public ArrayList<HoaDon> timHoaDon(double trigia){
-        ArrayList<HoaDon> list = new ArrayList();
+    public ArrayList<HoaDon> timTriGia(double triGia){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
         String query = "select * from hoadon where trigia = '"
-                + trigia + "'";
+                + triGia + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -109,14 +109,18 @@ public class HoaDonDB {
     }
     
     public void themHoaDon(HoaDon hd){
-        String query = "insert into hoadon (sohd,nghd,makh,manv,trigia) values "
-	+ "('"+hd.getSoHoaDon()+"','"+hd.getNgayHoaDon()+"','"+hd.getMaKhachKhang()+"','"+hd.getMaNhanVien()+"','"+hd.getTriGia()+"')";
+    	String maNV = (hd.getMaNhanVien() == null?"null":"'"+hd.getMaNhanVien()+"'");
+    	String maKH = (hd.getMaKhachKhang() == null?"null":"'"+hd.getMaKhachKhang()+"'");
+        String query = "insert into hoadon (nghd,makh,manv,trigia) values "
+        		+ "('"+hd.getNgayHoaDon()+"',"+maKH+","+maNV+",'"+hd.getTriGia()+"')";
         csdl.setDuLieu(query);
     }
     
     public void capNhatThongTin(HoaDon hd){
-        String query = "update hoadon set nghd = '" +hd.getNgayHoaDon()+"', makh = '"+hd.getMaKhachKhang()
-                +"', manv = '" + hd.getMaNhanVien()+"', trigia = '"+hd.getTriGia()+
+    	String maNV = (hd.getMaNhanVien() == null?"null":"'"+hd.getMaNhanVien()+"'");
+    	String maKH = (hd.getMaKhachKhang() == null?"null":"'"+hd.getMaKhachKhang()+"'");
+        String query = "update hoadon set nghd = '" +hd.getNgayHoaDon()+"', makh = "+ maKH
+                +", manv = " + maNV +", trigia = '"+hd.getTriGia()+
                 "' where sohd = '" +hd.getSoHoaDon()+"'";
         csdl.setDuLieu(query);
     }

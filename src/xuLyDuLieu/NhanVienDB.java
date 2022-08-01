@@ -28,7 +28,7 @@ public class NhanVienDB {
     
     
     public ArrayList<NhanVien> tatCa(){
-        ArrayList<NhanVien> list = new ArrayList();
+        ArrayList<NhanVien> list = new ArrayList<NhanVien>();
         String query = "select * from nhanvien";
         ResultSet rs = csdl.getDuLieu(query);
         try {
@@ -45,13 +45,13 @@ public class NhanVienDB {
         return list;
     }
     
-    public NhanVien timMaNhanVien(String manv){
-        NhanVien list = null;
-        String query = "select * from nhanvien where manv = '" + manv + "'";
+    public NhanVien timTheoMaNV(String maNV){
+        NhanVien nv = null;
+        String query = "select * from nhanvien where manv = '" + maNV + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list = getNhanVien(rs);
+                nv = getNhanVien(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -59,12 +59,12 @@ public class NhanVienDB {
         } finally{
             csdl.offStatement();
         }
-        return list;
+        return nv;
     }
     
-    public ArrayList<NhanVien> timTenNhanVien(String hoten){
-        ArrayList<NhanVien> list = new ArrayList();
-        String query = "select * from nhanvien where hoten like N'%" + hoten + "%'";
+    public ArrayList<NhanVien> timTheoHoTen(String hoTen){
+        ArrayList<NhanVien> list = new ArrayList<NhanVien>();
+        String query = "select * from nhanvien where hoten like N'%" + hoTen + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -80,7 +80,7 @@ public class NhanVienDB {
     }
     
     
-    public ArrayList<NhanVien> timSoDienThoaiNhanVien(String sodt){
+    public ArrayList<NhanVien> timTheoSoDT(String sodt){
         ArrayList<NhanVien> list = new ArrayList();
         String query = "select * from nhanvien where sodt like '%" + sodt + "%'";
         ResultSet rs = csdl.getDuLieu(query);
