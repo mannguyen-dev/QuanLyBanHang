@@ -5,6 +5,7 @@ import javax.swing.JPasswordField;
 
 import tienIch.AppConstants;
 import tienIch.AppHelper;
+import xuLyDuLieu.ChiTietHoaDonDB;
 import xuLyDuLieu.HoaDonDB;
 import xuLyDuLieu.KhachHangDB;
 import xuLyDuLieu.NhanVienDB;
@@ -31,6 +32,7 @@ import java.text.NumberFormat;
 import java.awt.event.ActionEvent;
 import com.toedter.calendar.JDateChooser;
 
+import model.ChiTietHoaDon;
 import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
@@ -570,6 +572,12 @@ public class PnlHoaDon extends JPanel {
 				}
 				try {
 					if (AppHelper.thongBaoXacNhan(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+"?") == JOptionPane.OK_OPTION) {
+						// xoa CTHD
+						ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
+						List<ChiTietHoaDon> listCTHD = cthdDB.timTheoSoHD(hdHienTai.getSoHoaDon());
+						for (ChiTietHoaDon cthd: listCTHD) {
+							cthdDB.xoaCTHD(cthd.getSoHoaDon(),cthd.getMaSP());
+						}
 						//update database
 						hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
 						
@@ -685,7 +693,11 @@ public class PnlHoaDon extends JPanel {
 		lblChuyenCTHD.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				controller.setViewCTHD();
+				if (hdHienTai!=null) {
+					controller.setViewCTHD();					
+				}else {
+					AppHelper.thongBao(getRootPane(), "Bạn chưa chọn hóa đơn!");
+				}
 			}
 		});
 
@@ -821,9 +833,7 @@ public class PnlHoaDon extends JPanel {
 		boolean flag = false;
 		try {
 			HoaDonDB hdDB = new HoaDonDB();
-			int sl = JOptionPane.showConfirmDialog(getRootPane(), "Thêm hóa đơn mới?", "Xác nhận",
-					JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-			if (sl == JOptionPane.OK_OPTION) {
+			if (AppHelper.thongBaoXacNhan(getRootPane(), "Thêm hóa đơn mới?") == JOptionPane.OK_OPTION) {
 				String maKH = (String) cboKhachHangCN.getSelectedItem();
 				
 				//update database
@@ -843,8 +853,7 @@ public class PnlHoaDon extends JPanel {
 				flag = true;
 			}
 		} catch (Exception e2) {
-			JOptionPane.showMessageDialog(getRootPane(), "Có lỗi trong quá trình thực hiện!","Lỗi",JOptionPane.ERROR_MESSAGE);
-			e2.printStackTrace();
+			AppHelper.thongBaoLoiThem(getRootPane());
 		}	
 		return flag;
 	}

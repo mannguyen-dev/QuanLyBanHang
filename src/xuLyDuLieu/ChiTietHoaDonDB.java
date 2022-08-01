@@ -47,7 +47,7 @@ public class ChiTietHoaDonDB {
                 + soHD + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            if (rs.next()) {                
+            while (rs.next()) {                
                 list.add(getChiTietHoaDon(rs));
             }
             csdl.getStmt().close();
@@ -75,6 +75,24 @@ public class ChiTietHoaDonDB {
             csdl.offStatement();
         }
         return list;
+    }
+    
+    public ChiTietHoaDon timTheoSoHDVaMaSP(int soHD, String maSP){
+        ChiTietHoaDon cthd = null;
+        String query = "select * from cthd where masp = '"
+                + maSP + "' and sohd = "+soHD;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+                cthd = getChiTietHoaDon(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return cthd;
     }
     
     public void themCTHD(ChiTietHoaDon cthd){

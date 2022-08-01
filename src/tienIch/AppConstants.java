@@ -50,4 +50,7 @@ public class AppConstants {
 	//Vai tro
 	public final static String VT_ADMIN		= "Admin";
 	public final static String VT_NHANVIEN	= "Nhân Viên";
+	
+	//orther
+	public final static double THUE		= 0.1;
 }

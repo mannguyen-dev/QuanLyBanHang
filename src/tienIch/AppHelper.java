@@ -45,6 +45,6 @@ public class AppHelper {
 	}
 	
 	public static void main(String[] args) {
-		thongBaoNhapThieuTruong(null,"ABC");
+		thongBaoLoiThem(null);
 	}
 }
