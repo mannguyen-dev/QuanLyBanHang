@@ -9,6 +9,8 @@ import java.awt.Color;
 import javax.swing.JTextField;
 
 import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.ChiTietHoaDonDB;
 import xuLyDuLieu.HoaDonDB;
 import xuLyDuLieu.KhachHangDB;
 import xuLyDuLieu.NhanVienDB;
@@ -19,6 +21,8 @@ import javax.swing.JButton;
 import javax.swing.JFormattedTextField.AbstractFormatter;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
+import java.sql.Date;
+import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -43,9 +47,9 @@ import javax.swing.DefaultComboBoxModel;
 public class PnlTrangChu extends JPanel {
 	private JTextField txtHoTenCapNhat;
 	private JTextField txtSDTCapNhat;
-	private JPasswordField passwordField;
-	private JPasswordField passwordField_1;
-	private JPasswordField passwordField_2;
+	private JPasswordField txtMKCu;
+	private JPasswordField txtMKMoi;
+	private JPasswordField txtMKMoi2;
 	private JPanel pnlCapNhat;
 	private JPanel pnlDoiMK;
 	private JDateChooser txtNgayVLCapNhat;
@@ -63,7 +67,14 @@ public class PnlTrangChu extends JPanel {
 	private JLabel lblSoLoaiSP;
 	private JLabel lblTongSoNV;
 	private JLabel lblTongSoKH;
-	private JLabel lblNewLabel;
+	private JLabel lblTongDoanhSo;
+	
+	//data
+	private KhachHangDB khDB = new KhachHangDB();
+	private NhanVienDB nvDB = new NhanVienDB();
+	private HoaDonDB hdDB = new HoaDonDB();
+	private SanPhamDB spDB = new SanPhamDB();
+	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	
 	public void setUser(NhanVien user) {
 		this.user = user;
@@ -99,11 +110,11 @@ public class PnlTrangChu extends JPanel {
 		lblNewLabel_6.setBounds(123, 11, 242, 51);
 		panel_3.add(lblNewLabel_6);
 		
-		lblNewLabel = new JLabel("1,000,000 VNĐ");
-		lblNewLabel.setForeground(Color.WHITE);
-		lblNewLabel.setFont(new Font("Arial", Font.BOLD, 28));
-		lblNewLabel.setBounds(125, 59, 240, 59);
-		panel_3.add(lblNewLabel);
+		lblTongDoanhSo = new JLabel("1,000,000 VNĐ");
+		lblTongDoanhSo.setForeground(Color.WHITE);
+		lblTongDoanhSo.setFont(new Font("Arial", Font.BOLD, 28));
+		lblTongDoanhSo.setBounds(125, 59, 240, 59);
+		panel_3.add(lblTongDoanhSo);
 		
 		JPanel panel_3_1 = new JPanel();
 		panel_3_1.setBackground(new Color(AppConstants.MAU_DO));
@@ -397,27 +408,46 @@ public class PnlTrangChu extends JPanel {
 		pnlCapNhat.add(lblNewLabel_3_1);
 		lblNewLabel_3_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		
-		JButton btnCpNht = new JButton("Cập nhật");
-		btnCpNht.setFocusable(false);
-		btnCpNht.setForeground(Color.WHITE);
-		btnCpNht.addActionListener(new ActionListener() {
+		JButton btnCapNhatTT = new JButton("Cập nhật");
+		btnCapNhatTT.setFocusable(false);
+		btnCapNhatTT.setForeground(Color.WHITE);
+		btnCapNhatTT.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-//					txtHoTen.setText(txtNgayVL.getDate().toString());
-//					NhanVienBL nvBL = new NhanVienBL();
-//					NhanVien nv = nvBL.timTheoMaNV("NV01");
-//					txtHoTen.setText(nv.getHoTen());
-					
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Câp nhật thông tin tài khoản của bạn?")==JOptionPane.OK_OPTION) {
+						// get data
+						String hoTen = txtHoTenCapNhat.getText();
+						java.util.Date date = txtNgayVLCapNhat.getDate();
+						String soDT = txtSDTCapNhat.getText();
+						// check valid
+						if (hoTen.equals("") || date == null || soDT.equals("")) {
+							AppHelper.thongBaoNhapThieuTruong(getRootPane(), "đầy đủ thông tin");
+							return;
+						}
+						// update
+						Date ngVL = new Date(date.getTime());
+						user.setHoTen(hoTen);
+						user.setNgVL(ngVL);
+						user.setSoDT(soDT);
+						if(nvDB.capNhatThongTin(user)!= 0) {
+							// update panel
+							loadUserInfo();
+							pnlCapNhat.setVisible(false);	
+							btnHienCN.setBackground(Color.WHITE);
+							AppHelper.thongBao(getRootPane(), "Cập nhật thành công!");
+						}
+					}
 				}catch (Exception e1) {
-					JOptionPane.showMessageDialog(getRootPane(), "Lỗi... Thông tin vừa nhập không hợp lệ");
+					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					e1.printStackTrace();
 				}
 			}
 		});
-		btnCpNht.setBackground(new Color(AppConstants.VIOLET));
-		btnCpNht.setFont(new Font("Arial", Font.BOLD, 18));
-		btnCpNht.setBorder(null);
-		btnCpNht.setBounds(142, 150, 203, 48);
-		pnlCapNhat.add(btnCpNht);
+		btnCapNhatTT.setBackground(new Color(AppConstants.VIOLET));
+		btnCapNhatTT.setFont(new Font("Arial", Font.BOLD, 18));
+		btnCapNhatTT.setBorder(null);
+		btnCapNhatTT.setBounds(142, 150, 203, 48);
+		pnlCapNhat.add(btnCapNhatTT);
 		
 		JButton btnHuyCN = new JButton("Hủy");
 		btnHuyCN.setFocusable(false);
@@ -463,6 +493,42 @@ public class PnlTrangChu extends JPanel {
 		pnlDoiMK.add(lblNewLabel_3_1_1);
 		
 		JButton btnDoiMK = new JButton("Đổi");
+		btnDoiMK.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Câp nhật mật khẩu cho tài khoản của bạn?")==JOptionPane.OK_OPTION) {
+						// get data
+						String mkCu = String.valueOf(txtMKCu.getPassword());
+						String mkMoi = String.valueOf(txtMKMoi.getPassword());
+						String mkMoi2 = String.valueOf(txtMKMoi2.getPassword());
+						// check valid
+						if (mkCu.equals("") || mkMoi == null || mkMoi2.equals("")) {
+							AppHelper.thongBaoNhapThieuTruong(getRootPane(), "đầy đủ thông tin");
+							return;
+						}
+						if (!mkCu.equals(user.getMatKhau())) {
+							AppHelper.thongBaoLoi(getRootPane(), "Mật khẩu cũ không đúng. Vui lòng kiểm tra lại!");
+							return;
+						}
+						if (!mkMoi.equals(mkMoi2)) {
+							AppHelper.thongBaoLoi(getRootPane(), "Mật khẩu nhập lại không khớp!");
+							return;
+						}
+						
+						// update
+						user.setMatKhau(mkMoi);
+						if(nvDB.capNhatThongTin(user)!= 0) {
+							AppHelper.thongBao(getRootPane(), "Cập nhật thành công!");
+							btnHienDoiMK.setBackground(Color.WHITE);
+							pnlDoiMK.setVisible(false);	
+						}
+					}
+				}catch (Exception e1) {
+					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					e1.printStackTrace();
+				}
+			}
+		});
 		btnDoiMK.setFocusable(false);
 		btnDoiMK.setForeground(Color.WHITE);
 		btnDoiMK.setFont(new Font("Arial", Font.BOLD, 18));
@@ -471,20 +537,20 @@ public class PnlTrangChu extends JPanel {
 		btnDoiMK.setBounds(142, 150, 203, 48);
 		pnlDoiMK.add(btnDoiMK);
 		
-		passwordField = new JPasswordField();
-		passwordField.setFont(new Font("Arial", Font.PLAIN, 16));
-		passwordField.setBounds(142, 12, 203, 35);
-		pnlDoiMK.add(passwordField);
+		txtMKCu = new JPasswordField();
+		txtMKCu.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtMKCu.setBounds(142, 12, 203, 35);
+		pnlDoiMK.add(txtMKCu);
 		
-		passwordField_1 = new JPasswordField();
-		passwordField_1.setFont(new Font("Arial", Font.PLAIN, 16));
-		passwordField_1.setBounds(142, 58, 203, 35);
-		pnlDoiMK.add(passwordField_1);
+		txtMKMoi = new JPasswordField();
+		txtMKMoi.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtMKMoi.setBounds(142, 58, 203, 35);
+		pnlDoiMK.add(txtMKMoi);
 		
-		passwordField_2 = new JPasswordField();
-		passwordField_2.setFont(new Font("Arial", Font.PLAIN, 16));
-		passwordField_2.setBounds(142, 104, 203, 35);
-		pnlDoiMK.add(passwordField_2);
+		txtMKMoi2 = new JPasswordField();
+		txtMKMoi2.setFont(new Font("Arial", Font.PLAIN, 16));
+		txtMKMoi2.setBounds(142, 104, 203, 35);
+		pnlDoiMK.add(txtMKMoi2);
 		
 		JButton btnHuyDoiMK = new JButton("Hủy");
 		btnHuyDoiMK.setFocusable(false);
@@ -517,21 +583,25 @@ public class PnlTrangChu extends JPanel {
 	}
 	
 	private void loadData() {
-		lblMaUser.setText(user.getMaNV());
-		lblHoTenUser.setText(user.getHoTen());
-		lblSDTUser.setText(user.getSoDT());
-		lblVaiTroUser.setText(user.getVaiTro());
-		lblNgayVLUser.setText(user.getNgayVLToString());
+		loadUserInfo();
 		
-		//load feature
-		KhachHangDB khDB = new KhachHangDB();
-		NhanVienDB nvDB = new NhanVienDB();
-		HoaDonDB hdDB = new HoaDonDB();
-		SanPhamDB spDB = new SanPhamDB();
+		//load feature number
+		Locale lc = new Locale("vi","VN");
+		NumberFormat nf = NumberFormat.getInstance(lc);
 				
 		lblTongSoHD.setText(String.valueOf(hdDB.tatCa().size()));
 		lblTongSoKH.setText(String.valueOf(khDB.tatCa().size()));
 		lblTongSoNV.setText(String.valueOf(nvDB.tatCa().size()));
 		lblSoLoaiSP.setText(String.valueOf(spDB.tatCa().size()));
+		lblTongDoanhSo.setText(nf.format(hdDB.tongDoanhSo())+" VNĐ");
+		lblSoLuongDaBan.setText(String.valueOf(cthdDB.getSoLuongSPDaBan()));
+	}
+	
+	private void loadUserInfo() {
+		lblMaUser.setText(user.getMaNV());
+		lblHoTenUser.setText(user.getHoTen());
+		lblSDTUser.setText(user.getSoDT());
+		lblVaiTroUser.setText(user.getVaiTro());
+		lblNgayVLUser.setText(user.getNgayVLToString());
 	}
 }

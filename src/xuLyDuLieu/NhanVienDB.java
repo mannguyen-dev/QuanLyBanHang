@@ -50,7 +50,7 @@ public class NhanVienDB {
         String query = "select * from nhanvien where manv = '" + maNV + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            while (rs.next()) {                
+            if (rs.next()) {                
                 nv = getNhanVien(rs);
             }
             csdl.getStmt().close();
@@ -80,9 +80,9 @@ public class NhanVienDB {
     }
     
     
-    public ArrayList<NhanVien> timTheoSoDT(String sodt){
-        ArrayList<NhanVien> list = new ArrayList();
-        String query = "select * from nhanvien where sodt like '%" + sodt + "%'";
+    public ArrayList<NhanVien> timTheoSoDT(String soDT){
+        ArrayList<NhanVien> list = new ArrayList<NhanVien>();
+        String query = "select * from nhanvien where sodt like '%" + soDT + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -97,9 +97,9 @@ public class NhanVienDB {
         return list;
     }
     
-    public ArrayList<NhanVien> timNgayVaoLamNhanVien(Date date){
-        ArrayList<NhanVien> list = new ArrayList();
-        String query = "select * from nhanvien where ngvl = '" + date + "'";
+    public ArrayList<NhanVien> timTheoNgVL(Date ngVL){
+        ArrayList<NhanVien> list = new ArrayList<NhanVien>();
+        String query = "select * from nhanvien where ngvl = '" + ngVL + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -114,9 +114,9 @@ public class NhanVienDB {
         return list;
     }
     
-    public ArrayList<NhanVien> timVaiTroNhanVien(String vaitro){
-        ArrayList<NhanVien> list = new ArrayList();
-        String query = "select * from nhanvien where vaitro like N'%" + vaitro + "%'";
+    public ArrayList<NhanVien> timTheoVaiTro(String vaiTro){
+        ArrayList<NhanVien> list = new ArrayList<NhanVien>();
+        String query = "select * from nhanvien where vaitro like N'%" + vaiTro + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -132,21 +132,21 @@ public class NhanVienDB {
     }
     
     
-    public void themNhanVien(NhanVien nv){
+    public int themNhanVien(NhanVien nv){
         String query = "insert into nhanvien (manv,hoten,sodt,ngvl,matkhau,vaitro) values "
 	+ "('"+nv.getMaNV()+"',N'"+nv.getHoTen()+"','"+nv.getSoDT()+"','"+nv.getNgVL()+"','"+nv.getMatKhau()+"',N'"+nv.getVaiTro()+"')";
-        csdl.setDuLieu(query);
+        return csdl.setDuLieu(query);
     }
     
-    public void capNhatThongTin(NhanVien nv){
+    public int capNhatThongTin(NhanVien nv){
         String query = "update nhanvien set hoten = N'" +nv.getHoTen()+"', sodt = '"+nv.getSoDT()
                 +"', ngvl = '" + nv.getNgVL()+"', matkhau = '"+nv.getMatKhau()+"', vaitro = N'"+nv.getVaiTro()+
                 "' where manv = '" +nv.getMaNV()+"'";
-        csdl.setDuLieu(query);
+        return csdl.setDuLieu(query);
     }
     
-    public void xoaNhanVien(String manv){
+    public int xoaNhanVien(String manv){
         String query = "delete from nhanvien where manv = '"+manv+"'";
-        csdl.setDuLieu(query);
+        return csdl.setDuLieu(query);
     }
 }

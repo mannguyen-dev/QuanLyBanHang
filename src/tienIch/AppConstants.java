@@ -33,10 +33,19 @@ public class AppConstants {
 	//Menh de
 	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
 	public final static String EMPTY		= "<trống>";
-	
-	//Hoa don
-	public final static String SO_HOA_DON		= "Số hóa đơn";
 	public final static String NO_INFO		= "...";
+	
+	//Tim kiem
+	public final static String SO_HOA_DON		= "Số hóa đơn";
+	public final static String MA_NV		= "Mã nhân viên";
+	public final static String TEN_NV		= "Tên nhân viên";
+	public final static String MA_KH		= "Mã khách hàng";
+	public final static String TEN_KH		= "Tên khách hàng";
+	public final static String NGAY_HD		= "Ngày HĐ (dd/MM/yyyy)";
+	public final static String THANG_HD		= "Tháng HĐ (dd/MM/yyyy)";
+	public final static String NAM_HD		= "Năm HĐ (yyyy)";	
+	public final static String TRIGIA_CAOHON		= "Trị giá cao hơn";
+	public final static String TRIGIA_THAPHON		= "Trị giá thấp hơn";
 	
 	//Vai tro
 	public final static String VT_ADMIN		= "Admin";

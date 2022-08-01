@@ -4,6 +4,7 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 
 import tienIch.AppConstants;
+import tienIch.AppHelper;
 import xuLyDuLieu.HoaDonDB;
 import xuLyDuLieu.KhachHangDB;
 import xuLyDuLieu.NhanVienDB;
@@ -110,29 +111,53 @@ public class PnlHoaDon extends JPanel {
 		
 		JComboBox<String> cboTimKiem = new JComboBox<String>();
 		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {AppConstants.SO_HOA_DON, "Ngày tạo (dd-MM-yyyy)", "Tháng (MM-yyyy)", "Năm (yyyy)", "Mã nhân viên", "Tên nhân viên", "Mã khách hàng", "Tên khách hàng"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel<String>(new String[] {AppConstants.SO_HOA_DON, AppConstants.MA_KH, AppConstants.TEN_KH, 
+				AppConstants.MA_NV, AppConstants.TEN_NV, AppConstants.NGAY_HD, AppConstants.THANG_HD,AppConstants.NAM_HD,
+				AppConstants.TRIGIA_CAOHON, AppConstants.TRIGIA_THAPHON}));
 		cboTimKiem.setBounds(346, 11, 227, 43);
 		panel.add(cboTimKiem);
 		
 		JButton btnTiemKiem = new JButton("Tìm kiếm");
 		btnTiemKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String thongtin = txtTiemKiem.getText();
-				if (thongtin.equals("")) {
-					listHD = hdDB.tatCa();
-					hienThi();
-					return;
-				}
-				if (cboTimKiem.getSelectedItem().equals(AppConstants.SO_HOA_DON)) {
-					int soHD = Integer.parseInt(thongtin);
-					HoaDon hd = hdDB.timTheoSoHD(soHD);
-					if (hd != null) {
-						listHD = new ArrayList<HoaDon>();
-						listHD.add(hd);
-					}else {
-						listHD = null;
+				try {
+					String thongTin = txtTiemKiem.getText();
+					if (thongTin.equals("")) {
+						listHD = hdDB.tatCa();
+						hienThi();
+						return;
+					}
+					if (cboTimKiem.getSelectedItem().equals(AppConstants.SO_HOA_DON)) {
+						int soHD = Integer.parseInt(thongTin);
+						HoaDon hd = hdDB.timTheoSoHD(soHD);
+						if (hd != null) {
+							listHD = new ArrayList<HoaDon>();
+							listHD.add(hd);
+						}else {
+							listHD = null;
+						}
+					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.MA_NV)) {
+						listHD = hdDB.timTheoMaNV(thongTin);
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.MA_KH)){
+						listHD = hdDB.timTheoMaKH(thongTin);
+					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.TEN_NV)) {
+//						listHD = hdDB.timTheoMaNV(thongTin);
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TEN_KH)){
+//						listHD = hdDB.timTheoMaKH(thongTin);
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NGAY_HD)) {
+//						listHD = hdDB.timTheoNgHD();
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.THANG_HD)) {
+//						listHD = hdDB.timTheoNgHD();
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NAM_HD)) {
+//						listHD = hdDB.timTheoNgHD();
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_CAOHON)) {
+//						listHD = hdDB.timTheoNgHD();
+					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_THAPHON)) {
+//						listHD = hdDB.timTheoNgHD();
 					}
 					hienThi();
+				}catch (Exception e1) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
 				}
 			}
 		});
@@ -189,6 +214,12 @@ public class PnlHoaDon extends JPanel {
 		panel_2.add(lblNewLabel_2);
 		
 		JButton btnHC = new JButton("HĐ có trị giá cao nhất      ");
+		btnHC.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listHD = hdDB.topHoaDonCaoNhat(1);
+				hienThi();
+			}
+		});
 		btnHC.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconStarFull.png")));
 		btnHC.setForeground(Color.WHITE);
 		btnHC.setFont(new Font("Arial", Font.BOLD, 18));
@@ -200,6 +231,12 @@ public class PnlHoaDon extends JPanel {
 		panel_2.add(btnHC);
 		
 		JButton btnHC_2 = new JButton("10 HĐ có trị giá cao nhất ");
+		btnHC_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listHD = hdDB.topHoaDonCaoNhat(10);
+				hienThi();
+			}
+		});
 		btnHC_2.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconHoaDon.png")));
 		btnHC_2.setForeground(Color.WHITE);
 		btnHC_2.setFont(new Font("Arial", Font.BOLD, 18));
@@ -214,6 +251,8 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2_1.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconHoaDon.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				listHD = hdDB.topHoaDonThapNhat(10);
+				hienThi();
 			}
 		});
 		btnHC_2_1.setForeground(Color.WHITE);
@@ -226,6 +265,12 @@ public class PnlHoaDon extends JPanel {
 		panel_2.add(btnHC_2_1);
 		
 		JButton btnHC_2_2 = new JButton("HĐ có trị giá thấp nhất     ");
+		btnHC_2_2.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				listHD = hdDB.topHoaDonThapNhat(1);
+				hienThi();
+			}
+		});
 		btnHC_2_2.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconStar.png")));
 		btnHC_2_2.setForeground(Color.WHITE);
 		btnHC_2_2.setFont(new Font("Arial", Font.BOLD, 18));
@@ -239,7 +284,10 @@ public class PnlHoaDon extends JPanel {
 		JButton btnHanCa = new JButton("Hóa đơn của tôi                ");
 		btnHanCa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-
+				listHD = hdDB.timTheoMaNV(user.getMaNV());
+				txtTiemKiem.setText(user.getMaNV());
+				cboTimKiem.setSelectedItem(AppConstants.MA_NV);
+				hienThi();
 			}
 		});
 		btnHanCa.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconNhanVienNho.png")));
@@ -392,7 +440,7 @@ public class PnlHoaDon extends JPanel {
 		btnHienCN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (hdHienTai==null) {
-					JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn hóa đơn cần cập nhật");
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn hóa đơn cần cập nhật");
 				}else {
 					btnHienCN.setBackground(new Color(AppConstants.MAU_TIM_NHAT_2));
 					btnHienThem.setBackground(Color.WHITE);
@@ -466,7 +514,7 @@ public class PnlHoaDon extends JPanel {
 						btnHienCN.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(getRootPane(), "Có lỗi trong quá trình cập nhật!","Lỗi",JOptionPane.ERROR_MESSAGE);
+					AppHelper.thongBaoLoiCapNhat(getRootPane());
 				}	
 			}
 		});
@@ -517,13 +565,11 @@ public class PnlHoaDon extends JPanel {
 		btnHienCN_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (hdHienTai == null) {
-					JOptionPane.showMessageDialog(getRootPane(), "Vui lòng chọn hóa đơn cần xóa!","Thông báo",JOptionPane.INFORMATION_MESSAGE);
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn hóa đơn cần xóa!");
 					return;
 				}
 				try {
-					int sl = JOptionPane.showConfirmDialog(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+"?", "Xác nhận",
-							JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if (sl == JOptionPane.OK_OPTION) {
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+"?") == JOptionPane.OK_OPTION) {
 						//update database
 						hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
 						
@@ -534,7 +580,7 @@ public class PnlHoaDon extends JPanel {
 						hienThi();
 					}
 				} catch (Exception e2) {
-					JOptionPane.showMessageDialog(getRootPane(), "Có lỗi trong quá trình thực hiện!","Lỗi",JOptionPane.ERROR_MESSAGE);
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
 				}	
 			}
 		});

@@ -41,13 +41,13 @@ public class ChiTietHoaDonDB {
         return list;
     }
     
-    public ArrayList<ChiTietHoaDon> timCTHD(int sohd){
-        ArrayList<ChiTietHoaDon> list = new ArrayList();
+    public ArrayList<ChiTietHoaDon> timTheoSoHD(int soHD){
+        ArrayList<ChiTietHoaDon> list = new ArrayList<ChiTietHoaDon>();
         String query = "select * from cthd where sohd = '"
-                + sohd + "'";
+                + soHD + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            while (rs.next()) {                
+            if (rs.next()) {                
                 list.add(getChiTietHoaDon(rs));
             }
             csdl.getStmt().close();
@@ -58,10 +58,11 @@ public class ChiTietHoaDonDB {
         }
         return list;
     }
-    public ArrayList<ChiTietHoaDon> timCTHD(String masp){
-        ArrayList<ChiTietHoaDon> list = new ArrayList();
+    
+    public ArrayList<ChiTietHoaDon> timTheoMaSP(String maSP){
+        ArrayList<ChiTietHoaDon> list = new ArrayList<ChiTietHoaDon>();
         String query = "select * from cthd where masp = '"
-                + masp + "'";
+                + maSP + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -91,6 +92,22 @@ public class ChiTietHoaDonDB {
     public void xoaCTHD(int mahd, String masp){
         String query = "delete from cthd where sohd = '"+mahd+"' and masp = '" + masp + "'";
         csdl.setDuLieu(query);
+    }
+    
+    public int getSoLuongSPDaBan(){
+        int tong = 0;
+        String query = "select SUM(cthd.sl) tong from cthd";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+                tong = tong + rs.getInt("tong");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return tong;
     }
     
     
