@@ -56,7 +56,6 @@ public class PnlTrangChu extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienDoiMK;
 	private JTable table;
-	private NhanVien user;
 	private JLabel lblMaUser;
 	private JLabel lblHoTenUser;
 	private JLabel lblSDTUser;
@@ -70,6 +69,7 @@ public class PnlTrangChu extends JPanel {
 	private JLabel lblTongDoanhSo;
 	
 	//data
+	private NhanVien user;
 	private KhachHangDB khDB = new KhachHangDB();
 	private NhanVienDB nvDB = new NhanVienDB();
 	private HoaDonDB hdDB = new HoaDonDB();

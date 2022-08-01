@@ -75,6 +75,7 @@ public class PnlHoaDon extends JPanel {
 	private JComboBox<String> cboKhachHangCN;
 	private JComboBox<String> cboKhachHangThem;
 	private NhanVien user;
+	private HoaDonDB hdDB = new HoaDonDB();
 
 
 //	public void setJpnView(JPanel jpnView) {
@@ -571,7 +572,8 @@ public class PnlHoaDon extends JPanel {
 					return;
 				}
 				try {
-					if (AppHelper.thongBaoXacNhan(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+"?") == JOptionPane.OK_OPTION) {
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Xóa hóa đơn "+hdHienTai.getSoHoaDon()+" và các CTHD liên quan?") 
+							== JOptionPane.OK_OPTION) {
 						// xoa CTHD
 						ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 						List<ChiTietHoaDon> listCTHD = cthdDB.timTheoSoHD(hdHienTai.getSoHoaDon());
@@ -637,6 +639,8 @@ public class PnlHoaDon extends JPanel {
 		btnThem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				themHoaDon();
+				pnlThemHD.setVisible(false);
+				btnHienThem.setBackground(Color.WHITE);
 			}
 		});
 		btnThem.setForeground(Color.WHITE);
@@ -827,6 +831,8 @@ public class PnlHoaDon extends JPanel {
 		cboKhachHangCN.setModel(dcmKH);
 		cboKhachHangThem.setModel(dcmKH);
 		
+		listHD = hdDB.tatCa();
+		hienThi();
 	}
 	
 	private boolean themHoaDon() {

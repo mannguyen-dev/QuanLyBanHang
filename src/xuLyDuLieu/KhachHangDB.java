@@ -216,8 +216,23 @@ public class KhachHangDB {
     
     public ArrayList<KhachHang> topKhachHangMuaNhieuNhat(int top){
         ArrayList<KhachHang> list = new ArrayList<>();
-        String query = "select top "+top+" with ties doanhso as doanhso, makh, hoten, sodt"
-                + " from khachhang order by doanhso desc";
+        String query = "select top "+top+" with ties * from khachhang order by doanhso desc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getKhachHang(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<KhachHang> topKhachHangMuaItNhat(int top){
+        ArrayList<KhachHang> list = new ArrayList<>();
+        String query = "select top "+top+" with ties * from khachhang order by doanhso asc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                

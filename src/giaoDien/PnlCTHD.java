@@ -235,10 +235,7 @@ public class PnlCTHD extends JPanel {
 		btnHienCN = new JButton("   In hóa đơn    ");
 		btnHienCN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-//				btnHienCN.setBackground(new Color(AppConstants.MAU_TIM_NHAT_2));
-//				btnHienThem.setBackground(Color.WHITE);
-//				pnlDoiTTHD.setVisible(true);
-//				pnlThemHD.setVisible(false);
+				AppHelper.thongBao(getRootPane(), "Xin lỗi... Tính năng này đang phát triển!");
 			}
 		});
 		btnHienCN.setIcon(new ImageIcon(PnlCTHD.class.getResource("/hinhAnh/IconIn.png")));
