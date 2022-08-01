@@ -40,14 +40,15 @@ public class KhachHangDB {
         }
        return list;
     }
-   
-    public KhachHang timMaKhachHang(String makh){
-        KhachHang list = null;
-        String query = "select * from khachhang where makh = '" + makh + "'";
+
+    
+    public KhachHang timTheoMaKH(String maKH){
+    	KhachHang kh = null;
+        String query = "select * from khachhang where makh = '" + maKH + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            while (rs.next()) {                
-                list = getKhachHang(rs);
+            if (rs.next()) {                
+                kh = getKhachHang(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -55,29 +56,12 @@ public class KhachHangDB {
         } finally{
             csdl.offStatement();
         }
-        return list;
+        return kh;
     }
     
-    public ArrayList<KhachHang> timTenKhachHang(String hoten){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where hoten like N'%" + hoten + "%'";
-        ResultSet rs = csdl.getDuLieu(query);
-        try {
-            while (rs.next()) {                
-                list.add(getKhachHang(rs));
-            }
-            csdl.getStmt().close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally{
-            csdl.offStatement();
-        }
-        return list;
-    }
-    
-    public ArrayList<KhachHang> timDiaChiKhachHang(String dchi){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where dchi like N'%" + dchi + "%'";
+    public ArrayList<KhachHang> timTheoHoTen(String hoTen){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where hoten like N'%" + hoTen + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -92,9 +76,9 @@ public class KhachHangDB {
         return list;
     }
     
-    public ArrayList<KhachHang> timSoDienThoaiKhachHang(String sodt){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where sodt like '%" + sodt + "%'";
+    public ArrayList<KhachHang> timTheoDiaChi(String diaChi){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where dchi like N'%" + diaChi + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -109,9 +93,9 @@ public class KhachHangDB {
         return list;
     }
     
-    public ArrayList<KhachHang> timNgaySinhKhachHang(Date date){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where ngsinh = '" + date + "'";
+    public ArrayList<KhachHang> timTheoSDT(String soDT){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where sodt like '%" + soDT + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -126,9 +110,9 @@ public class KhachHangDB {
         return list;
     }
     
-    public ArrayList<KhachHang> timNgayDKYKhachHang(Date date){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where ngdk = '" + date + "'";
+    public ArrayList<KhachHang> timTheoNgaySinh(Date ngaySinh){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where ngsinh = '" + ngaySinh + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -143,9 +127,9 @@ public class KhachHangDB {
         return list;
     }
     
-    public ArrayList<KhachHang> timDoanhSoKhachHang(double doanhso){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where doanhso = '" + doanhso + "'";
+    public ArrayList<KhachHang> timTheoNgayDKy(Date ngayDKy){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where ngdk = '" + ngayDKy + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -160,9 +144,26 @@ public class KhachHangDB {
         return list;
     }
     
-    public ArrayList<KhachHang> timLoaiKhachHang(String loaikh){
-        ArrayList<KhachHang> list = new ArrayList();
-        String query = "select * from khachhang where loaikh like N'%" + loaikh + "%'";
+    public ArrayList<KhachHang> timTheoDoanhSo(double doanhSo){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where doanhso = '" + doanhSo + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getKhachHang(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<KhachHang> timTheoLoaiKH(String loaiKH){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where loaikh like N'%" + loaiKH + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                

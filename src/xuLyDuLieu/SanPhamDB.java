@@ -24,7 +24,7 @@ public class SanPhamDB {
     }
     
     public ArrayList<SanPham> tatCa(){
-        ArrayList<SanPham> list = new ArrayList();
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
         String query = "select * from sanpham";
         ResultSet rs = csdl.getDuLieu(query);
         try {
@@ -39,12 +39,12 @@ public class SanPhamDB {
         return list;
     }
     
-    public SanPham timMaSanPham(String masp){
+    public SanPham timTheoMaSP(String maSP){
         SanPham list = null;
-        String query = "select * from sanpham where masp = '" + masp + "'";
+        String query = "select * from sanpham where masp = '" + maSP + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
-            while (rs.next()) {                
+            if (rs.next()) {                
                 list = getSanPham(rs);
             }
             csdl.getStmt().close();
@@ -56,9 +56,9 @@ public class SanPhamDB {
         return list;
     }
     
-    public ArrayList<SanPham> timTenSanPham(String ten){
-        ArrayList<SanPham> list = new ArrayList();
-        String query = "select * from sanpham where tensp like N'%" + ten + "%'";
+    public ArrayList<SanPham> timTheoTenSP(String tenSP){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where tensp like N'%" + tenSP + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -73,9 +73,9 @@ public class SanPhamDB {
         return list;
     }
     
-    public ArrayList<SanPham> timDonViTinhSanPham(String dvt){
-        ArrayList<SanPham> list = new ArrayList();
-        String query = "select * from sanpham where dvt = N'" + dvt + "'";
+    public ArrayList<SanPham> timTheoDonViTinh(String donViTinh){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where dvt = N'" + donViTinh + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -90,9 +90,9 @@ public class SanPhamDB {
         return list;
     }
     
-    public ArrayList<SanPham> timNuocSXSanPham(String nuoc){
-        ArrayList<SanPham> list = new ArrayList();
-        String query = "select * from sanpham where nuocsx like N'%" + nuoc + "%'";
+    public ArrayList<SanPham> timTheoNuocSX(String nuocSX){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where nuocsx like N'%" + nuocSX + "%'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -107,9 +107,9 @@ public class SanPhamDB {
         return list;
     }
     
-    public ArrayList<SanPham> timGiaSanPham(double gia){
-        ArrayList<SanPham> list = new ArrayList();
-        String query = "select * from sanpham where gia = '" + gia + "'";
+    public ArrayList<SanPham> timTheoGiaBan(double giaBan){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where gia = '" + giaBan + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
