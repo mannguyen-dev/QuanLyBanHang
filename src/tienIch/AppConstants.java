@@ -8,7 +8,7 @@ public class AppConstants {
 	
 	//Colors
 	public final static int MAU_TIM		 	= Integer.parseInt("4C6EF5",16);
-	public final static int MAU_TIM_DAM		 	= Integer.parseInt("364fc7",16);
+	public final static int MAU_TIM_DAM		= Integer.parseInt("364fc7",16);
 	public final static int MAU_TIM_NHAT 	= Integer.parseInt("748FFC",16);
 	public final static int MAU_TIM_NHAT_2 	= Integer.parseInt("bac8ff",16);
 	public final static int MAU_TIM_NHAT_3 	= Integer.parseInt("dbe4ff",16);
@@ -17,10 +17,10 @@ public class AppConstants {
 	public final static int MAU_XAM_NHAT 	= Integer.parseInt("DEE2E6",16);
 	public final static int MAU_XAM_NHAT_2 	= Integer.parseInt("868E96",16);
 	
-	public final static int MAU_DO 		= Integer.parseInt("fa5252",16);
+	public final static int MAU_DO 			= Integer.parseInt("fa5252",16);
 	public final static int MAU_XANH_LA 	= Integer.parseInt("0ca678",16);
-	public final static int MAU_CAM 	= Integer.parseInt("f08c00",16);
-	public final static int VIOLET 	= Integer.parseInt("7048e8",16);
+	public final static int MAU_CAM 		= Integer.parseInt("f08c00",16);
+	public final static int VIOLET 			= Integer.parseInt("7048e8",16);
 	
 	//Kinds
 	public final static String TRANG_CHU 	= "TrangChu";
@@ -33,12 +33,47 @@ public class AppConstants {
 	//Menh de
 	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
 	public final static String EMPTY		= "<trống>";
-	
-	//Hoa don
-	public final static String SO_HOA_DON		= "Số hóa đơn";
 	public final static String NO_INFO		= "...";
+	
+	//ten truong
+	public final static String SO_HOA_DON	= "Số hóa đơn";
+	public final static String MA_NV		= "Mã nhân viên";
+	public final static String TEN_NV		= "Tên nhân viên";
+	public final static String MA_KH		= "Mã khách hàng";
+	public final static String TEN_KH		= "Tên khách hàng";
+	public final static String NGAY_HD		= "Ngày HĐ (dd/MM/yyyy)";
+	public final static String THANG_HD		= "Tháng HĐ (MM/yyyy)";
+	public final static String NAM_HD		= "Năm HĐ (yyyy)";	
+	public final static String TRIGIA_CAOHON		= "Trị giá cao hơn";
+	public final static String TRIGIA_THAPHON		= "Trị giá thấp hơn";
+	public final static String HO_TEN		= "Họ tên";
+	public final static String DIA_CHI		= "Địa chỉ";
+	public final static String SO_DT		= "Số điện thoại";
+	public final static String NGAY_SINH	= "Ngày sinh (dd/MM/yyyy)";
+	public final static String NGAY_DK		= "Ngày ĐK (dd/MM/yyyy)";
+	public final static String THANG_DK		= "Tháng ĐK (dd/MM/yyyy)";
+	public final static String NAM_DK		= "Năm ĐK (yyyy)";
+	public final static String LOAI_KH		= "Loại khách hàng";
+	public final static String DS_CAOHON	= "Doanh số cao hơn";
+	public final static String DS_THAPHON	= "Doanh số thấp hơn";
+	public final static String MA_SP		= "Mã sản phẩm";
+	public final static String TEN_SP		= "Tên sản phẩm";
+	public final static String DVT			= "ĐVT (cây, hộp, cái, quyển, chục)";
+	public final static String NUOC_SX		= "Nước sản xuất";
+	public final static String GIA_CAOHON	= "Giá cao hơn";
+	public final static String GIA_THAPHON	= "Giá thấp hơn";
+	
+	//don vi tinh
+	public final static String CAY			= "cây";
+	public final static String CHUC			= "chục";
+	public final static String CAI			= "cái";
+	public final static String QUYEN		= "quyển";
+	public final static String HOP			= "hộp";
 	
 	//Vai tro
 	public final static String VT_ADMIN		= "Admin";
 	public final static String VT_NHANVIEN	= "Nhân Viên";
+	
+	//orther
+	public final static double THUE		= 0.1;
 }

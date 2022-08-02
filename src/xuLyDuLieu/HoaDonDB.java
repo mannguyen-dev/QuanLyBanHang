@@ -75,9 +75,26 @@ public class HoaDonDB {
     }
     
     public ArrayList<HoaDon> timTheoMaKH(String maKH){
-        ArrayList<HoaDon> list = new ArrayList();
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
         String query = "select * from hoadon where makh = '"
                 + maKH + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> timTheoMaNV(String maNV){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon where manv = '"
+                + maNV + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -143,8 +160,25 @@ public class HoaDonDB {
     
     public ArrayList<HoaDon> topHoaDonCaoNhat(int top){
         ArrayList<HoaDon> list = new ArrayList<>();
-        String query = "select top "+top+" with ties trigia as trigia,sohd, makh"
-                + " from hoadon order by trigia desc";
+        String query = "select top "+top+" with ties trigia as trigia,sohd,nghd, makh, manv "
+        		+ "from hoadon order by trigia desc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> topHoaDonThapNhat(int top){
+        ArrayList<HoaDon> list = new ArrayList<>();
+        String query = "select top "+top+" with ties trigia as trigia,sohd,nghd, makh, manv "
+        		+ "from hoadon order by trigia asc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                

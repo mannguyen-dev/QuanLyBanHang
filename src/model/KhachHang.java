@@ -4,6 +4,7 @@
  */
 package model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -53,11 +54,21 @@ public class KhachHang {
     public Date getNgaySinh() {
         return ngaySinh;
     }
+    
+    public String getNgaySinhToString() {
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+    	return formatter.format(ngaySinh);
+    }
 
     public Date getNgayDKy() {
         return ngayDKy;
     }
 
+    public String getNgayDKyToString() {
+    	SimpleDateFormat formatter = new SimpleDateFormat("dd/MM/yyyy"); 
+    	return formatter.format(ngayDKy);
+    }
+    
     public double getDoanhSo() {
         return doanhSo;
     }

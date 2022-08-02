@@ -52,14 +52,14 @@ public class KetNoiCSDL {
         return rs;
     }
     
-    public boolean setDuLieu(String query){
-    	boolean rs = false;
+    public int setDuLieu(String query){
+    	int rs = 0;
         try {
             stmt = conn.createStatement();
-            rs = stmt.execute(query);
+            rs = stmt.executeUpdate(query);
         } catch (SQLException e) {
             e.printStackTrace();
-            return false;
+            return 0;
         } finally{
             try {
                 stmt.close();
