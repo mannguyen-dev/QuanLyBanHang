@@ -10,11 +10,13 @@ import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.ChiTietHoaDon;
 import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
 import tienIch.AppConstants;
 import tienIch.AppHelper;
+import xuLyDuLieu.ChiTietHoaDonDB;
 import xuLyDuLieu.HoaDonDB;
 import xuLyDuLieu.KhachHangDB;
 import xuLyDuLieu.NhanVienDB;
@@ -80,7 +82,17 @@ public class PnlKhachHang extends JPanel {
 	private JDateChooser txtNgayDKCN;
 	private JDateChooser txtNgSinhThem;
 	private JDateChooser txtNgDKThem;
+	private ChuyenPanelTheoDanhMuc controller;
 
+	public KhachHang getKhHienTai() {
+		return khHienTai;
+	}
+	public void setController(ChuyenPanelTheoDanhMuc controller) {
+		this.controller = controller;
+	}
+	public ChuyenPanelTheoDanhMuc getController() {
+		return controller;
+	}
 	/**
 	 * Create the panel.
 	 */
@@ -107,13 +119,13 @@ public class PnlKhachHang extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (AppHelper.thongBaoXacNhan(getRootPane(), "Thêm khách hàng mới?") == JOptionPane.OK_OPTION) {
-						String maKH = (String) txtMaKHThem.getText();
-						String hoTen = (String) txtHoTenThem.getText();
+						String maKH = txtMaKHThem.getText();
+						String hoTen = txtHoTenThem.getText();
 						Date ngSinhRaw = txtNgSinhThem.getDate();
 						Date ngDKRaw = txtNgDKThem.getDate();
-						String loaiKH = (String) txtLoaiKHThem.getText();
-						String diaChi = (String) txtDiaChiThem.getText();
-						String soDT = (String) txtSoDTThem.getText();
+						String loaiKH = txtLoaiKHThem.getText();
+						String diaChi = txtDiaChiThem.getText();
+						String soDT = txtSoDTThem.getText();
 						
 						//kiem tra nhap
 						if (maKH.equals("")||hoTen.equals("")||diaChi.equals("")||soDT.equals("")||loaiKH.equals("")) {
@@ -265,6 +277,53 @@ public class PnlKhachHang extends JPanel {
 		pnlDoiTTKH.setLayout(null);
 		
 		JButton btnCapNhat = new JButton("Đổi");
+		btnCapNhat.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Cập nhật thông tin khách hàng có mã \""+khHienTai.getMaKH()+"\"?") 
+							== JOptionPane.OK_OPTION) {
+						String hoTen = txtHoTenCN.getText();
+						Date ngSinhRaw = txtNgSinhCN.getDate();
+						Date ngDKRaw = txtNgayDKCN.getDate();
+						String loaiKH = txtLoaiKHCN.getText();
+						String diaChi = txtDiaChiCN.getText();
+						String soDT = txtSoDTCN.getText();
+						
+						//update database
+						java.sql.Date ngSinh = new java.sql.Date(ngSinhRaw.getTime());
+						java.sql.Date ngDK = new java.sql.Date(ngDKRaw.getTime());
+						khHienTai.setHoTen(hoTen);
+						khHienTai.setNgaySinh(ngSinh);
+						khHienTai.setNgayDKy(ngDK);
+						khHienTai.setLoaiKH(loaiKH);
+						khHienTai.setDiaChi(diaChi);
+						khHienTai.setSoDT(soDT);
+						khDB.capNhatThongTin(khHienTai);
+						
+						//update panel
+						listKH = new ArrayList<KhachHang>();
+						listKH.add(khHienTai);
+						hienThi();
+						
+						// set info
+						Locale lc = new Locale("vi","VN");
+						NumberFormat nf = NumberFormat.getInstance(lc);
+						lblMaKH.setText(khHienTai.getMaKH());
+						lblHoTen.setText(khHienTai.getHoTen());
+						lblNgaySinh.setText(khHienTai.getNgaySinhToString());
+						lblSDT.setText(khHienTai.getSoDT());
+						lblNgayDK.setText(khHienTai.getNgayDKyToString());
+						lblLoaiKH.setText(khHienTai.getLoaiKH());
+						lblDiaChi.setText("<HTML>"+khHienTai.getDiaChi()+"<HTML>");
+						lblDoanhSo.setText(nf.format(khHienTai.getDoanhSo())+" VNĐ");
+						pnlDoiTTKH.setVisible(false);
+						btnHienCN.setBackground(Color.WHITE);
+					}
+				} catch (Exception e2) {
+					AppHelper.thongBaoLoiCapNhat(getRootPane());
+				}	
+			}
+		});
 		btnCapNhat.setFocusable(false);
 		btnCapNhat.setForeground(Color.WHITE);
 		btnCapNhat.setFont(new Font("Arial", Font.BOLD, 18));
@@ -424,10 +483,22 @@ public class PnlKhachHang extends JPanel {
 		btnHienCN = new JButton("Cập nhật TT ");
 		btnHienCN.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				btnHienCN.setBackground(new Color(AppConstants.MAU_TIM_NHAT_2));
-				btnHienThem.setBackground(Color.WHITE);
-				pnlDoiTTKH.setVisible(true);
-				pnlThemKH.setVisible(false);
+				if (khHienTai==null) {
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn khách hàng cần cập nhật");
+				}else {
+					btnHienCN.setBackground(new Color(AppConstants.MAU_TIM_NHAT_2));
+					btnHienThem.setBackground(Color.WHITE);
+					pnlDoiTTKH.setVisible(true);
+					pnlThemKH.setVisible(false);
+					
+					//load data
+					txtHoTenCN.setText(khHienTai.getHoTen());
+					txtNgSinhCN.setDate(khHienTai.getNgaySinh());
+					txtNgayDKCN.setDate(khHienTai.getNgayDKy());
+					txtLoaiKHCN.setText(khHienTai.getLoaiKH());
+					txtDiaChiCN.setText(khHienTai.getDiaChi());
+					txtSoDTCN.setText(khHienTai.getSoDT());
+				}
 			}
 		});
 		btnHienCN.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconCapNhat.png")));
@@ -441,6 +512,35 @@ public class PnlKhachHang extends JPanel {
 		panel_1.add(btnHienCN);
 		
 		JButton btnHienCN_1 = new JButton(" Xóa");
+		btnHienCN_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (khHienTai == null) {
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn khách hàng cần xóa!");
+					return;
+				}
+				try {
+					if (AppHelper.canhBaoXacNhan(getRootPane(), "Xóa khách hàng có mã \""+khHienTai.getMaKH()+"\"?") 
+							== JOptionPane.OK_OPTION) {
+						// xoa CTHD
+//						ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
+//						List<ChiTietHoaDon> listCTHD = cthdDB.timTheoSoHD(hdHienTai.getSoHoaDon());
+//						for (ChiTietHoaDon cthd: listCTHD) {
+//							cthdDB.xoaCTHD(cthd.getSoHoaDon(),cthd.getMaSP());
+//						}
+//						//update database
+//						hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
+//						
+//						//update panel
+//						hdHienTai = null;
+//						listHD = new ArrayList<HoaDon>();
+//						resetInfo();
+//						hienThi();
+					}
+				} catch (Exception e2) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+				}	
+			}
+		});
 		btnHienCN_1.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconXoa.png")));
 		btnHienCN_1.setForeground(Color.WHITE);
 		btnHienCN_1.setFont(new Font("Arial", Font.BOLD, 18));
@@ -478,12 +578,16 @@ public class PnlKhachHang extends JPanel {
 		panel_4.setLayout(new BorderLayout(0, 0));
 		
 		lblChuyenHD = new JLabel("Xem hóa đơn");
-//				lblChuyenCTHD.addMouseListener(new MouseAdapter() {
-//					@Override
-//					public void mouseClicked(MouseEvent e) {
-//						controller.setViewCTHD();
-//					}
-//				});
+		lblChuyenHD.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (khHienTai!=null) {
+					controller.setViewFromKhachHangToHoaDon();					
+				}else {
+					AppHelper.thongBao(getRootPane(), "Bạn chưa chọn khách hàng!");
+				}
+			}
+		});
 
 		panel_4.add(lblChuyenHD);
 		lblChuyenHD.setBackground(Color.WHITE);
@@ -794,15 +898,6 @@ public class PnlKhachHang extends JPanel {
 		}
 		
 		tblHienThi.setModel(dtm);
-//		tblHoaDon.getColumnModel().getColumn(0).setPreferredWidth(60);
-//		tblHoaDon.getColumnModel().getColumn(0).setMinWidth(60);
-//		tblHoaDon.getColumnModel().getColumn(0).setMaxWidth(60);
-//		tblHoaDon.getColumnModel().getColumn(1).setPreferredWidth(100);
-//		tblHoaDon.getColumnModel().getColumn(1).setMinWidth(100);
-//		tblHoaDon.getColumnModel().getColumn(1).setMaxWidth(100);
-//		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
-//		renderer.setHorizontalAlignment( JLabel.RIGHT );
-//		tblHoaDon.getColumnModel().getColumn(4).setCellRenderer(renderer);
 		tblHienThi.setRowHeight(40);
 		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
 		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));;

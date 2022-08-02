@@ -35,7 +35,7 @@ public class AppConstants {
 	public final static String EMPTY		= "<trống>";
 	public final static String NO_INFO		= "...";
 	
-	//Tim kiem
+	//ten truong
 	public final static String SO_HOA_DON	= "Số hóa đơn";
 	public final static String MA_NV		= "Mã nhân viên";
 	public final static String TEN_NV		= "Tên nhân viên";
@@ -56,6 +56,19 @@ public class AppConstants {
 	public final static String LOAI_KH		= "Loại khách hàng";
 	public final static String DS_CAOHON	= "Doanh số cao hơn";
 	public final static String DS_THAPHON	= "Doanh số thấp hơn";
+	public final static String MA_SP		= "Mã sản phẩm";
+	public final static String TEN_SP		= "Tên sản phẩm";
+	public final static String DVT			= "ĐVT (cây, hộp, cái, quyển, chục)";
+	public final static String NUOC_SX		= "Nước sản xuất";
+	public final static String GIA_CAOHON	= "Giá cao hơn";
+	public final static String GIA_THAPHON	= "Giá thấp hơn";
+	
+	//don vi tinh
+	public final static String CAY			= "cây";
+	public final static String CHUC			= "chục";
+	public final static String CAI			= "cái";
+	public final static String QUYEN		= "quyển";
+	public final static String HOP			= "hộp";
 	
 	//Vai tro
 	public final static String VT_ADMIN		= "Admin";

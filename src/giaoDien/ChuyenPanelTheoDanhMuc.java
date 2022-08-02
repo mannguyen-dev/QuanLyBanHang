@@ -25,7 +25,7 @@ public class ChuyenPanelTheoDanhMuc {
 	}
 	
 	public void setView(JPanel jpnItem, JLabel jlbItem) {
-		kindSelected = "TrangChu";
+		kindSelected = AppConstants.TRANG_CHU;
 		jpnItem.setBackground(new Color(AppConstants.MAU_TIM));
 		jlbItem.setBackground(new Color(AppConstants.MAU_TIM));
 		
@@ -38,7 +38,7 @@ public class ChuyenPanelTheoDanhMuc {
 	}
 	
 	public void setViewCTHD() {
-		kindSelected = "CTHD";
+		kindSelected = AppConstants.CTHD;
 		listItem.get(1).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
 		listItem.get(1).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
 		listItem.get(2).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
@@ -49,6 +49,24 @@ public class ChuyenPanelTheoDanhMuc {
 		root.removeAll();
 		root.setLayout(new BorderLayout());
 		root.add(pnlCTHD);
+		root.validate();
+		root.repaint();
+	}
+	
+	public void setViewFromKhachHangToHoaDon() {
+		kindSelected = AppConstants.HOA_DON;
+		listItem.get(4).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(4).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(1).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(1).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
+		
+		PnlKhachHang pnlKH = (PnlKhachHang) root.getComponent(0);
+		PnlHoaDon pnlHD = new PnlHoaDon();
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+		root.add(pnlHD);
+		pnlHD.hienThiHoaDonKhachHang(pnlKH.getKhHienTai());
+		pnlHD.setController(pnlKH.getController());
 		root.validate();
 		root.repaint();
 	}
@@ -132,6 +150,8 @@ public class ChuyenPanelTheoDanhMuc {
 					break;
 				case AppConstants.KHACH_HANG:
 					node = new PnlKhachHang();
+					PnlKhachHang nodeKH = (PnlKhachHang) node;
+					nodeKH.setController(frmMain.getController());
 					break;
 				case AppConstants.NHAN_VIEN:
 					node = new PnlNhanVien();

@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 public class AppHelper {
 	public static String LOI = "Lỗi";
 	public static String THONG_BAO = "Thông báo";
+	public static String CANH_BAO = "Cảnh báo";
 	public static String XAC_NHAN = "Xác nhận";
 	
 	public static void thongBaoLoiQuaTrinhXuLy(Component component) {
@@ -32,6 +33,11 @@ public class AppHelper {
 	public static void thongBao(Component component, String noiDung) {
 		JOptionPane.showMessageDialog(component, noiDung, THONG_BAO, 
 				JOptionPane.INFORMATION_MESSAGE);
+	}
+	
+	public static int canhBaoXacNhan(Component component, String noiDung) {
+		return JOptionPane.showConfirmDialog(component, noiDung, CANH_BAO, JOptionPane.OK_CANCEL_OPTION,
+				JOptionPane.WARNING_MESSAGE);
 	}
 	
 	public static void thongBaoNhapThieuTruong(Component component, String tenTruong) {

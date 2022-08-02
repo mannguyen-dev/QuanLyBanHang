@@ -13,9 +13,9 @@ public class SanPham {
     private String tenSP;
     private String donViTinh;
     private String nuocSX;
-    private int giaBan;
+    private double giaBan;
 
-    public SanPham(String maSP, String tenSP, String donViTinh, String nuocSX, int giaBan) {
+    public SanPham(String maSP, String tenSP, String donViTinh, String nuocSX, double giaBan) {
         this.maSP = maSP;
         this.tenSP = tenSP;
         this.donViTinh = donViTinh;
@@ -62,7 +62,7 @@ public class SanPham {
         this.nuocSX = nuocSX;
     }
 
-    public void setGiaBan(int giaBan) {
+    public void setGiaBan(double giaBan) {
         this.giaBan = giaBan;
     }
     

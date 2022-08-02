@@ -492,9 +492,8 @@ public class PnlHoaDon extends JPanel {
 		btnCapNhat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					int sl = JOptionPane.showConfirmDialog(getRootPane(), "Cập nhật lại hóa đơn "+hdHienTai.getSoHoaDon()+"?", "Xác nhận",
-							JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE);
-					if (sl == JOptionPane.OK_OPTION) {
+					if (AppHelper.thongBaoXacNhan(getRootPane(), "Cập nhật lại hóa đơn "+hdHienTai.getSoHoaDon()+"?") 
+							== JOptionPane.OK_OPTION) {
 						Date ngHD = txtNgHDCapNhat.getDate();
 						String maNV = (String) cboNhanVienCN.getSelectedItem();
 						String maKH = (String) cboKhachHangCN.getSelectedItem();
@@ -831,8 +830,8 @@ public class PnlHoaDon extends JPanel {
 		cboKhachHangCN.setModel(dcmKH);
 		cboKhachHangThem.setModel(dcmKH);
 		
-		listHD = hdDB.tatCa();
-		hienThi();
+//		listHD = hdDB.tatCa();
+//		hienThi();
 	}
 	
 	private boolean themHoaDon() {
@@ -862,5 +861,10 @@ public class PnlHoaDon extends JPanel {
 			AppHelper.thongBaoLoiThem(getRootPane());
 		}	
 		return flag;
+	}
+	
+	public void hienThiHoaDonKhachHang(KhachHang kh) {
+		listHD = hdDB.timTheoMaKH(kh.getMaKH());
+		hienThi();
 	}
 }

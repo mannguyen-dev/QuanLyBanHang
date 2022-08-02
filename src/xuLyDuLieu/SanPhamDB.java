@@ -20,7 +20,7 @@ public class SanPhamDB {
     }
     
     private SanPham getSanPham(ResultSet rs)throws Exception{
-        return new SanPham(rs.getString("masp"), rs.getString("tensp"), rs.getString("dvt"), rs.getString("nuocsx"), rs.getInt("gia"));
+        return new SanPham(rs.getString("masp"), rs.getString("tensp"), rs.getString("dvt"), rs.getString("nuocsx"), rs.getDouble("gia"));
     }
     
     public ArrayList<SanPham> tatCa(){
@@ -142,16 +142,46 @@ public class SanPhamDB {
         csdl.setDuLieu(query);
     }
     
-    public ResultSet topSanPhamBanChay(int top){
-        
+    public ArrayList<SanPham> topSanPhamBanChay(int top){
+    	ArrayList<SanPham> list = new ArrayList<SanPham>();
         
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
-        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx\n" +
-            "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp on abc.masp = sp.masp\n" +
-            "order by soluongln desc";
+        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        		+ "on abc.masp = sp.masp order by soluongln desc";
         ResultSet rs = csdl.getDuLieu(query);
-        return rs;
+        try {
+            while (rs.next()) {                
+                list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<SanPham> topSanPhamBanCham(int top){
+    	ArrayList<SanPham> list = new ArrayList<SanPham>();
+        
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        		+ "on abc.masp = sp.masp order by soluongln asc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
     }
     
 //    public static void main(String[] args) {
