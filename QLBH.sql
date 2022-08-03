@@ -14,7 +14,8 @@ create table KHACHHANG (
 	NGSINH	smalldatetime,
 	NGDK	smalldatetime,
 	DOANHSO money,
-	LOAIKH	nvarchar(50)
+	LOAIKH	nvarchar(50),
+	IS_DELETED varchar(5),
 	primary key (MAKH)
 )
 
@@ -24,7 +25,8 @@ create table NHANVIEN (
 	SODT	varchar(20),
 	NGVL	smalldatetime,
 	MATKHAU varchar(50),
-	VAITRO	nvarchar(10)
+	VAITRO	nvarchar(10),
+	IS_DELETED varchar(5)
 )
 
 create table SANPHAM (
@@ -32,7 +34,8 @@ create table SANPHAM (
 	TENSP	nvarchar(40),
 	DVT		nvarchar(20),
 	NUOCSX	nvarchar(40),
-	GIA		money
+	GIA		money,
+	IS_DELETED varchar(5)
 )
 
 create table HOADON (
@@ -52,12 +55,12 @@ create table CTHD (
 
 --check database--
 
-insert into nhanvien values ('NV01', N'Nguyễn Như Nhựt', '0927456798', '13/4/2006', '123',N'Nhân Viên')
-insert into nhanvien values ('NV02', N'Lê Thị Phi Yến', '0927456546', '21/4/2006', '123',N'Nhân Viên')
-insert into nhanvien values ('NV03', N'Nguyễn Văn B', '0927789798', '27/4/2006', '123',N'Nhân Viên')
-insert into nhanvien values ('NV04', N'Ngô Thanh Tuấn', '0927684498', '24/6/2006', '123',N'Nhân Viên')
-insert into nhanvien values ('NV05', N'Nguyễn Thị Trúc Thanh', '0927452598', '20/7/2006', '123',N'Nhân Viên')
-insert into nhanvien values ('AD00', N'Admin', '0', '01/08/2022', 'AD00',N'Admin')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('NV01', N'Nguyễn Như Nhựt', '0927456798', '13/4/2006', '123',N'Nhân Viên')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('NV02', N'Lê Thị Phi Yến', '0927456546', '21/4/2006', '123',N'Nhân Viên')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('NV03', N'Nguyễn Văn B', '0927789798', '27/4/2006', '123',N'Nhân Viên')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('NV04', N'Ngô Thanh Tuấn', '0927684498', '24/6/2006', '123',N'Nhân Viên')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('NV05', N'Nguyễn Thị Trúc Thanh', '0927452598', '20/7/2006', '123',N'Nhân Viên')
+insert into nhanvien (MANV,HOTEN,SODT,NGVL,MATKHAU,VAITRO) values ('AD01', N'Admin', '0', '01/08/2022', 'AD00',N'Admin')
 
 insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values ('KH01',N'Nguyễn Văn A',N'731 Trần Hưng Đạo, Q5, TpHCM','08823451','22/10/1960','13,060,000','22/07/2006',N'VIP')
 insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values ('KH02',N'Trần Ngọc Hân',N'23/5 Nguyễn Trãi, Q5, TpHCM','0908256478','3/4/1974','280,000','30/07/2006',N'Thường xuyên')
@@ -70,30 +73,32 @@ insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values 
 insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values ('KH09',N'Lê Hà Vinh',N'873 Lê Hồng Phong, Q5, TpHCM','08654763','3/9/1979','70,000','14/01/2007',N'Vãng lai')
 insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values ('KH10',N'Hà Duy Lập',N'34/34B Nguyễn Trãi, Q1, TpHCM','08768904','2/5/1983','67,500','16/01/2007',N'Vãng lai')
 
-INSERT INTO sanpham   VALUES ('BC01', N'Bút chì', N'cây', N'Singapore', 3000)
-INSERT INTO sanpham   VALUES ('BC02', N'Bút chì', N'cây', N'Singapore', 5000)
-INSERT INTO sanpham   VALUES ('BC03', N'Bút chì', N'cây', N'Việt Nam', 3500)
-INSERT INTO sanpham   VALUES ('BC04', N'Bút chì', N'hộp', N'Việt Nam', 30000)
-INSERT INTO sanpham   VALUES ('BB01', N'Bút chì', N'cây', N'Việt Nam', 5000)
-INSERT INTO sanpham   VALUES ('BB02', N'Bút bi', N'cây', N'Trung Quốc', 7000)
-INSERT INTO sanpham   VALUES ('BB03', N'Bút bi', N'hộp', N'Thái Lan', 100000)
-INSERT INTO sanpham   VALUES ('TV01', N'Tập 100 giấy mỏng', N'quyển', N'Trung Quốc', 2500)
-INSERT INTO sanpham   VALUES ('TV02', N'Tập 200 giấy mỏng', N'quyển', N'Trung Quốc', 4500)
-INSERT INTO sanpham   VALUES ('TV03', N'Tập 100 giấy tốt', N'quyển', N'Việt Nam', 3000)
-INSERT INTO sanpham   VALUES ('TV04', N'Tập 200 giấy tốt', N'quyển', N'Việt Nam', 5500)
-INSERT INTO sanpham   VALUES ('TV05', N'Tập 100 trang', N'chục', N'Việt Nam', 23000)
-INSERT INTO sanpham   VALUES ('TV06', N'Tập 200 trang', N'chục', N'Việt Nam', 53000)
-INSERT INTO sanpham   VALUES ('TV07', N'Tập 100 trang', N'chục', N'Việt Nam', 34000)
-INSERT INTO sanpham   VALUES ('ST01', N'Sổ tay 500 trang', N'quyển', N'Việt Nam', 40000)
-INSERT INTO sanpham   VALUES ('ST02', N'Sổ tay loại 1', N'quyển', N'Việt Nam', 55000)
-INSERT INTO sanpham   VALUES ('ST03', N'Sổ tay loại 2', N'quyển', N'Việt Nam', 51000)
-INSERT INTO sanpham   VALUES ('ST04', N'Sổ tay', N'quyển', N'Thái Lan', 55000)
-INSERT INTO sanpham   VALUES ('ST05', N'Sổ tay mỏng', N'quyển', N'Thái Lan', 20000)
-INSERT INTO sanpham   VALUES ('ST06', N'Phấn viết bảng', N'hộp', N'Việt Nam', 5000)
-INSERT INTO sanpham   VALUES ('ST07', N'Phấn không bụi', N'hộp', N'Việt Nam', 5000)
-INSERT INTO sanpham   VALUES ('ST08', N'Bóng băng', N'cái', N'Việt Nam', 1000)
-INSERT INTO sanpham   VALUES ('ST09', N'Bút lông', N'cây', N'Việt Nam', 5000)
-INSERT INTO sanpham   VALUES ('ST10', N'Bút lông', N'cây', N'Trung Quốc', 7000)
+insert into khachhang (makh,hoten,dchi,sodt,ngsinh,doanhso,ngdk, LOAIKH) values ('KH99',N'Test',N'34/34B Nguyễn Trãi, Q1, TpHCM','08768904','2/5/1983','67,500','16/01/2007',N'Vãng lai')
+
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('BC01', N'Bút chì', N'cây', N'Singapore', 3000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('BC02', N'Bút chì', N'cây', N'Singapore', 5000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('BC03', N'Bút chì', N'cây', N'Việt Nam', 3500)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('BC04', N'Bút chì', N'hộp', N'Việt Nam', 30000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('BB01', N'Bút chì', N'cây', N'Việt Nam', 5000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('BB02', N'Bút bi', N'cây', N'Trung Quốc', 7000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('BB03', N'Bút bi', N'hộp', N'Thái Lan', 100000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV01', N'Tập 100 giấy mỏng', N'quyển', N'Trung Quốc', 2500)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV02', N'Tập 200 giấy mỏng', N'quyển', N'Trung Quốc', 4500)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV03', N'Tập 100 giấy tốt', N'quyển', N'Việt Nam', 3000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV04', N'Tập 200 giấy tốt', N'quyển', N'Việt Nam', 5500)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('TV05', N'Tập 100 trang', N'chục', N'Việt Nam', 23000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV06', N'Tập 200 trang', N'chục', N'Việt Nam', 53000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('TV07', N'Tập 100 trang', N'chục', N'Việt Nam', 34000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('ST01', N'Sổ tay 500 trang', N'quyển', N'Việt Nam', 40000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('ST02', N'Sổ tay loại 1', N'quyển', N'Việt Nam', 55000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('ST03', N'Sổ tay loại 2', N'quyển', N'Việt Nam', 51000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('ST04', N'Sổ tay', N'quyển', N'Thái Lan', 55000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('ST05', N'Sổ tay mỏng', N'quyển', N'Thái Lan', 20000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('ST06', N'Phấn viết bảng', N'hộp', N'Việt Nam', 5000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('ST07', N'Phấn không bụi', N'hộp', N'Việt Nam', 5000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)    VALUES ('ST08', N'Bóng băng', N'cái', N'Việt Nam', 1000)
+INSERT INTO sanpham (MASP,TENSP,DVT,NUOCSX,GIA)   VALUES ('ST09', N'Bút lông', N'cây', N'Việt Nam', 5000)
+INSERT INTO sanpham  (MASP,TENSP,DVT,NUOCSX,GIA)  VALUES ('ST10', N'Bút lông', N'cây', N'Trung Quốc', 7000)
 
 INSERT INTO hoadon (NGHD,MAKH,MANV,TRIGIA)  VALUES ('23/07/2006', 'KH01', 'NV01', 320000)
 INSERT INTO hoadon (NGHD,MAKH,MANV,TRIGIA)   VALUES ('12/08/2006', 'KH01', 'NV02', 840000)
