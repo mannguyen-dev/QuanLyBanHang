@@ -19,6 +19,8 @@ import xuLyDuLieu.SanPhamDB;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JFormattedTextField.AbstractFormatter;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.JPasswordField;
 import java.awt.event.ActionListener;
 import java.sql.Date;
@@ -26,6 +28,7 @@ import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Properties;
 import java.awt.event.ActionEvent;
 import javax.swing.ImageIcon;
@@ -33,7 +36,10 @@ import javax.swing.SwingConstants;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.HoaDon;
+import model.KhachHang;
 import model.NhanVien;
+import model.SanPham;
 
 import java.util.Locale;
 import java.awt.Component;
@@ -43,6 +49,10 @@ import javax.swing.JComboBox;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ItemListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class PnlTrangChu extends JPanel {
 	private JTextField txtHoTenCapNhat;
@@ -55,7 +65,7 @@ public class PnlTrangChu extends JPanel {
 	private JDateChooser txtNgayVLCapNhat;
 	private JButton btnHienCN;
 	private JButton btnHienDoiMK;
-	private JTable table;
+	private JTable tblHienThi;
 	private JLabel lblMaUser;
 	private JLabel lblHoTenUser;
 	private JLabel lblSDTUser;
@@ -75,9 +85,21 @@ public class PnlTrangChu extends JPanel {
 	private HoaDonDB hdDB = new HoaDonDB();
 	private SanPhamDB spDB = new SanPhamDB();
 	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
+	private List<HoaDon> listHD = null;
+	private List<SanPham> listSP = null;
+	private List<KhachHang> listKH = null;
+	private ChuyenPanelTheoDanhMuc controller;
 	
 	public void setUser(NhanVien user) {
 		this.user = user;
+	}
+	
+	public void setController(ChuyenPanelTheoDanhMuc controller) {
+		this.controller = controller;
+	}
+	
+	public ChuyenPanelTheoDanhMuc getController() {
+		return controller;
 	}
 
 	/**
@@ -86,7 +108,7 @@ public class PnlTrangChu extends JPanel {
 	public PnlTrangChu(NhanVien user) {
 		setLayout(null);
 		
-		this.user = user;
+		this.user = nvDB.timTheoMaNV(user.getMaNV());
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(AppConstants.MAU_XAM_NHAT));
 		panel.setBounds(0, 0, 767, 814);
@@ -242,29 +264,103 @@ public class PnlTrangChu extends JPanel {
 		lblNewLabel_10.setBounds(0, 11, 123, 36);
 		panel_4.add(lblNewLabel_10);
 		
-		JComboBox comboBox = new JComboBox();
-		comboBox.setFont(new Font("Arial", Font.PLAIN, 16));
-		comboBox.setModel(new DefaultComboBoxModel(new String[] {"TOP 5 hóa đơn có giá trị cao nhất", "TOP 5 khách hàng mua nhiều nhất", "TOP 5 sản phẩm bán chạy nhất"}));
-		comboBox.setBorder(null);
-		comboBox.setBackground(Color.WHITE);
-		comboBox.setBounds(133, 11, 470, 33);
-		panel_4.add(comboBox);
+		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem.addItemListener(new ItemListener() {
+			public void itemStateChanged(ItemEvent e) {
+				try {
+					switch((String)cboTimKiem.getSelectedItem()) {
+						case AppConstants.HOA_DON_GAN_NHAT:
+							listHD = hdDB.topHoaDonMoiNhat(10);
+							hienThiHoaDon();
+							break;
+						case AppConstants.HOA_DON_CU_NHAT:
+							listHD = hdDB.topHoaDonCuNhat(10);
+							hienThiHoaDon();
+							break;
+						case AppConstants.HOA_DON_CAO_NHAT:
+							listHD = hdDB.topHoaDonCaoNhat(10);
+							hienThiHoaDon();
+							break;
+						case AppConstants.HOA_DON_THAP_NHAT:
+							listHD = hdDB.topHoaDonThapNhat(10);
+							hienThiHoaDon();
+							break;
+						case AppConstants.SAN_PHAM_BAN_CHAY:
+							listSP = spDB.topSanPhamBanChay(10);
+							hienThiSanPham();
+							break;
+						case AppConstants.SAN_PHAM_BAN_CHAM:
+							listSP = spDB.topSanPhamBanCham(10);
+							hienThiSanPham();
+							break;
+						case AppConstants.KHACH_HANG_DS_CAO_NHAT:
+							listKH = khDB.topKhachHangMuaNhieuNhat(10);
+							hienThiKhachHang();
+							break;
+						case AppConstants.KHACH_HANG_DS_THAP_NHAT:
+							listKH = khDB.topKhachHangMuaItNhat(10);
+							hienThiKhachHang();
+							break;
+					}
+				} catch (Exception e2) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+				}
+			}
+		});
+		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 16));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {AppConstants.HOA_DON_GAN_NHAT, AppConstants.HOA_DON_CU_NHAT, 
+				AppConstants.HOA_DON_CAO_NHAT,AppConstants.HOA_DON_THAP_NHAT,AppConstants.SAN_PHAM_BAN_CHAY,
+				AppConstants.SAN_PHAM_BAN_CHAM,AppConstants.KHACH_HANG_DS_CAO_NHAT,AppConstants.KHACH_HANG_DS_THAP_NHAT}));
+		cboTimKiem.setBorder(null);
+		cboTimKiem.setBackground(Color.WHITE);
+		cboTimKiem.setBounds(133, 11, 614, 33);
+		panel_4.add(cboTimKiem);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(0, 58, 747, 314);
 		panel_4.add(scrollPane);
 		
-		table = new JTable();
-		scrollPane.setViewportView(table);
-		
-		JButton btnHinTh = new JButton("Hiển thị");
-		btnHinTh.setForeground(Color.WHITE);
-		btnHinTh.setFont(new Font("Arial", Font.BOLD, 16));
-		btnHinTh.setFocusable(false);
-		btnHinTh.setBorder(null);
-		btnHinTh.setBackground(new Color(73, 80, 87));
-		btnHinTh.setBounds(615, 11, 132, 33);
-		panel_4.add(btnHinTh);
+		tblHienThi = new JTable();
+		tblHienThi.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int row = tblHienThi.getSelectedRow();
+				try {
+					switch((String)cboTimKiem.getSelectedItem()) {
+						case AppConstants.HOA_DON_GAN_NHAT:
+						case AppConstants.HOA_DON_CU_NHAT:
+						case AppConstants.HOA_DON_CAO_NHAT:
+						case AppConstants.HOA_DON_THAP_NHAT:
+							int soHD = Integer.parseInt(tblHienThi.getModel().getValueAt(row, 1).toString());
+							if (AppHelper.thongBaoXacNhan(getRootPane(), "Chuyển sang xem thông tin hóa đơn số \""+soHD+"\"?")
+									== JOptionPane.OK_OPTION) {
+								controller.setViewFromTrangChuToHoaDon(hdDB.timTheoSoHD(soHD));					
+							}
+							break;
+						case AppConstants.SAN_PHAM_BAN_CHAY:
+						case AppConstants.SAN_PHAM_BAN_CHAM:
+							String maSP = tblHienThi.getModel().getValueAt(row, 1).toString();
+							if (AppHelper.thongBaoXacNhan(getRootPane(), "Chuyển sang xem thông tin sản phẩm có mã \""+maSP+"\"?")
+									== JOptionPane.OK_OPTION) {
+								controller.setViewFromTrangChuToSanPham(spDB.timTheoMaSP(maSP));					
+							}
+							break;
+						case AppConstants.KHACH_HANG_DS_CAO_NHAT:
+						case AppConstants.KHACH_HANG_DS_THAP_NHAT:
+							String maKH = tblHienThi.getModel().getValueAt(row, 1).toString();
+							if (AppHelper.thongBaoXacNhan(getRootPane(), "Chuyển sang xem thông tin khách hàng có mã \""+maKH+"\"?")
+									== JOptionPane.OK_OPTION) {
+								controller.setViewFromTrangChuToKhachHang(khDB.timTheoMaKH(maKH));					
+							}
+							break;
+					}
+				} catch (Exception e2) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					e2.printStackTrace();
+				}
+			}
+		});
+		scrollPane.setViewportView(tblHienThi);
 		
 		JPanel panel_1 = new JPanel();
 		panel_1.setFont(new Font("Arial", Font.BOLD, 18));
@@ -580,6 +676,8 @@ public class PnlTrangChu extends JPanel {
 		});
 		
 		loadData();
+		listHD = hdDB.topHoaDonMoiNhat(10);
+		hienThiHoaDon() ;
 	}
 	
 	private void loadData() {
@@ -603,5 +701,108 @@ public class PnlTrangChu extends JPanel {
 		lblSDTUser.setText(user.getSoDT());
 		lblVaiTroUser.setText(user.getVaiTro());
 		lblNgayVLUser.setText(user.getNgayVLToString());
+	}
+	
+	private void hienThiHoaDon() {		
+		DefaultTableModel dtm = new DefaultTableModel(){
+		   @Override
+		   public boolean isCellEditable(int row, int column) {
+		       return false;
+		   }
+		};
+		dtm.addColumn("STT");
+		dtm.addColumn("SỐ HĐ");
+		dtm.addColumn("NGÀY HĐ");
+		dtm.addColumn("TT KHÁCH HÀNG");
+		dtm.addColumn("TT NHÂN VIÊN");
+		dtm.addColumn("TRỊ GIÁ");
+		Locale lc = new Locale("vi","VN");
+		NumberFormat nf = NumberFormat.getInstance(lc);
+		int i = 1;
+		if (listHD != null) {
+			for (HoaDon hd : listHD) {
+				KhachHangDB khDB = new KhachHangDB();
+				NhanVienDB nvDB = new NhanVienDB();
+				KhachHang kh = khDB.timTheoMaKH(hd.getMaKhachKhang());
+				NhanVien nv = nvDB.timTheoMaNV(hd.getMaNhanVien());
+	
+				Object[] data = {i++,hd.getSoHoaDon(),hd.getNgayHoaDonToString(),(kh==null?AppConstants.EMPTY:kh.getMaKH()+" - "+ kh.getHoTen()),
+						(nv==null?AppConstants.EMPTY:nv.getMaNV()+" - "+nv.getHoTen()),nf.format(hd.getTriGia())+" VNĐ"};
+				dtm.addRow(data);
+			}
+		}
+		
+		tblHienThi.setModel(dtm);
+		tblHienThi.getColumnModel().getColumn(0).setMaxWidth(40);
+		tblHienThi.getColumnModel().getColumn(1).setMaxWidth(60);
+		tblHienThi.getColumnModel().getColumn(2).setPreferredWidth(100);
+		tblHienThi.getColumnModel().getColumn(2).setMaxWidth(120);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment( JLabel.RIGHT );
+		tblHienThi.getColumnModel().getColumn(5).setCellRenderer(renderer);
+		tblHienThi.setRowHeight(40);
+		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
+		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+			
+	}
+	
+	private void hienThiSanPham() {
+		DefaultTableModel dtm = new DefaultTableModel();
+		dtm.addColumn("STT");
+		dtm.addColumn("MÃ SP");
+		dtm.addColumn("TÊN SP");
+		dtm.addColumn("ĐVT");
+		dtm.addColumn("NƯỚC SX");
+		dtm.addColumn("GIÁ");
+		Locale lc = new Locale("vi","VN");
+		NumberFormat nf = NumberFormat.getInstance(lc);
+		if (listSP != null) {
+			int i = 1;
+			for (SanPham item : listSP) {
+				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),nf.format(item.getGiaBan())+" VNĐ"};
+				dtm.addRow(data);
+			}
+		}
+		tblHienThi.setModel(dtm);
+		tblHienThi.getColumnModel().getColumn(0).setMaxWidth(40);
+		tblHienThi.getColumnModel().getColumn(1).setMaxWidth(60);
+		tblHienThi.setRowHeight(40);
+		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
+		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
+	}
+	
+	private void hienThiKhachHang() {
+		DefaultTableModel dtm = new DefaultTableModel(){
+		   @Override
+		   public boolean isCellEditable(int row, int column) {
+		       return false;
+		   }
+		};
+		dtm.addColumn("STT");
+		dtm.addColumn("MÃ KH");
+		dtm.addColumn("HỌ TÊN");
+		dtm.addColumn("ĐỊA CHỈ");
+		dtm.addColumn("SỐ ĐT");
+		dtm.addColumn("NGÀY SINH");
+		dtm.addColumn("NGÀY ĐK");
+		dtm.addColumn("LOẠI KH");
+		dtm.addColumn("DOANH SỐ");
+		Locale lc = new Locale("vi","VN");
+		NumberFormat nf = NumberFormat.getInstance(lc);
+		int i = 1;
+		if (listKH != null) {
+			for (KhachHang item : listKH) {
+				Object[] data = {i++,item.getMaKH(),item.getHoTen(),item.getDiaChi(),item.getSoDT(), item.getNgaySinhToString(),
+						item.getNgayDKyToString(),item.getLoaiKH(),nf.format(item.getDoanhSo())+" VNĐ"};
+				dtm.addRow(data);
+			}
+		}
+		
+		tblHienThi.setModel(dtm);
+		tblHienThi.getColumnModel().getColumn(0).setMaxWidth(40);
+		tblHienThi.getColumnModel().getColumn(1).setMaxWidth(60);
+		tblHienThi.setRowHeight(40);
+		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
+		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));;
 	}
 }

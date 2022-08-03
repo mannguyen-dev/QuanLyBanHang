@@ -197,15 +197,49 @@ public class HoaDonDB {
         csdl.setDuLieu(query);
     }
     
-//    public static void main(String[] args) {
-//        HoaDonDB kh = new HoaDonDB();
+    public ArrayList<HoaDon> topHoaDonMoiNhat(int top){
+        ArrayList<HoaDon> list = new ArrayList<>();
+        String query = "select top "+top+" * from HOADON order by NGHD desc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> topHoaDonCuNhat(int top){
+        ArrayList<HoaDon> list = new ArrayList<>();
+        String query = "select top "+top+" * from HOADON order by NGHD asc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+
+    public static void main(String[] args) {
+        HoaDonDB kh = new HoaDonDB();
 //        //HoaDon p = new HoaDon(1111, java.sql.Date.valueOf("2010-10-10"), "KH01", "NV01", 10210.25);
 //        //kh.themHoaDon(p);
 //        //kh.xoaHoaDon(1111);
 //        double tong = kh.tongDoanhSo();
 //        System.out.println("tong la: " + tong);
-//        ArrayList<HoaDon> list = new ArrayList<>();
-//        list = kh.tatCa();
-//        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getNgayHoaDon()));
-//    }
+        ArrayList<HoaDon> list = new ArrayList<>();
+        list = kh.topHoaDonMoiNhat(10);
+        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getNgayHoaDon()));
+        
+    }
 }

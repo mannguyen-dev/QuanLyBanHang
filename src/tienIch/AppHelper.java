@@ -1,7 +1,9 @@
 package tienIch;
 
 import java.awt.Component;
-
+import java.sql.Date;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 public class AppHelper {
@@ -49,8 +51,20 @@ public class AppHelper {
 		return JOptionPane.showConfirmDialog(component, noiDung, XAC_NHAN , JOptionPane.OK_CANCEL_OPTION,
 				JOptionPane.QUESTION_MESSAGE);
 	}
+
+	public static Date kiemTraNgayHopLe(Component component, String value, String dinhDang) {
+		SimpleDateFormat df = new SimpleDateFormat(dinhDang);
+		Date date = null;
+		try {
+			java.util.Date dateUT = df.parse(value);
+			date = new Date(dateUT.getTime());
+		} catch (ParseException e) {
+			thongBao(component, "Vui lòng nhập đúng định dạng \""+dinhDang+"\"!");
+		}
+		return date;
+	}
 	
 	public static void main(String[] args) {
-		thongBaoLoiThem(null);
+		System.out.println(kiemTraNgayHopLe(null,"2022",AppConstants.DD_NAM));
 	}
 }
