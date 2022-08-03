@@ -29,7 +29,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getSanPham(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -45,7 +45,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
-                list = getSanPham(rs);
+            	if (rs.getString("IS_DELETED")==null) list = getSanPham(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -62,7 +62,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getSanPham(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -79,7 +79,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getSanPham(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -96,7 +96,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getSanPham(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -113,7 +113,7 @@ public class SanPhamDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getSanPham(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -137,9 +137,14 @@ public class SanPhamDB {
         csdl.setDuLieu(query);
     }
     
-    public void xoaSanPham(String masp){
+    public int xoaSanPham(String masp){
         String query = "delete from sanpham where masp = '"+masp+"'";
-        csdl.setDuLieu(query);
+        return csdl.setDuLieu(query);
+    }
+    
+    public int xoaMem(String masp){
+        String query = "UPDATE SANPHAM SET IS_DELETED = 'TRUE' WHERE MASP = '"+masp+"'";
+        return csdl.setDuLieu(query);
     }
     
     public ArrayList<SanPham> topSanPhamBanChay(int top){

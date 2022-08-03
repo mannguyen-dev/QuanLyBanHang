@@ -26,7 +26,7 @@ import javax.swing.JLabel;
 public class PnlNhanVien extends JPanel {
 	
 	private JPanel pnlDoiTTKH;
-	private JTextField textField;
+	private JTextField txtTimKiem;
 	private JTable table;
 	private JPanel pnlThemKH;
 	private JButton btnHienCN;
@@ -227,11 +227,11 @@ public class PnlNhanVien extends JPanel {
 		lblNewLabel_1.setBounds(10, 78, 72, 30);
 		panel_1.add(lblNewLabel_1);
 		
-		JLabel lblHoTen = new JLabel("1000");
-		lblHoTen.setForeground(Color.BLACK);
-		lblHoTen.setFont(new Font("Arial", Font.BOLD, 28));
-		lblHoTen.setBounds(112, 67, 163, 44);
-		panel_1.add(lblHoTen);
+		JLabel lblMaNV = new JLabel("1000");
+		lblMaNV.setForeground(Color.BLACK);
+		lblMaNV.setFont(new Font("Arial", Font.BOLD, 28));
+		lblMaNV.setBounds(112, 67, 163, 44);
+		panel_1.add(lblMaNV);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("Họ tên:");
 		lblNewLabel_1_1.setForeground(Color.BLACK);
@@ -239,11 +239,11 @@ public class PnlNhanVien extends JPanel {
 		lblNewLabel_1_1.setBounds(10, 119, 72, 30);
 		panel_1.add(lblNewLabel_1_1);
 		
-		JLabel lblHoTen_1 = new JLabel("Nguyễn Văn A");
-		lblHoTen_1.setForeground(Color.BLACK);
-		lblHoTen_1.setFont(new Font("Arial", Font.BOLD, 18));
-		lblHoTen_1.setBounds(112, 119, 279, 30);
-		panel_1.add(lblHoTen_1);
+		JLabel lblHoTen = new JLabel("Nguyễn Văn A");
+		lblHoTen.setForeground(Color.BLACK);
+		lblHoTen.setFont(new Font("Arial", Font.BOLD, 18));
+		lblHoTen.setBounds(112, 119, 279, 30);
+		panel_1.add(lblHoTen);
 		
 		btnHienCN = new JButton("Cập nhật thông tin                ");
 		btnHienCN.addActionListener(new ActionListener() {
@@ -321,11 +321,11 @@ public class PnlNhanVien extends JPanel {
 				lblNewLabel_1_1_1_1_2.setBounds(10, 198, 95, 30);
 				panel_1.add(lblNewLabel_1_1_1_1_2);
 				
-				JLabel lblHoTen_1_1_1_2 = new JLabel("01/01/2000");
-				lblHoTen_1_1_1_2.setForeground(Color.BLACK);
-				lblHoTen_1_1_1_2.setFont(new Font("Arial", Font.BOLD, 18));
-				lblHoTen_1_1_1_2.setBounds(112, 198, 279, 30);
-				panel_1.add(lblHoTen_1_1_1_2);
+				JLabel lblNgVL = new JLabel("01/01/2000");
+				lblNgVL.setForeground(Color.BLACK);
+				lblNgVL.setFont(new Font("Arial", Font.BOLD, 18));
+				lblNgVL.setBounds(112, 198, 279, 30);
+				panel_1.add(lblNgVL);
 				
 				JLabel lblNewLabel_1_1_1_1_2_1 = new JLabel("Vai trò:");
 				lblNewLabel_1_1_1_1_2_1.setForeground(Color.BLACK);
@@ -333,11 +333,11 @@ public class PnlNhanVien extends JPanel {
 				lblNewLabel_1_1_1_1_2_1.setBounds(10, 239, 85, 30);
 				panel_1.add(lblNewLabel_1_1_1_1_2_1);
 				
-				JLabel lblHoTen_1_1_1_2_1 = new JLabel("Admin");
-				lblHoTen_1_1_1_2_1.setForeground(Color.BLACK);
-				lblHoTen_1_1_1_2_1.setFont(new Font("Arial", Font.BOLD, 18));
-				lblHoTen_1_1_1_2_1.setBounds(112, 239, 279, 30);
-				panel_1.add(lblHoTen_1_1_1_2_1);
+				JLabel lblVaiTro = new JLabel("Admin");
+				lblVaiTro.setForeground(Color.BLACK);
+				lblVaiTro.setFont(new Font("Arial", Font.BOLD, 18));
+				lblVaiTro.setBounds(112, 239, 279, 30);
+				panel_1.add(lblVaiTro);
 				
 				JLabel lblNewLabel_1_1_1_1_3 = new JLabel("SĐT:");
 				lblNewLabel_1_1_1_1_3.setForeground(Color.BLACK);
@@ -345,11 +345,11 @@ public class PnlNhanVien extends JPanel {
 				lblNewLabel_1_1_1_1_3.setBounds(10, 157, 51, 30);
 				panel_1.add(lblNewLabel_1_1_1_1_3);
 				
-				JLabel lblHoTen_1_1_1_3 = new JLabel("01234567890");
-				lblHoTen_1_1_1_3.setForeground(Color.BLACK);
-				lblHoTen_1_1_1_3.setFont(new Font("Arial", Font.BOLD, 18));
-				lblHoTen_1_1_1_3.setBounds(112, 157, 115, 30);
-				panel_1.add(lblHoTen_1_1_1_3);
+				JLabel lblSoDT = new JLabel("01234567890");
+				lblSoDT.setForeground(Color.BLACK);
+				lblSoDT.setFont(new Font("Arial", Font.BOLD, 18));
+				lblSoDT.setBounds(112, 157, 255, 30);
+				panel_1.add(lblSoDT);
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(AppConstants.MAU_XAM_NHAT));
@@ -357,27 +357,27 @@ public class PnlNhanVien extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		textField = new JTextField();
-		textField.setFont(new Font("Arial", Font.PLAIN, 20));
-		textField.setBounds(10, 11, 326, 43);
-		panel.add(textField);
-		textField.setColumns(10);
+		txtTimKiem = new JTextField();
+		txtTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtTimKiem.setBounds(10, 11, 326, 43);
+		panel.add(txtTimKiem);
+		txtTimKiem.setColumns(10);
 		
-		JComboBox comboBox_2 = new JComboBox();
-		comboBox_2.setFont(new Font("Arial", Font.PLAIN, 20));
-		comboBox_2.setModel(new DefaultComboBoxModel(new String[] {"Mã nhân viên", "Họ tên", "Số điện thoại", "Ngày VL (dd/MM/yyyy)", "Tháng VL (MM/yyyy)", "Năm VL (yyyy)", "Vai trò", "Doanh số cao hơn", "Doanh số thấp hơn"}));
-		comboBox_2.setBounds(346, 11, 227, 43);
-		panel.add(comboBox_2);
+		JComboBox cboTimKiem = new JComboBox();
+		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã nhân viên", "Họ tên", "Số điện thoại", "Ngày VL (dd/MM/yyyy)", "Tháng VL (MM/yyyy)", "Năm VL (yyyy)", "Vai trò", "Doanh số cao hơn", "Doanh số thấp hơn"}));
+		cboTimKiem.setBounds(346, 11, 227, 43);
+		panel.add(cboTimKiem);
 		
-		JButton btnTm = new JButton("Tìm kiếm");
-		btnTm.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconTimKiem.png")));
-		btnTm.setForeground(Color.WHITE);
-		btnTm.setFont(new Font("Arial", Font.BOLD, 22));
-		btnTm.setFocusable(false);
-		btnTm.setBorder(null);
-		btnTm.setBackground(new Color(73, 80, 87));
-		btnTm.setBounds(583, 11, 150, 43);
-		panel.add(btnTm);
+		JButton btnTimKiem = new JButton("Tìm kiếm");
+		btnTimKiem.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconTimKiem.png")));
+		btnTimKiem.setForeground(Color.WHITE);
+		btnTimKiem.setFont(new Font("Arial", Font.BOLD, 22));
+		btnTimKiem.setFocusable(false);
+		btnTimKiem.setBorder(null);
+		btnTimKiem.setBackground(new Color(73, 80, 87));
+		btnTimKiem.setBounds(583, 11, 150, 43);
+		panel.add(btnTimKiem);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(10, 65, 723, 443);
@@ -474,39 +474,39 @@ public class PnlNhanVien extends JPanel {
 		lblNewLabel_2_1_2_2_1.setBounds(20, 142, 367, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1);
 		
-		JLabel lblNewLabel_2_1_2_3 = new JLabel("10");
-		lblNewLabel_2_1_2_3.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3.setBounds(171, 43, 216, 33);
-		panel_3.add(lblNewLabel_2_1_2_3);
+		JLabel lblSoNVTimThay = new JLabel("10");
+		lblSoNVTimThay.setFont(new Font("Arial", Font.BOLD, 18));
+		lblSoNVTimThay.setBounds(171, 43, 216, 33);
+		panel_3.add(lblSoNVTimThay);
 		
-		JLabel lblNewLabel_2_1_2_3_1 = new JLabel("10.000.000 VNĐ");
-		lblNewLabel_2_1_2_3_1.setForeground(new Color(AppConstants.MAU_DO));
-		lblNewLabel_2_1_2_3_1.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2_1_2_3_1.setBounds(171, 239, 216, 33);
-		panel_3.add(lblNewLabel_2_1_2_3_1);
+		JLabel lblDoanhSoTong = new JLabel("10.000.000 VNĐ");
+		lblDoanhSoTong.setForeground(new Color(AppConstants.MAU_DO));
+		lblDoanhSoTong.setFont(new Font("Arial", Font.BOLD, 22));
+		lblDoanhSoTong.setBounds(171, 239, 216, 33);
+		panel_3.add(lblDoanhSoTong);
 		
-		JLabel lblNewLabel_2_1_2_3_2 = new JLabel("1000 - 1.000.000 VNĐ");
-		lblNewLabel_2_1_2_3_2.setForeground(Color.BLACK);
-		lblNewLabel_2_1_2_3_2.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2.setBounds(102, 106, 285, 33);
-		panel_3.add(lblNewLabel_2_1_2_3_2);
+		JLabel lblDoanhSoNVMax = new JLabel("1000 - 1.000.000 VNĐ");
+		lblDoanhSoNVMax.setForeground(Color.BLACK);
+		lblDoanhSoNVMax.setFont(new Font("Arial", Font.BOLD, 18));
+		lblDoanhSoNVMax.setBounds(102, 106, 285, 33);
+		panel_3.add(lblDoanhSoNVMax);
 		
-		JLabel lblNewLabel_2_1_2_3_2_1 = new JLabel("1000 - 1.200.000 VNĐ");
-		lblNewLabel_2_1_2_3_2_1.setForeground(Color.BLACK);
-		lblNewLabel_2_1_2_3_2_1.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2_1.setBounds(102, 173, 285, 33);
-		panel_3.add(lblNewLabel_2_1_2_3_2_1);
+		JLabel lblDoanhSoNVMin = new JLabel("1000 - 1.200.000 VNĐ");
+		lblDoanhSoNVMin.setForeground(Color.BLACK);
+		lblDoanhSoNVMin.setFont(new Font("Arial", Font.BOLD, 18));
+		lblDoanhSoNVMin.setBounds(102, 173, 285, 33);
+		panel_3.add(lblDoanhSoNVMin);
 		
 		JLabel lblNewLabel_2_1_2_2_1_1 = new JLabel("DS trung bình:");
 		lblNewLabel_2_1_2_2_1_1.setFont(new Font("Arial", Font.PLAIN, 18));
 		lblNewLabel_2_1_2_2_1_1.setBounds(20, 205, 149, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1_1);
 		
-		JLabel lblNewLabel_2_1_2_3_2_2 = new JLabel("1.000.000 VNĐ");
-		lblNewLabel_2_1_2_3_2_2.setForeground(new Color(54, 79, 199));
-		lblNewLabel_2_1_2_3_2_2.setFont(new Font("Arial", Font.BOLD, 18));
-		lblNewLabel_2_1_2_3_2_2.setBounds(171, 205, 216, 33);
-		panel_3.add(lblNewLabel_2_1_2_3_2_2);
+		JLabel lblDoanhSoTB = new JLabel("1.000.000 VNĐ");
+		lblDoanhSoTB.setForeground(new Color(54, 79, 199));
+		lblDoanhSoTB.setFont(new Font("Arial", Font.BOLD, 18));
+		lblDoanhSoTB.setBounds(171, 205, 216, 33);
+		panel_3.add(lblDoanhSoTB);
 
 	}
 

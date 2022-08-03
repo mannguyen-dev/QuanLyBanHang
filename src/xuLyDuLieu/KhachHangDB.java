@@ -30,7 +30,7 @@ public class KhachHangDB {
        ResultSet rs = csdl.getDuLieu(query);
        try {
            while (rs.next()) {               
-               list.add(getKhachHang(rs));
+               if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
            }
            csdl.getStmt().close();
        } catch (Exception e) {
@@ -48,7 +48,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
-                kh = getKhachHang(rs);
+            	if (rs.getString("IS_DELETED")==null) kh = getKhachHang(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -65,7 +65,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -82,7 +82,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -99,7 +99,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -116,7 +116,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -133,7 +133,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -150,7 +150,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -167,7 +167,7 @@ public class KhachHangDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -195,6 +195,11 @@ public class KhachHangDB {
     public void xoaKhachHang(String makh){
         String query = "delete from khachhang where makh = '"+makh+"'";
         csdl.setDuLieu(query);
+    }
+    
+    public int xoaMem(String makh){
+        String query = "UPDATE KHACHHANG SET IS_DELETED = 'TRUE' WHERE MAKH = '"+makh+"'";
+        return csdl.setDuLieu(query);
     }
     
     public int tongSoLuongKhachHang(){
@@ -251,10 +256,12 @@ public class KhachHangDB {
         KhachHangDB kh = new KhachHangDB();
         //KhachHang p = new KhachHang("XXX", "dacapnhat", "dacapnhat", "dacapnhat", java.sql.Date.valueOf("1993-10-10"), java.sql.Date.valueOf("2006-10-10"), 598632.23, "XXXXX");
         //kh.xoaKhachHang("XXX");
-        int tong = kh.tongSoLuongKhachHang();
-        System.out.println("tong = " + tong);
-        ArrayList<KhachHang> list = new ArrayList<>();
-        list = kh.tatCa();
-        list.forEach(s->System.out.println(s.getMaKH()+ ", " + s.getHoTen()+", " + s.getNgaySinh()+", " + s.getDoanhSo()));
+//        int tong = kh.tongSoLuongKhachHang();
+//        System.out.println("tong = " + tong);
+//        ArrayList<KhachHang> list = new ArrayList<>();
+//        list = kh.tatCa();
+//        list.forEach(s->System.out.println(s.getMaKH()+ ", " + s.getHoTen()+", " + s.getNgaySinh()+", " + s.getDoanhSo()));
+        kh.tatCa().forEach(s->System.out.println(s.getHoTen()));;
+        
     }
 }

@@ -132,8 +132,8 @@ public class ChuyenPanelTheoDanhMuc {
 			switch(kind) {
 				case AppConstants.TRANG_CHU:
 					node = new PnlTrangChu(frmMain.getUser());
-					PnlTrangChu nodeTC = (PnlTrangChu) node;
-					nodeTC.setUser(frmMain.getUser());
+//					PnlTrangChu nodeTC = (PnlTrangChu) node;
+//					nodeTC.setUser(frmMain.getUser());
 					break;
 				case AppConstants.HOA_DON:
 					node = new PnlHoaDon();

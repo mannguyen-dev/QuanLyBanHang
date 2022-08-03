@@ -33,7 +33,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getNhanVien(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getNhanVien(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -51,7 +51,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
-                nv = getNhanVien(rs);
+            	if (rs.getString("IS_DELETED")==null) nv = getNhanVien(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -68,7 +68,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getNhanVien(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getNhanVien(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -86,7 +86,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getNhanVien(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getNhanVien(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -103,7 +103,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getNhanVien(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getNhanVien(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -120,7 +120,7 @@ public class NhanVienDB {
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getNhanVien(rs));
+            	if (rs.getString("IS_DELETED")==null) list.add(getNhanVien(rs));
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -134,7 +134,7 @@ public class NhanVienDB {
     
     public int themNhanVien(NhanVien nv){
         String query = "insert into nhanvien (manv,hoten,sodt,ngvl,matkhau,vaitro) values "
-	+ "('"+nv.getMaNV()+"',N'"+nv.getHoTen()+"','"+nv.getSoDT()+"','"+nv.getNgVL()+"','"+nv.getMatKhau()+"',N'"+nv.getVaiTro()+"')";
+        		+ "('"+nv.getMaNV()+"',N'"+nv.getHoTen()+"','"+nv.getSoDT()+"','"+nv.getNgVL()+"','"+nv.getMatKhau()+"',N'"+nv.getVaiTro()+"')";
         return csdl.setDuLieu(query);
     }
     
@@ -147,6 +147,11 @@ public class NhanVienDB {
     
     public int xoaNhanVien(String manv){
         String query = "delete from nhanvien where manv = '"+manv+"'";
+        return csdl.setDuLieu(query);
+    }
+    
+    public int xoaMem(String manv){
+        String query = "UPDATE NHANVIEN SET IS_DELETED = 'TRUE' WHERE MANV = '"+manv+"'";
         return csdl.setDuLieu(query);
     }
 }
