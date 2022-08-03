@@ -189,7 +189,7 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_2_2_3.setBounds(180, 11, 120, 33);
 		panel_2.add(lblNewLabel_2_2_3);
 		
-		lblTongTriGia = new JLabel("20.000.000 VNĐ");
+		lblTongTriGia = new JLabel("...");
 		lblTongTriGia.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblTongTriGia.setFont(new Font("Arial", Font.BOLD, 22));
 		lblTongTriGia.setBounds(379, 11, 334, 33);
@@ -200,7 +200,7 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_2_2_3_1.setBounds(180, 55, 189, 33);
 		panel_2.add(lblNewLabel_2_2_3_1);
 		
-		lblThue = new JLabel("2.000.000 VNĐ");
+		lblThue = new JLabel("...");
 		lblThue.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblThue.setFont(new Font("Arial", Font.BOLD, 22));
 		lblThue.setBounds(379, 55, 334, 33);
@@ -212,7 +212,7 @@ public class PnlCTHD extends JPanel {
 		lblNewLabel_2_2_3_2.setBounds(180, 109, 189, 33);
 		panel_2.add(lblNewLabel_2_2_3_2);
 		
-		lblThanhTien = new JLabel("22.000.000 VNĐ");
+		lblThanhTien = new JLabel("...");
 		lblThanhTien.setForeground(new Color(AppConstants.MAU_DO));
 		lblThanhTien.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblThanhTien.setFont(new Font("Arial", Font.BOLD, 32));

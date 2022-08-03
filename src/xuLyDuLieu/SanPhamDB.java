@@ -40,12 +40,12 @@ public class SanPhamDB {
     }
     
     public SanPham timTheoMaSP(String maSP){
-        SanPham list = null;
+        SanPham sp = null;
         String query = "select * from sanpham where masp = '" + maSP + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
-            	if (rs.getString("IS_DELETED")==null) list = getSanPham(rs);
+            	if (rs.getString("IS_DELETED")==null) sp = getSanPham(rs);
             }
             csdl.getStmt().close();
         } catch (Exception e) {
@@ -53,7 +53,24 @@ public class SanPhamDB {
         } finally{
             csdl.offStatement();
         }
-        return list;
+        return sp;
+    }
+    
+    public SanPham kiemTraTonTaiMaSP(String maSP){
+        SanPham sp = null;
+        String query = "select * from sanpham where masp = '" + maSP + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+            	sp = getSanPham(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return sp;
     }
     
     public ArrayList<SanPham> timTheoTenSP(String tenSP){

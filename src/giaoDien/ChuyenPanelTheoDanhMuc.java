@@ -10,9 +10,14 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import model.DanhMucBean;
+import model.HoaDon;
+import model.KhachHang;
+import model.NhanVien;
+import model.SanPham;
 import tienIch.AppConstants;
 
 public class ChuyenPanelTheoDanhMuc {
+	private NhanVien user;
 	private FrmMain frmMain;
 	private JPanel root;
 	private String kindSelected = "";
@@ -22,6 +27,7 @@ public class ChuyenPanelTheoDanhMuc {
 		super();
 		frmMain = jpnRoot;
 		this.root = jpnRoot.getJpnView();
+		user = frmMain.getUser();
 	}
 	
 	public void setView(JPanel jpnItem, JLabel jlbItem) {
@@ -32,6 +38,7 @@ public class ChuyenPanelTheoDanhMuc {
 		root.removeAll();
 		root.setLayout(new BorderLayout());
 		PnlTrangChu pnlTC = new PnlTrangChu(frmMain.getUser());
+		pnlTC.setController(frmMain.getController());
 		root.add(pnlTC);
 		root.validate();
 		root.repaint();
@@ -67,6 +74,80 @@ public class ChuyenPanelTheoDanhMuc {
 		root.add(pnlHD);
 		pnlHD.hienThiHoaDonKhachHang(pnlKH.getKhHienTai());
 		pnlHD.setController(pnlKH.getController());
+		pnlHD.setUser(user);
+		root.validate();
+		root.repaint();
+	}
+	
+	public void setViewFromNhanVienToHoaDon() {
+		kindSelected = AppConstants.HOA_DON;
+		listItem.get(5).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(5).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(1).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(1).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
+		
+		PnlNhanVien pnlNV = (PnlNhanVien) root.getComponent(0);
+		PnlHoaDon pnlHD = new PnlHoaDon();
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+		root.add(pnlHD);
+		pnlHD.hienThiHoaDonNhanVien(pnlNV.getNvHienTai());
+		pnlHD.setController(frmMain.getController());
+		pnlHD.setUser(user);
+		root.validate();
+		root.repaint();
+	}
+	
+	public void setViewFromTrangChuToHoaDon(HoaDon hd) {
+		kindSelected = AppConstants.HOA_DON;
+		listItem.get(0).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(0).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(1).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(1).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
+		
+		PnlHoaDon pnlHD = new PnlHoaDon();
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+		pnlHD.setController(frmMain.getController());
+		pnlHD.setUser(user);
+		pnlHD.hienThiHoaDon(hd);
+		root.add(pnlHD);
+		root.validate();
+		root.repaint();
+	}
+	
+	public void setViewFromTrangChuToSanPham(SanPham sp) {
+		kindSelected = AppConstants.SAN_PHAM;
+		listItem.get(0).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(0).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(3).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(3).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
+		
+		PnlSanPham pnlSP = new PnlSanPham();
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+//		pnlSP.setController(frmMain.getController());
+//		pnlHD.setUser(user);
+		pnlSP.hienThiSanPham(sp);
+		root.add(pnlSP);
+		root.validate();
+		root.repaint();
+	}
+	
+	public void setViewFromTrangChuToKhachHang(KhachHang kh) {
+		kindSelected = AppConstants.KHACH_HANG;
+		listItem.get(0).getJlb().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(0).getJpn().setBackground(new Color(AppConstants.MAU_XAM_NHAT_2));
+		listItem.get(4).getJlb().setBackground(new Color(AppConstants.MAU_TIM));
+		listItem.get(4).getJpn().setBackground(new Color(AppConstants.MAU_TIM));
+		
+		PnlKhachHang pnlKH = new PnlKhachHang();
+		root.removeAll();
+		root.setLayout(new BorderLayout());
+		pnlKH.setController(frmMain.getController());
+//		pnlKH.setUser(user);
+		pnlKH.hienThiKhachHang(kh);
+		root.add(pnlKH);
 		root.validate();
 		root.repaint();
 	}
@@ -131,8 +212,9 @@ public class ChuyenPanelTheoDanhMuc {
 			kindSelected = kind;
 			switch(kind) {
 				case AppConstants.TRANG_CHU:
-					node = new PnlTrangChu(frmMain.getUser());
-//					PnlTrangChu nodeTC = (PnlTrangChu) node;
+					node = new PnlTrangChu(user);
+					PnlTrangChu nodeTC = (PnlTrangChu) node;
+					nodeTC.setController(frmMain.getController());
 //					nodeTC.setUser(frmMain.getUser());
 					break;
 				case AppConstants.HOA_DON:
@@ -140,7 +222,7 @@ public class ChuyenPanelTheoDanhMuc {
 					PnlHoaDon nodeHD = (PnlHoaDon) node;
 //					nodeHD.setJpnView(root);
 					nodeHD.setController(frmMain.getController());
-					nodeHD.setUser(frmMain.getUser());
+					nodeHD.setUser(user);
 					break;
 				case AppConstants.CTHD:
 					node = new PnlCTHD(null);
@@ -155,9 +237,13 @@ public class ChuyenPanelTheoDanhMuc {
 					break;
 				case AppConstants.NHAN_VIEN:
 					node = new PnlNhanVien();
+					PnlNhanVien nodeNV = (PnlNhanVien) node;
+					nodeNV.setController(frmMain.getController());
 					break;
 				default:
-					node = new PnlTrangChu(frmMain.getUser());
+					node = new PnlTrangChu(user);
+					PnlTrangChu nodeTC1 = (PnlTrangChu) node;
+					nodeTC1.setController(frmMain.getController());
 					break;
 			}
 			root.removeAll();

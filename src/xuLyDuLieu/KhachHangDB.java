@@ -59,6 +59,23 @@ public class KhachHangDB {
         return kh;
     }
     
+    public KhachHang kiemTraTonTaiMaKH(String maKH){
+    	KhachHang kh = null;
+        String query = "select * from khachhang where makh = '" + maKH + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+            	kh = getKhachHang(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return kh;
+    }
+    
     public ArrayList<KhachHang> timTheoHoTen(String hoTen){
         ArrayList<KhachHang> list = new ArrayList<KhachHang>();
         String query = "select * from khachhang where hoten like N'%" + hoTen + "%'";

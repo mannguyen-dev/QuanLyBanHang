@@ -7,6 +7,7 @@ import javax.swing.JTextField;
 
 import com.toedter.calendar.JDateChooser;
 
+import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
 import model.SanPham;
@@ -105,7 +106,8 @@ public class PnlSanPham extends JPanel {
 					}
 					if (cboTimKiem.getSelectedItem().equals(AppConstants.MA_SP)) {
 						listSP = new ArrayList<SanPham>();
-						listSP.add(spDB.timTheoMaSP(thongTin));
+						SanPham sp = spDB.timTheoMaSP(thongTin);
+						if (sp!=null) listSP.add(sp);
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.TEN_SP)) {
 						listSP = spDB.timTheoTenSP(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.DVT)){
@@ -469,13 +471,13 @@ public class PnlSanPham extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if (AppHelper.thongBaoXacNhan(getRootPane(), "Thêm sản phẩm mới?") == JOptionPane.OK_OPTION) {
-						String maKH = txtMaSPThem.getText();
+						String maSP = txtMaSPThem.getText();
 						String tenSP = txtTenSPThem.getText();
 						String dvt = (String) cboDVTThem.getSelectedItem();
 						String nuocSX = (String) cboNuocSXThem.getSelectedItem();
 						
 						//kiem tra nhap
-						if (maKH.equals("")||tenSP.equals("")||nuocSX.equals("")||nuocSX.equals(AppConstants.EMPTY)||txtGiaThem.getText().equals("")) {
+						if (maSP.equals("")||tenSP.equals("")||nuocSX.equals("")||nuocSX.equals(AppConstants.EMPTY)||txtGiaThem.getText().equals("")) {
 							AppHelper.thongBao(getRootPane(), "Vui lòng nhập đầy đủ thông tin!");
 							return;
 						}
@@ -490,14 +492,14 @@ public class PnlSanPham extends JPanel {
 						}
 						
 						//Kiem tra maKH
-						if (spDB.timTheoMaSP(maKH)!=null) {
+						if (spDB.kiemTraTonTaiMaSP(maSP)!=null) {
 							AppHelper.thongBao(getRootPane(), "Mã sản phẩm đã tồn tại!");
 							return;
 						}
 						
 						//update database
 
-						spHienTai = new SanPham(maKH, tenSP, dvt, nuocSX, gia);			
+						spHienTai = new SanPham(maSP, tenSP, dvt, nuocSX, gia);			
 						spDB.themSanPham(spHienTai);
 				
 						//update panel
@@ -506,13 +508,7 @@ public class PnlSanPham extends JPanel {
 						hienThi();
 						
 						// set info
-						Locale lc = new Locale("vi","VN");
-						NumberFormat nf = NumberFormat.getInstance(lc);
-						lblMaSP.setText(spHienTai.getMaSP());
-						lblTenSP.setText(spHienTai.getTenSP());
-						lblDVT.setText(spHienTai.getDonViTinh());
-						lblNuocSX.setText(spHienTai.getNuocSX());
-						lblGia.setText(nf.format(spHienTai.getGiaBan())+" VNĐ");
+						resetInfo();
 						pnlThemSP.setVisible(false);
 						btnHienThem.setBackground(Color.WHITE);
 					}
@@ -689,6 +685,30 @@ public class PnlSanPham extends JPanel {
 		panel_1.add(btnHienCN);
 		
 		JButton btnHienCN_1 = new JButton(" Xóa");
+		btnHienCN_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (spHienTai == null) {
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn sản phẩm cần xóa!");
+					return;
+				}
+				try {
+					if (AppHelper.canhBaoXacNhan(getRootPane(), "Xóa sản phẩm có mã \""+spHienTai.getMaSP()+"\"?") 
+							== JOptionPane.OK_OPTION) {
+					
+						//update database
+						spDB.xoaMem(spHienTai.getMaSP());
+						
+						//update panel
+						spHienTai = null;
+						listSP = new ArrayList<SanPham>();
+						resetInfo();
+						hienThi();
+					}
+				} catch (Exception e2) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+				}	
+			}
+		});
 		btnHienCN_1.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconXoa.png")));
 		btnHienCN_1.setForeground(Color.WHITE);
 		btnHienCN_1.setFont(new Font("Arial", Font.BOLD, 18));
@@ -738,12 +758,7 @@ public class PnlSanPham extends JPanel {
 	}
 	
 	private void hienThi() {
-		DefaultTableModel dtm = new DefaultTableModel(){
-		   @Override
-		   public boolean isCellEditable(int row, int column) {
-		       return false;
-		   }
-		};
+		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("STT");
 		dtm.addColumn("MÃ SP");
 		dtm.addColumn("TÊN SP");
@@ -798,5 +813,32 @@ public class PnlSanPham extends JPanel {
 		lblSPThapNhat.setText(min.getMaSP()+" - "+nf.format(min.getGiaBan())+" VNĐ");
 		lblGiaTB.setText(nf.format(Math.round(sum/listSP.size()))+" "+ "VNĐ");
 		lblTongGia.setText(nf.format(sum)+"VNĐ");
+	}
+	
+	private void resetInfo() {
+		if (spHienTai == null) {
+			lblMaSP.setText(AppConstants.NO_INFO);
+			lblTenSP.setText(AppConstants.NO_INFO);
+			lblDVT.setText(AppConstants.NO_INFO);
+			lblNuocSX.setText(AppConstants.NO_INFO);
+			lblGia.setText(AppConstants.NO_INFO);
+		}else {
+			Locale lc = new Locale("vi","VN");
+			NumberFormat nf = NumberFormat.getInstance(lc);
+			lblMaSP.setText(spHienTai.getMaSP());
+			lblTenSP.setText(spHienTai.getTenSP());
+			lblDVT.setText(spHienTai.getDonViTinh());
+			lblNuocSX.setText(spHienTai.getNuocSX());
+			lblGia.setText(nf.format(spHienTai.getGiaBan())+" VNĐ");
+		}
+	}
+	
+	protected void hienThiSanPham(SanPham sp) {
+		spHienTai = sp;
+		resetInfo();
+		listSP = new ArrayList<SanPham>();
+		listSP.add(sp);
+		hienThi();
+		tblHienThi.setRowSelectionInterval(0, 0);
 	}
 }

@@ -34,6 +34,14 @@ public class AppConstants {
 	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
 	public final static String EMPTY		= "<trống>";
 	public final static String NO_INFO		= "...";
+	public final static String HOA_DON_GAN_NHAT		= "10 hóa đơn gần nhất";
+	public final static String HOA_DON_CU_NHAT		= "10 hóa đơn cũ nhất";
+	public final static String HOA_DON_CAO_NHAT		= "10 hóa đơn có trị giá cao nhất";
+	public final static String HOA_DON_THAP_NHAT	= "10 hóa đơn có trị giá thấp nhất";
+	public final static String SAN_PHAM_BAN_CHAY	= "10 sản phẩm bán chạy nhất";
+	public final static String SAN_PHAM_BAN_CHAM	= "10 sản phẩm bán chậm nhất";
+	public final static String KHACH_HANG_DS_CAO_NHAT	= "10 khách hàng có doanh số cao nhất";
+	public final static String KHACH_HANG_DS_THAP_NHAT	= "10 khách hàng có doanh số thấp nhất";
 	
 	//ten truong
 	public final static String SO_HOA_DON	= "Số hóa đơn";
@@ -51,7 +59,7 @@ public class AppConstants {
 	public final static String SO_DT		= "Số điện thoại";
 	public final static String NGAY_SINH	= "Ngày sinh (dd/MM/yyyy)";
 	public final static String NGAY_DK		= "Ngày ĐK (dd/MM/yyyy)";
-	public final static String THANG_DK		= "Tháng ĐK (dd/MM/yyyy)";
+	public final static String THANG_DK		= "Tháng ĐK (MM/yyyy)";
 	public final static String NAM_DK		= "Năm ĐK (yyyy)";
 	public final static String LOAI_KH		= "Loại khách hàng";
 	public final static String DS_CAOHON	= "Doanh số cao hơn";
@@ -62,6 +70,10 @@ public class AppConstants {
 	public final static String NUOC_SX		= "Nước sản xuất";
 	public final static String GIA_CAOHON	= "Giá cao hơn";
 	public final static String GIA_THAPHON	= "Giá thấp hơn";
+	public final static String NGAY_VL		= "Ngày VL (dd/MM/yyyy)";
+	public final static String THANG_VL		= "Tháng VL (MM/yyyy)";
+	public final static String NAM_VL		= "Năm VL (yyyy)";
+	public final static String VAITRO		= "Vai trò";
 	
 	//don vi tinh
 	public final static String CAY			= "cây";
@@ -74,6 +86,14 @@ public class AppConstants {
 	public final static String VT_ADMIN		= "Admin";
 	public final static String VT_NHANVIEN	= "Nhân Viên";
 	
+	//Dinh dang thoi gian
+	public final static String DD_NGAY		= "dd/MM/yyyy";
+	public final static String DD_THANG		= "MM/yyyy";
+	public final static String DD_NAM		= "yyyy";
+	
 	//orther
-	public final static double THUE		= 0.1;
+	public final static double THUE			= 0.1;
+	public final static String MATKHAU_MACDINH		= "12345678";
+	
+	
 }

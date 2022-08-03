@@ -90,6 +90,9 @@ public class PnlHoaDon extends JPanel {
 	public NhanVien getUser() {
 		return user;
 	}
+	public void setHdHienTai(HoaDon hdHienTai) {
+		this.hdHienTai = hdHienTai;
+	}
 	public HoaDon getHdHienTai() {
 		return hdHienTai;
 	}
@@ -98,7 +101,6 @@ public class PnlHoaDon extends JPanel {
 	 */
 	public PnlHoaDon() {
 		setLayout(null);
-		HoaDonDB hdDB = new HoaDonDB();
 		
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(AppConstants.MAU_XAM_NHAT));
@@ -132,13 +134,9 @@ public class PnlHoaDon extends JPanel {
 					}
 					if (cboTimKiem.getSelectedItem().equals(AppConstants.SO_HOA_DON)) {
 						int soHD = Integer.parseInt(thongTin);
+						listHD = new ArrayList<HoaDon>();
 						HoaDon hd = hdDB.timTheoSoHD(soHD);
-						if (hd != null) {
-							listHD = new ArrayList<HoaDon>();
-							listHD.add(hd);
-						}else {
-							listHD = null;
-						}
+						if (hd!=null) listHD.add(hd);
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.MA_NV)) {
 						listHD = hdDB.timTheoMaNV(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.MA_KH)){
@@ -148,11 +146,20 @@ public class PnlHoaDon extends JPanel {
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TEN_KH)){
 //						listHD = hdDB.timTheoMaKH(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NGAY_HD)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NGAY);
+						if (date != null) {
+							listHD = hdDB.timTheoNgHD(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.THANG_HD)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_THANG);
+						if (date != null) {
+//							listHD = hdDB.timTheoNgHD(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NAM_HD)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NAM);
+						if (date != null) {
+//							listHD = hdDB.timTheoNgHD(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_CAOHON)) {
 //						listHD = hdDB.timTheoNgHD();
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_THAPHON)) {
@@ -752,7 +759,7 @@ public class PnlHoaDon extends JPanel {
 		tblHoaDon.getColumnModel().getColumn(4).setCellRenderer(renderer);
 		tblHoaDon.setRowHeight(40);
 		tblHoaDon.setFont(new Font("Arial", Font.PLAIN, 18));
-		tblHoaDon.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));;
+		tblHoaDon.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 		
 		thongKe();
 	}
@@ -829,9 +836,6 @@ public class PnlHoaDon extends JPanel {
 		}
 		cboKhachHangCN.setModel(dcmKH);
 		cboKhachHangThem.setModel(dcmKH);
-		
-//		listHD = hdDB.tatCa();
-//		hienThi();
 	}
 	
 	private boolean themHoaDon() {
@@ -863,8 +867,22 @@ public class PnlHoaDon extends JPanel {
 		return flag;
 	}
 	
-	public void hienThiHoaDonKhachHang(KhachHang kh) {
+	protected void hienThiHoaDonKhachHang(KhachHang kh) {
 		listHD = hdDB.timTheoMaKH(kh.getMaKH());
 		hienThi();
+	}
+	
+	protected void hienThiHoaDonNhanVien(NhanVien nv) {
+		listHD = hdDB.timTheoMaNV(nv.getMaNV());
+		hienThi();
+	}
+	
+	protected void hienThiHoaDon(HoaDon hoaDon) {
+		hdHienTai = hoaDon;
+		resetInfo();
+		listHD = new ArrayList<HoaDon>();
+		listHD.add(hoaDon);
+		hienThi();
+		tblHoaDon.setRowSelectionInterval(0, 0);
 	}
 }

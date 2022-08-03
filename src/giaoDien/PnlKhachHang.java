@@ -14,6 +14,7 @@ import model.ChiTietHoaDon;
 import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
+import model.SanPham;
 import tienIch.AppConstants;
 import tienIch.AppHelper;
 import xuLyDuLieu.ChiTietHoaDonDB;
@@ -44,7 +45,7 @@ import javax.swing.JOptionPane;
 public class PnlKhachHang extends JPanel {
 	
 	private JPanel pnlDoiTTKH;
-	private JTextField txtTiemKiem;
+	private JTextField txtTimKiem;
 	private JTable tblHienThi;
 	private JPanel pnlThemKH;
 	private JButton btnHienCN;
@@ -138,7 +139,7 @@ public class PnlKhachHang extends JPanel {
 						}
 						
 						//Kiem tra maKH
-						if (khDB.timTheoMaKH(maKH)!=null) {
+						if (khDB.kiemTraTonTaiMaKH(maKH)!=null) {
 							AppHelper.thongBao(getRootPane(), "Mã khách hàng đã tồn tại!");
 							return;
 						}
@@ -155,16 +156,7 @@ public class PnlKhachHang extends JPanel {
 						hienThi();
 						
 						// set info
-						Locale lc = new Locale("vi","VN");
-						NumberFormat nf = NumberFormat.getInstance(lc);
-						lblMaKH.setText(khHienTai.getMaKH());
-						lblHoTen.setText(khHienTai.getHoTen());
-						lblNgaySinh.setText(khHienTai.getNgaySinhToString());
-						lblSDT.setText(khHienTai.getSoDT());
-						lblNgayDK.setText(khHienTai.getNgayDKyToString());
-						lblLoaiKH.setText(khHienTai.getLoaiKH());
-						lblDiaChi.setText("<HTML>"+khHienTai.getDiaChi()+"<HTML>");
-						lblDoanhSo.setText(nf.format(khHienTai.getDoanhSo())+" VNĐ");
+						resetInfo();
 						pnlThemKH.setVisible(false);
 						btnHienThem.setBackground(Color.WHITE);
 					}
@@ -521,20 +513,15 @@ public class PnlKhachHang extends JPanel {
 				try {
 					if (AppHelper.canhBaoXacNhan(getRootPane(), "Xóa khách hàng có mã \""+khHienTai.getMaKH()+"\"?") 
 							== JOptionPane.OK_OPTION) {
-						// xoa CTHD
-//						ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
-//						List<ChiTietHoaDon> listCTHD = cthdDB.timTheoSoHD(hdHienTai.getSoHoaDon());
-//						for (ChiTietHoaDon cthd: listCTHD) {
-//							cthdDB.xoaCTHD(cthd.getSoHoaDon(),cthd.getMaSP());
-//						}
-//						//update database
-//						hdDB.xoaHoaDon(hdHienTai.getSoHoaDon());
-//						
-//						//update panel
-//						hdHienTai = null;
-//						listHD = new ArrayList<HoaDon>();
-//						resetInfo();
-//						hienThi();
+					
+						//update database
+						khDB.xoaMem(khHienTai.getMaKH());
+						
+						//update panel
+						khHienTai = null;
+						listKH = new ArrayList<KhachHang>();
+						resetInfo();
+						hienThi();
 					}
 				} catch (Exception e2) {
 					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
@@ -637,11 +624,11 @@ public class PnlKhachHang extends JPanel {
 		add(panel);
 		panel.setLayout(null);
 		
-		txtTiemKiem = new JTextField();
-		txtTiemKiem.setFont(new Font("Arial", Font.PLAIN, 20));
-		txtTiemKiem.setBounds(10, 11, 326, 43);
-		panel.add(txtTiemKiem);
-		txtTiemKiem.setColumns(10);
+		txtTimKiem = new JTextField();
+		txtTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
+		txtTimKiem.setBounds(10, 11, 326, 43);
+		panel.add(txtTimKiem);
+		txtTimKiem.setColumns(10);
 		
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -655,7 +642,7 @@ public class PnlKhachHang extends JPanel {
 		btnTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
-					String thongTin = txtTiemKiem.getText();
+					String thongTin = txtTimKiem.getText();
 					if (thongTin.equals("")) {
 						listKH = khDB.tatCa();
 						hienThi();
@@ -663,7 +650,8 @@ public class PnlKhachHang extends JPanel {
 					}
 					if (cboTimKiem.getSelectedItem().equals(AppConstants.MA_KH)) {
 						listKH = new ArrayList<KhachHang>();
-						listKH.add(khDB.timTheoMaKH(thongTin));
+						KhachHang kh = khDB.timTheoMaKH(thongTin);
+						if (kh!=null) listKH.add(kh);
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.HO_TEN)) {
 						listKH = khDB.timTheoHoTen(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.DIA_CHI)){
@@ -671,13 +659,25 @@ public class PnlKhachHang extends JPanel {
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.SO_DT)) {
 						listKH = khDB.timTheoSDT(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NGAY_SINH)){
-//						listHD = hdDB.timTheoMaKH(thongTin);
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NGAY);
+						if (date != null) {
+							listKH = khDB.timTheoNgaySinh(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NGAY_DK)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NGAY);
+						if (date != null) {
+							listKH = khDB.timTheoNgayDKy(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.THANG_DK)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_THANG);
+						if (date != null) {
+//							listKH = khDB.timTheoNgaySinh(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NAM_DK)) {
-//						listHD = hdDB.timTheoNgHD();
+						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NAM);
+						if (date != null) {
+//							listKH = khDB.timTheoNgaySinh(date);
+						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.LOAI_KH)) {
 						listKH = khDB.timTheoLoaiKH(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.DS_CAOHON)) {
@@ -933,5 +933,38 @@ public class PnlKhachHang extends JPanel {
 		lblKHCoDSThapNhat.setText(min.getMaKH()+" - "+nf.format(min.getDoanhSo())+" VNĐ");
 		lblDoanhSoTB.setText(nf.format(Math.round(sum/listKH.size()))+" "+ "VNĐ");
 		lblTongDS.setText(nf.format(sum)+"VNĐ");
+	}
+	
+	private void resetInfo() {
+		if (khHienTai == null) {
+			lblMaKH.setText(AppConstants.NO_INFO);
+			lblHoTen.setText(AppConstants.NO_INFO);
+			lblNgaySinh.setText(AppConstants.NO_INFO);
+			lblSDT.setText(AppConstants.NO_INFO);
+			lblNgayDK.setText(AppConstants.NO_INFO);
+			lblLoaiKH.setText(AppConstants.NO_INFO);
+			lblDiaChi.setText("<HTML>"+AppConstants.NO_INFO+"<HTML>");
+			lblDoanhSo.setText(AppConstants.NO_INFO);
+		}else {
+			Locale lc = new Locale("vi","VN");
+			NumberFormat nf = NumberFormat.getInstance(lc);
+			lblMaKH.setText(khHienTai.getMaKH());
+			lblHoTen.setText(khHienTai.getHoTen());
+			lblNgaySinh.setText(khHienTai.getNgaySinhToString());
+			lblSDT.setText(khHienTai.getSoDT());
+			lblNgayDK.setText(khHienTai.getNgayDKyToString());
+			lblLoaiKH.setText(khHienTai.getLoaiKH());
+			lblDiaChi.setText("<HTML>"+khHienTai.getDiaChi()+"<HTML>");
+			lblDoanhSo.setText(nf.format(khHienTai.getDoanhSo())+" VNĐ");
+		}
+	}
+	
+	protected void hienThiKhachHang(KhachHang kh) {
+		khHienTai = kh;
+		resetInfo();
+		listKH = new ArrayList<KhachHang>();
+		listKH.add(kh);
+		hienThi();
+		tblHienThi.setRowSelectionInterval(0, 0);
 	}
 }

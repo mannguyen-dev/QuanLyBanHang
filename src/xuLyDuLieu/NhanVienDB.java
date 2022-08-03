@@ -62,6 +62,23 @@ public class NhanVienDB {
         return nv;
     }
     
+    public NhanVien kiemTraTonTaiMaNV(String maNV){
+        NhanVien nv = null;
+        String query = "select * from nhanvien where manv = '" + maNV + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            if (rs.next()) {                
+            	nv = getNhanVien(rs);
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return nv;
+    }
+    
     public ArrayList<NhanVien> timTheoHoTen(String hoTen){
         ArrayList<NhanVien> list = new ArrayList<NhanVien>();
         String query = "select * from nhanvien where hoten like N'%" + hoTen + "%'";
