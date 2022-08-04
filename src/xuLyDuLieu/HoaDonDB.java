@@ -5,9 +5,11 @@
 package xuLyDuLieu;
 
 import model.HoaDon;
+
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.Calendar;
 
 /**
  *
@@ -15,6 +17,7 @@ import java.util.Date;
  */
 public class HoaDonDB {
     private KetNoiCSDL csdl;
+    private Calendar cal = Calendar.getInstance();
 
     public HoaDonDB() {
         csdl = new KetNoiCSDL();
@@ -74,6 +77,39 @@ public class HoaDonDB {
         return list;
     }
     
+    public ArrayList<HoaDon> timTheoThangHD(int thang, int nam){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon where month(nghd) = "
+                + thang + " and year(nghd) = "+ nam;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> timTheoNamHD(int nam){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon where year(nghd) = "+ nam;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
     public ArrayList<HoaDon> timTheoMaKH(String maKH){
         ArrayList<HoaDon> list = new ArrayList<HoaDon>();
         String query = "select * from hoadon where makh = '"
@@ -108,10 +144,73 @@ public class HoaDonDB {
         return list;
     }
     
+    public ArrayList<HoaDon> timTheoTenNV(String tenNV){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon hd, nhanvien nv where hd.MANV=nv.MANV and nv.HOTEN like N'%"+tenNV+"%'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> timTheoTenKH(String tenKH){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon hd, khachhang kh where hd.MAKH=kh.MAKH and kh.HOTEN like N'%"+tenKH+"%'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
     public ArrayList<HoaDon> timTriGia(double triGia){
         ArrayList<HoaDon> list = new ArrayList<HoaDon>();
-        String query = "select * from hoadon where trigia = '"
-                + triGia + "'";
+        String query = "select * from hoadon where trigia = " + triGia;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> triGiaCaoHon(double triGia){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon where trigia >= " + triGia;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(getHoaDon(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<HoaDon> triGiaThapHon(double triGia){
+        ArrayList<HoaDon> list = new ArrayList<HoaDon>();
+        String query = "select * from hoadon where trigia <= "+ triGia + "";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -237,9 +336,8 @@ public class HoaDonDB {
 //        //kh.xoaHoaDon(1111);
 //        double tong = kh.tongDoanhSo();
 //        System.out.println("tong la: " + tong);
-        ArrayList<HoaDon> list = new ArrayList<>();
-        list = kh.topHoaDonMoiNhat(10);
-        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getNgayHoaDon()));
+        ArrayList<HoaDon> list = kh.timTheoTenKH("A");
+        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getMaNhanVien()));
         
     }
 }

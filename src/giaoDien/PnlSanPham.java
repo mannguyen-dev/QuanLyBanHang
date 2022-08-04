@@ -90,7 +90,8 @@ public class PnlSanPham extends JPanel {
 		
 		JComboBox cboTimKiem = new JComboBox();
 		cboTimKiem.setFont(new Font("Arial", Font.PLAIN, 20));
-		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {"Mã sản phẩm", "Tên sản phẩm", "ĐVT (cây, hộp, cái, quyển, chục)", "Nước sản xuất", "Giá thấp hơn", "Giá cao hơn"}));
+		cboTimKiem.setModel(new DefaultComboBoxModel(new String[] {AppConstants.MA_SP, AppConstants.TEN_SP,
+				AppConstants.DVT, AppConstants.NUOC_SX, AppConstants.GIA_CAOHON, AppConstants.GIA_THAPHON}));
 		cboTimKiem.setBounds(346, 11, 227, 43);
 		panel.add(cboTimKiem);
 		
@@ -115,9 +116,9 @@ public class PnlSanPham extends JPanel {
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.NUOC_SX)) {
 						listSP = spDB.timTheoNuocSX(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.GIA_CAOHON)) {
-//						listSP = hdDB.timTheoNgHD();
+						listSP = spDB.giaBanCaoHon(Double.parseDouble(thongTin));
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.GIA_THAPHON)) {
-//						listSP = hdDB.timTheoNgHD();
+						listSP = spDB.giaBanThapHon(Double.parseDouble(thongTin));
 					}
 					hienThi();
 				}catch (Exception e1) {
@@ -171,7 +172,7 @@ public class PnlSanPham extends JPanel {
 		lblNewLabel_2.setBounds(10, 11, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnHC = new JButton("SP bán chạy nhất      ");
+		JButton btnHC = new JButton("SP mua nhiều nhất      ");
 		btnHC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -192,7 +193,7 @@ public class PnlSanPham extends JPanel {
 		btnHC.setBounds(10, 44, 296, 49);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("10 SP bán chạy nhất ");
+		JButton btnHC_2 = new JButton("TOP10 mua nhiều nhất ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -213,7 +214,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2.setBounds(10, 164, 296, 49);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("10 SP bán chậm nhất");
+		JButton btnHC_2_1 = new JButton("TOP10 mua ít nhất        ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlSanPham.class.getResource("/hinhAnh/IconSanPham.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -234,7 +235,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2_1.setBounds(10, 224, 296, 49);
 		panel_2.add(btnHC_2_1);
 		
-		JButton btnHC_2_2 = new JButton("SP bán chậm nhất     ");
+		JButton btnHC_2_2 = new JButton("SP mua ít nhất             ");
 		btnHC_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -758,7 +759,12 @@ public class PnlSanPham extends JPanel {
 	}
 	
 	private void hienThi() {
-		DefaultTableModel dtm = new DefaultTableModel();
+		DefaultTableModel dtm = new DefaultTableModel(){
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
 		dtm.addColumn("STT");
 		dtm.addColumn("MÃ SP");
 		dtm.addColumn("TÊN SP");

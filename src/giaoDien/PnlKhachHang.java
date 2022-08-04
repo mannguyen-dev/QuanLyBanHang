@@ -31,6 +31,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -642,6 +643,7 @@ public class PnlKhachHang extends JPanel {
 		btnTimKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					Calendar cal = Calendar.getInstance();
 					String thongTin = txtTimKiem.getText();
 					if (thongTin.equals("")) {
 						listKH = khDB.tatCa();
@@ -671,19 +673,21 @@ public class PnlKhachHang extends JPanel {
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.THANG_DK)) {
 						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_THANG);
 						if (date != null) {
-//							listKH = khDB.timTheoNgaySinh(date);
+							cal.setTime(date);
+							listKH = khDB.timTheoThangDKy(cal.get(Calendar.MONTH)+1,cal.get(Calendar.YEAR));
 						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NAM_DK)) {
 						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NAM);
 						if (date != null) {
-//							listKH = khDB.timTheoNgaySinh(date);
+							cal.setTime(date);
+							listKH = khDB.timTheoNamDKy(cal.get(Calendar.YEAR));
 						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.LOAI_KH)) {
 						listKH = khDB.timTheoLoaiKH(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.DS_CAOHON)) {
-//						listHD = hdDB.timTheoNgHD();
+						listKH = khDB.doanhSoCaoHon(Double.parseDouble(thongTin));
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.DS_THAPHON)) {
-//						listHD = hdDB.timTheoNgHD();
+						listKH = khDB.doanhSoThapHon(Double.parseDouble(thongTin));
 					}
 					hienThi();
 				}catch (Exception e1) {
@@ -901,6 +905,9 @@ public class PnlKhachHang extends JPanel {
 		tblHienThi.setRowHeight(40);
 		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
 		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));;
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment( JLabel.RIGHT );
+		tblHienThi.getColumnModel().getColumn(7).setCellRenderer(renderer);
 		
 		thongKe();
 	}

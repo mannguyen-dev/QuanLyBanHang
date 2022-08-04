@@ -141,17 +141,51 @@ public class SanPhamDB {
         return list;
     }
     
-    public void themSanPham(SanPham sp){
-        String query = "insert into sanpham (masp,tensp,dvt,nuocsx,gia) values "
-	+ "('"+sp.getMaSP()+"',N'"+sp.getTenSP()+"',N'"+sp.getDonViTinh()+"',N'"+sp.getNuocSX()+"','"+sp.getGiaBan()+"')";
-        csdl.setDuLieu(query);
+    public ArrayList<SanPham> giaBanCaoHon(double giaBan){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where gia >= " + giaBan;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
     }
     
-    public void capNhatThongTin(SanPham sp){
+    public ArrayList<SanPham> giaBanThapHon(double giaBan){
+        ArrayList<SanPham> list = new ArrayList<SanPham>();
+        String query = "select * from sanpham where gia <= " + giaBan;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public int themSanPham(SanPham sp){
+        String query = "insert into sanpham (masp,tensp,dvt,nuocsx,gia) values "
+	+ "('"+sp.getMaSP()+"',N'"+sp.getTenSP()+"',N'"+sp.getDonViTinh()+"',N'"+sp.getNuocSX()+"','"+sp.getGiaBan()+"')";
+        return csdl.setDuLieu(query);
+    }
+    
+    public int capNhatThongTin(SanPham sp){
         String query = "update sanpham set tensp = N'" +sp.getTenSP()+"', dvt = N'"+sp.getDonViTinh()
                 +"', nuocsx = N'" + sp.getNuocSX()+"', gia = '"+sp.getGiaBan()+
                 "' where masp = '" +sp.getMaSP()+"'";
-        csdl.setDuLieu(query);
+        return csdl.setDuLieu(query);
     }
     
     public int xoaSanPham(String masp){
@@ -170,7 +204,7 @@ public class SanPhamDB {
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
         String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
         		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
-        		+ "on abc.masp = sp.masp order by soluongln desc";
+        		+ "on abc.masp = sp.masp where sp.IS_DELETED is null or abc.tong is null order by soluongln desc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -191,7 +225,7 @@ public class SanPhamDB {
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
         String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
         		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
-        		+ "on abc.masp = sp.masp order by soluongln asc";
+        		+ "on abc.masp = sp.masp where IS_DELETED is null or abc.tong is null order by soluongln asc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                

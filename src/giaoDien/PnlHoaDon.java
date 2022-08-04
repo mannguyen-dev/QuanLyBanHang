@@ -38,6 +38,7 @@ import model.KhachHang;
 import model.NhanVien;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -126,6 +127,7 @@ public class PnlHoaDon extends JPanel {
 		btnTiemKiem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
+					Calendar cal = Calendar.getInstance();
 					String thongTin = txtTiemKiem.getText();
 					if (thongTin.equals("")) {
 						listHD = hdDB.tatCa();
@@ -142,9 +144,9 @@ public class PnlHoaDon extends JPanel {
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.MA_KH)){
 						listHD = hdDB.timTheoMaKH(thongTin);
 					}else if(cboTimKiem.getSelectedItem().equals(AppConstants.TEN_NV)) {
-//						listHD = hdDB.timTheoMaNV(thongTin);
+						listHD = hdDB.timTheoTenNV(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TEN_KH)){
-//						listHD = hdDB.timTheoMaKH(thongTin);
+						listHD = hdDB.timTheoTenKH(thongTin);
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NGAY_HD)) {
 						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NGAY);
 						if (date != null) {
@@ -153,17 +155,19 @@ public class PnlHoaDon extends JPanel {
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.THANG_HD)) {
 						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_THANG);
 						if (date != null) {
-//							listHD = hdDB.timTheoNgHD(date);
+							cal.setTime(date);
+							listHD = hdDB.timTheoThangHD(cal.get(Calendar.MONTH)+1,cal.get(Calendar.YEAR));
 						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.NAM_HD)) {
 						java.sql.Date date = AppHelper.kiemTraNgayHopLe(getParent(), thongTin, AppConstants.DD_NAM);
 						if (date != null) {
-//							listHD = hdDB.timTheoNgHD(date);
+							cal.setTime(date);
+							listHD = hdDB.timTheoNamHD(cal.get(Calendar.YEAR));
 						}
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_CAOHON)) {
-//						listHD = hdDB.timTheoNgHD();
+						listHD = hdDB.triGiaCaoHon(Double.parseDouble(thongTin));
 					}else if (cboTimKiem.getSelectedItem().equals(AppConstants.TRIGIA_THAPHON)) {
-//						listHD = hdDB.timTheoNgHD();
+						listHD = hdDB.triGiaThapHon(Double.parseDouble(thongTin));
 					}
 					hienThi();
 				}catch (Exception e1) {
@@ -240,7 +244,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC.setBounds(10, 106, 296, 46);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("10 HĐ có trị giá cao nhất ");
+		JButton btnHC_2 = new JButton("TOP10 trị giá cao nhất      ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listHD = hdDB.topHoaDonCaoNhat(10);
@@ -257,7 +261,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2.setBounds(10, 220, 296, 46);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("10 HĐ có trị giá thấp nhất");
+		JButton btnHC_2_1 = new JButton("TOP10 trị giá thấp nhất     ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconHoaDon.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {

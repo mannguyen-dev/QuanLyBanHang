@@ -7,6 +7,8 @@ package xuLyDuLieu;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+
+import model.HoaDon;
 import model.KhachHang;
 
 /**
@@ -161,9 +163,76 @@ public class KhachHangDB {
         return list;
     }
     
+    public ArrayList<KhachHang> timTheoThangDKy(int thang, int nam){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where month(ngdk) = "
+                + thang + " and year(ngdk) = "+ nam;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<KhachHang> timTheoNamDKy(int nam){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where year(ngdk) = "+ nam;
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
     public ArrayList<KhachHang> timTheoDoanhSo(double doanhSo){
         ArrayList<KhachHang> list = new ArrayList<KhachHang>();
         String query = "select * from khachhang where doanhso = '" + doanhSo + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<KhachHang> doanhSoCaoHon(double doanhSo){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where doanhso >= '" + doanhSo + "'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+            	if (rs.getString("IS_DELETED")==null) list.add(getKhachHang(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<KhachHang> doanhSoThapHon(double doanhSo){
+        ArrayList<KhachHang> list = new ArrayList<KhachHang>();
+        String query = "select * from khachhang where doanhso <= '" + doanhSo + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -238,11 +307,11 @@ public class KhachHangDB {
     
     public ArrayList<KhachHang> topKhachHangMuaNhieuNhat(int top){
         ArrayList<KhachHang> list = new ArrayList<>();
-        String query = "select top "+top+" with ties * from khachhang order by doanhso desc";
+        String query = "select top "+top+" with ties * from khachhang where IS_DELETED is null order by doanhso desc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
-                list.add(getKhachHang(rs));
+            	list.add(getKhachHang(rs));
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -254,7 +323,7 @@ public class KhachHangDB {
     
     public ArrayList<KhachHang> topKhachHangMuaItNhat(int top){
         ArrayList<KhachHang> list = new ArrayList<>();
-        String query = "select top "+top+" with ties * from khachhang order by doanhso asc";
+        String query = "select top "+top+" with ties * from khachhang where IS_DELETED is null order by doanhso asc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
