@@ -6,6 +6,10 @@ package model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import xuLyDuLieu.HoaDonDB;
+import xuLyDuLieu.KhachHangDB;
 
 /**
  *
@@ -109,6 +113,17 @@ public class KhachHang {
         this.loaiKH = loaiKH;
     }
     
-    
-    
+    public void capNhatDoanhSo() {
+    	HoaDonDB hdDB = new HoaDonDB();
+    	List<HoaDon> listHD = hdDB.timTheoMaKH(maKH);
+    	double sum = 0;
+    	for (HoaDon hd: listHD) {
+    		sum += hd.getTriGia();
+    	}
+    	this.doanhSo = sum;
+    	
+    	// update database
+    	KhachHangDB khDB = new KhachHangDB();
+    	khDB.capNhatThongTin(this);
+    }
 }

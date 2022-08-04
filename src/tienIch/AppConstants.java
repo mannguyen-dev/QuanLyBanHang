@@ -94,6 +94,5 @@ public class AppConstants {
 	//orther
 	public final static double THUE			= 0.1;
 	public final static String MATKHAU_MACDINH		= "12345678";
-	
-	
+	public final static String NOI_LUU_TK_DANG_NHAP = "src/DangNhap.dat";
 }

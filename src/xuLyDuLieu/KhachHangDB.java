@@ -272,7 +272,7 @@ public class KhachHangDB {
     
     public void capNhatThongTin(KhachHang kh){
         String query = "update khachhang set hoten = N'" +kh.getHoTen()+"', dchi = N'"+kh.getDiaChi()
-                +"', sodt = '" + kh.getSoDT()+"', ngsinh = '"+kh.getNgaySinh()+"', ngdk = '"+kh.getNgayDKy()+ "', doanhso = '"+kh.getDoanhSo()+"', loaikh = N'"+kh.getLoaiKH()+
+                +"', sodt = '" + kh.getSoDT()+"', ngsinh = '"+kh.getNgaySinh()+"', ngdk = '"+kh.getNgayDKy()+ "', doanhso = "+kh.getDoanhSo()+", loaikh = N'"+kh.getLoaiKH()+
                 "' where makh = '" +kh.getMaKH()+"'";
         csdl.setDuLieu(query);
     }

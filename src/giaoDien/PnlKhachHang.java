@@ -705,7 +705,7 @@ public class PnlKhachHang extends JPanel {
 		panel.add(btnTimKiem);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 65, 723, 443);
+		scrollPane.setBounds(10, 65, 723, 407);
 		panel.add(scrollPane);
 		
 		tblHienThi = new JTable();
@@ -733,13 +733,13 @@ public class PnlKhachHang extends JPanel {
 		scrollPane.setViewportView(tblHienThi);
 		
 		JPanel panel_2 = new JPanel();
-		panel_2.setBounds(10, 519, 316, 284);
+		panel_2.setBounds(10, 483, 316, 320);
 		panel.add(panel_2);
 		panel_2.setLayout(null);
 		
 		JLabel lblNewLabel_2 = new JLabel("Tiện ích");
 		lblNewLabel_2.setFont(new Font("Arial", Font.BOLD, 22));
-		lblNewLabel_2.setBounds(10, 11, 99, 33);
+		lblNewLabel_2.setBounds(10, 8, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
 		JButton btnKHCoDSMax = new JButton("KH có DS cao nhất      ");
@@ -756,7 +756,7 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMax.setBorder(null);
 		btnKHCoDSMax.setBackground(new Color(AppConstants.VIOLET));
 		btnKHCoDSMax.setAlignmentX(0.5f);
-		btnKHCoDSMax.setBounds(10, 44, 296, 49);
+		btnKHCoDSMax.setBounds(10, 102, 296, 45);
 		panel_2.add(btnKHCoDSMax);
 		
 		JButton btnKHCoDSMax5 = new JButton("5 KH có DS\r\n cao nhất   ");
@@ -773,7 +773,7 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMax5.setBorder(null);
 		btnKHCoDSMax5.setBackground(new Color(54, 79, 199));
 		btnKHCoDSMax5.setAlignmentX(0.5f);
-		btnKHCoDSMax5.setBounds(10, 164, 296, 49);
+		btnKHCoDSMax5.setBounds(10, 208, 296, 45);
 		panel_2.add(btnKHCoDSMax5);
 		
 		JButton btnKHCoDSMin5 = new JButton("5 KH có DS thấp nhất  ");
@@ -790,7 +790,7 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMin5.setBorder(null);
 		btnKHCoDSMin5.setBackground(new Color(54, 79, 199));
 		btnKHCoDSMin5.setAlignmentX(0.5f);
-		btnKHCoDSMin5.setBounds(10, 224, 296, 49);
+		btnKHCoDSMin5.setBounds(10, 261, 296, 45);
 		panel_2.add(btnKHCoDSMin5);
 		
 		JButton btnKHCoDSMin = new JButton("KH có DS thấp nhất     ");
@@ -807,11 +807,35 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMin.setBorder(null);
 		btnKHCoDSMin.setBackground(new Color(AppConstants.VIOLET));
 		btnKHCoDSMin.setAlignmentX(0.5f);
-		btnKHCoDSMin.setBounds(10, 104, 296, 49);
+		btnKHCoDSMin.setBounds(10, 155, 296, 45);
 		panel_2.add(btnKHCoDSMin);
 		
+		JButton btnCpNhtDoanh = new JButton("Cập nhật doanh số KH");
+		btnCpNhtDoanh.setIcon(new ImageIcon(PnlKhachHang.class.getResource("/hinhAnh/IconCapNhatt.png")));
+		btnCpNhtDoanh.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if (listKH == null) {
+					AppHelper.thongBaoLoi(getRootPane(), "Danh sách KH hiển thị đang rỗng!");
+				}else {					
+					for (KhachHang kh: listKH) {
+						kh.capNhatDoanhSo();
+					}
+					hienThi();
+					AppHelper.thongBao(getRootPane(), "Cập nhật thành công doanh số các khách hàng trong danh sách!");
+				}
+			}
+		});
+		btnCpNhtDoanh.setForeground(Color.WHITE);
+		btnCpNhtDoanh.setFont(new Font("Arial", Font.BOLD, 18));
+		btnCpNhtDoanh.setFocusable(false);
+		btnCpNhtDoanh.setBorder(null);
+		btnCpNhtDoanh.setBackground(new Color(AppConstants.MAU_XANH_LA));
+		btnCpNhtDoanh.setAlignmentX(0.5f);
+		btnCpNhtDoanh.setBounds(10, 49, 296, 45);
+		panel_2.add(btnCpNhtDoanh);
+		
 		JPanel panel_3 = new JPanel();
-		panel_3.setBounds(336, 519, 397, 284);
+		panel_3.setBounds(336, 483, 397, 320);
 		panel.add(panel_3);
 		panel_3.setLayout(null);
 		
@@ -827,17 +851,17 @@ public class PnlKhachHang extends JPanel {
 		
 		JLabel lblNewLabel_2_1_2_1 = new JLabel("TỔNG DS:");
 		lblNewLabel_2_1_2_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_1.setBounds(20, 240, 141, 33);
+		lblNewLabel_2_1_2_1.setBounds(20, 276, 141, 33);
 		panel_3.add(lblNewLabel_2_1_2_1);
 		
 		JLabel lblNewLabel_2_1_2_2 = new JLabel("KH có doanh số cao nhất:");
 		lblNewLabel_2_1_2_2.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2.setBounds(20, 74, 367, 33);
+		lblNewLabel_2_1_2_2.setBounds(20, 87, 367, 33);
 		panel_3.add(lblNewLabel_2_1_2_2);
 		
 		JLabel lblNewLabel_2_1_2_2_1 = new JLabel("KH có doanh số thấp nhất:");
 		lblNewLabel_2_1_2_2_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2_1.setBounds(20, 142, 367, 33);
+		lblNewLabel_2_1_2_2_1.setBounds(20, 163, 367, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1);
 		
 		lblSoKHTimThay = new JLabel("...");
@@ -848,30 +872,30 @@ public class PnlKhachHang extends JPanel {
 		lblTongDS = new JLabel("...");
 		lblTongDS.setForeground(new Color(AppConstants.MAU_DO));
 		lblTongDS.setFont(new Font("Arial", Font.BOLD, 22));
-		lblTongDS.setBounds(171, 239, 216, 33);
+		lblTongDS.setBounds(171, 275, 216, 33);
 		panel_3.add(lblTongDS);
 		
 		lblKHCoDSCaoNhat = new JLabel("...");
 		lblKHCoDSCaoNhat.setForeground(Color.BLACK);
 		lblKHCoDSCaoNhat.setFont(new Font("Arial", Font.BOLD, 18));
-		lblKHCoDSCaoNhat.setBounds(102, 106, 285, 33);
+		lblKHCoDSCaoNhat.setBounds(102, 119, 285, 33);
 		panel_3.add(lblKHCoDSCaoNhat);
 		
 		lblKHCoDSThapNhat = new JLabel("...");
 		lblKHCoDSThapNhat.setForeground(Color.BLACK);
 		lblKHCoDSThapNhat.setFont(new Font("Arial", Font.BOLD, 18));
-		lblKHCoDSThapNhat.setBounds(102, 173, 285, 33);
+		lblKHCoDSThapNhat.setBounds(102, 194, 285, 33);
 		panel_3.add(lblKHCoDSThapNhat);
 		
 		JLabel lblNewLabel_2_1_2_2_1_1 = new JLabel("DS trung bình:");
 		lblNewLabel_2_1_2_2_1_1.setFont(new Font("Arial", Font.PLAIN, 18));
-		lblNewLabel_2_1_2_2_1_1.setBounds(20, 205, 149, 33);
+		lblNewLabel_2_1_2_2_1_1.setBounds(20, 232, 149, 33);
 		panel_3.add(lblNewLabel_2_1_2_2_1_1);
 		
 		lblDoanhSoTB = new JLabel("...");
 		lblDoanhSoTB.setForeground(new Color(54, 79, 199));
 		lblDoanhSoTB.setFont(new Font("Arial", Font.BOLD, 18));
-		lblDoanhSoTB.setBounds(171, 205, 216, 33);
+		lblDoanhSoTB.setBounds(171, 232, 216, 33);
 		panel_3.add(lblDoanhSoTB);
 
 	}

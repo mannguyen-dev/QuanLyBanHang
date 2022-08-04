@@ -236,8 +236,8 @@ public class HoaDonDB {
     	String maNV = (hd.getMaNhanVien() == null?"null":"'"+hd.getMaNhanVien()+"'");
     	String maKH = (hd.getMaKhachKhang() == null?"null":"'"+hd.getMaKhachKhang()+"'");
         String query = "update hoadon set nghd = '" +hd.getNgayHoaDon()+"', makh = "+ maKH
-                +", manv = " + maNV +", trigia = '"+hd.getTriGia()+
-                "' where sohd = '" +hd.getSoHoaDon()+"'";
+                +", manv = " + maNV +", trigia = "+hd.getTriGia()+
+                " where sohd = '" +hd.getSoHoaDon()+"'";
         csdl.setDuLieu(query);
     }
     

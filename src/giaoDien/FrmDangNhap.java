@@ -173,7 +173,7 @@ public class FrmDangNhap extends JFrame {
 						
 						// Luu dang nhap
 						try {
-							File file = new File("src/DangNhap.dat");
+							File file = new File(AppConstants.NOI_LUU_TK_DANG_NHAP);
 							if (cboLuuDangNhap.isSelected()) {
 								FileOutputStream os = null;
 								if (!file.isFile()) {
@@ -208,6 +208,7 @@ public class FrmDangNhap extends JFrame {
 		btnThoat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+				System.exit(0);
 			}
 		});
 		btnThoat.setForeground(Color.WHITE);
@@ -224,7 +225,7 @@ public class FrmDangNhap extends JFrame {
 	
 	private void loadData() {
 		try {
-			File file = new File("src/DangNhap.dat");
+			File file = new File(AppConstants.NOI_LUU_TK_DANG_NHAP);
 			FileInputStream is = null;
 			if (file.isFile()) {
 				is = new FileInputStream(file);

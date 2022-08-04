@@ -244,7 +244,8 @@ public class FrmMain extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int rep = JOptionPane.showConfirmDialog(rootPane, "Bạn muốn ĐÓNG chương trình?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
 				if (rep == JOptionPane.OK_OPTION) {
-					setVisible(false);					
+					setVisible(false);
+					System.exit(0);
 				}
 			}
 		});
