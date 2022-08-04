@@ -1,8 +1,8 @@
 ﻿
 --nhap du lieu
 set dateformat dmy
-CREATE DATABASE QLBH
 GO
+
 use QLBH
 go
 
@@ -223,3 +223,6 @@ INSERT INTO cthd   VALUES (1022, 'TV02', 10)
 INSERT INTO cthd   VALUES (1023, 'ST04', 6)
 INSERT INTO cthd   VALUES (1023, 'BC01', 5)
 INSERT INTO cthd   VALUES (1023, 'BC02', 1)
+
+
+

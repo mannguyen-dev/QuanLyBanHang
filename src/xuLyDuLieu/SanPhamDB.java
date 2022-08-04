@@ -185,6 +185,27 @@ public class SanPhamDB {
         return list;
     }
     
+    public ArrayList<String> slSanPhamBanChay(int top){
+    	ArrayList<String> list = new ArrayList();
+        
+        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+        String query = "select top "+top+" with ties abc.tong as soluongln "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        		+ "on abc.masp = sp.masp order by soluongln desc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(String.valueOf(rs.getInt("soluongln")));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
     public ArrayList<SanPham> topSanPhamBanCham(int top){
     	ArrayList<SanPham> list = new ArrayList<SanPham>();
         
@@ -196,6 +217,27 @@ public class SanPhamDB {
         try {
             while (rs.next()) {                
                 list.add(getSanPham(rs));
+            }
+            csdl.getStmt().close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally{
+            csdl.offStatement();
+        }
+        return list;
+    }
+    
+    public ArrayList<String> slSanPhamBanCham(int top){
+    	ArrayList<String> list = new ArrayList();
+        
+        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+        String query = "select top "+top+" with ties abc.tong as soluongnn "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        		+ "on abc.masp = sp.masp order by soluongnn asc";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+            while (rs.next()) {                
+                list.add(String.valueOf(rs.getInt("soluongnn")));
             }
             csdl.getStmt().close();
         } catch (Exception e) {

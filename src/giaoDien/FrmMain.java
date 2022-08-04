@@ -75,20 +75,20 @@ public class FrmMain extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-//					FrmMain frame = new FrmMain();
-//					System.out.println("DEBUG");
-//					frame.setVisible(true);
-//					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+////					FrmMain frame = new FrmMain();
+////					System.out.println("DEBUG");
+////					frame.setVisible(true);
+////					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -244,7 +244,8 @@ public class FrmMain extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				int rep = JOptionPane.showConfirmDialog(rootPane, "Bạn muốn ĐÓNG chương trình?", "Xác nhận", JOptionPane.OK_CANCEL_OPTION);
 				if (rep == JOptionPane.OK_OPTION) {
-					setVisible(false);					
+					setVisible(false);	
+                                        System.exit(0);
 				}
 			}
 		});

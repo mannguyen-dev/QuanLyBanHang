@@ -41,20 +41,20 @@ public class FrmDangNhap extends JFrame {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					FrmDangNhap frame = new FrmDangNhap();
-					
-					frame.setVisible(true);
-					frame.setResizable(false);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+//	public static void main(String[] args) {
+//		EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				try {
+//					FrmDangNhap frame = new FrmDangNhap();
+//					
+//					frame.setVisible(true);
+//					frame.setResizable(false);
+//				} catch (Exception e) {
+//					e.printStackTrace();
+//				}
+//			}
+//		});
+//	}
 
 	/**
 	 * Create the frame.
@@ -163,6 +163,7 @@ public class FrmDangNhap extends JFrame {
 		btnThoat.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
+                                System.exit(0);
 			}
 		});
 		btnThoat.setForeground(Color.WHITE);

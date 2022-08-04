@@ -87,6 +87,7 @@ public class PnlTrangChu extends JPanel {
 	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	private List<HoaDon> listHD = null;
 	private List<SanPham> listSP = null;
+        private List<String> listSoLuong = null;
 	private List<KhachHang> listKH = null;
 	private ChuyenPanelTheoDanhMuc controller;
 	
@@ -287,11 +288,13 @@ public class PnlTrangChu extends JPanel {
 							break;
 						case AppConstants.SAN_PHAM_BAN_CHAY:
 							listSP = spDB.topSanPhamBanChay(10);
-							hienThiSanPham();
+                                                        listSoLuong = spDB.slSanPhamBanChay(10);
+							hienThiSanPham(listSoLuong);
 							break;
 						case AppConstants.SAN_PHAM_BAN_CHAM:
 							listSP = spDB.topSanPhamBanCham(10);
-							hienThiSanPham();
+                                                        listSoLuong = spDB.slSanPhamBanCham(10);
+							hienThiSanPham(listSoLuong);
 							break;
 						case AppConstants.KHACH_HANG_DS_CAO_NHAT:
 							listKH = khDB.topKhachHangMuaNhieuNhat(10);
@@ -746,20 +749,20 @@ public class PnlTrangChu extends JPanel {
 			
 	}
 	
-	private void hienThiSanPham() {
+	private void hienThiSanPham(List<String> listsl) {
 		DefaultTableModel dtm = new DefaultTableModel();
 		dtm.addColumn("STT");
 		dtm.addColumn("MÃ SP");
 		dtm.addColumn("TÊN SP");
 		dtm.addColumn("ĐVT");
 		dtm.addColumn("NƯỚC SX");
-		dtm.addColumn("GIÁ");
+		dtm.addColumn("Đã Bán");
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listSP != null) {
 			int i = 1;
 			for (SanPham item : listSP) {
-				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),nf.format(item.getGiaBan())+" VNĐ"};
+				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),listsl.get(i-2)};
 				dtm.addRow(data);
 			}
 		}
