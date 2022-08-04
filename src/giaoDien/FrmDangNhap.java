@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import model.NhanVien;
 import tienIch.AppConstants;
+import tienIch.AppHelper;
 import xuLyDuLieu.NhanVienDB;
 
 import javax.swing.JLabel;
@@ -30,13 +31,26 @@ import javax.swing.Icon;
 import javax.swing.ImageIcon;
 import java.awt.Window.Type;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.channels.FileChannel;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.awt.event.ActionEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class FrmDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtMaNV;
 	private JPasswordField txtMatKhau;
+	private JCheckBox cboLuuDangNhap;
 
 	/**
 	 * Launch the application.
@@ -79,7 +93,6 @@ public class FrmDangNhap extends JFrame {
 		contentPane.add(lblMaNV);
 		
 		txtMaNV = new JTextField();
-		txtMaNV.setText("AD00");
 		txtMaNV.setBorder(null);
 		txtMaNV.setFont(new Font("Arial", Font.PLAIN, 18));
 		txtMaNV.setBounds(429, 85, 331, 36);
@@ -99,20 +112,32 @@ public class FrmDangNhap extends JFrame {
 		contentPane.add(lblNewLabel_2);
 		
 		txtMatKhau = new JPasswordField();
-		txtMatKhau.setText("AD00");
 		txtMatKhau.setBorder(null);
 		txtMatKhau.setFont(new Font("Arial", Font.PLAIN, 18));
 		txtMatKhau.setBounds(429, 170, 331, 36);
 		contentPane.add(txtMatKhau);
 		
-		JCheckBox cboLuuDangNhap = new JCheckBox("Lưu đăng nhập");
+		cboLuuDangNhap = new JCheckBox("Lưu tên đăng nhập");
+		cboLuuDangNhap.setSelected(true);
 		cboLuuDangNhap.setForeground(Color.BLACK);
 		cboLuuDangNhap.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		cboLuuDangNhap.setBounds(429, 213, 137, 27);
+		cboLuuDangNhap.setBounds(429, 213, 175, 27);
 		cboLuuDangNhap.setBackground(new Color(AppConstants.MAU_TIM_NHAT_3));
 		contentPane.add(cboLuuDangNhap);
 		
 		JLabel lblQuenMK = new JLabel("Quên mật khẩu?");
+		lblQuenMK.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// Da yeu gui yeu cau reset lai mat khau
+				if (AppHelper.thongBaoXacNhan(getRootPane(), "Hệ thống sẽ gửi yêu cầu reset mật khẩu. Xác nhận?")
+						== JOptionPane.OK_OPTION) {
+					// TODO: lien he admin
+					
+					AppHelper.thongBao(getRootPane(), "Đã gửi yêu cầu reset mật khẩu lên hệ thống. Xin vui lòng chờ admin liên hệ, cảm ơn!");
+				}
+			}
+		});
 		lblQuenMK.setForeground(Color.BLACK);
 		lblQuenMK.setHorizontalAlignment(SwingConstants.RIGHT);
 		lblQuenMK.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -124,6 +149,8 @@ public class FrmDangNhap extends JFrame {
 		btnDangNhap.setBorder(null);
 		btnDangNhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+			
+				// Dang nhap
 				String maNV = txtMaNV.getText();
 				String matKhau = String.valueOf(txtMatKhau.getPassword());
 				if (maNV.equals("")) {
@@ -143,6 +170,24 @@ public class FrmDangNhap extends JFrame {
 						frmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
 						frmMain.setVisible(true);
 						setVisible(false);
+						
+						// Luu dang nhap
+						try {
+							File file = new File("src/DangNhap.dat");
+							if (cboLuuDangNhap.isSelected()) {
+								FileOutputStream os = null;
+								if (!file.isFile()) {
+										file.createNewFile();
+								}
+								os = new FileOutputStream(file);
+								os.write(maNV.getBytes());								
+								os.close();
+							}else {
+								file.delete();
+							}
+						} catch (IOException e1) {
+							AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+						}
 					}
 				}
 			}
@@ -173,5 +218,31 @@ public class FrmDangNhap extends JFrame {
 		contentPane.add(btnThoat);
 		
 		setLocationRelativeTo(null);
+		
+		loadData();
+	}
+	
+	private void loadData() {
+		try {
+			File file = new File("src/DangNhap.dat");
+			FileInputStream is = null;
+			if (file.isFile()) {
+				is = new FileInputStream(file);
+				FileChannel fc = is.getChannel();
+				ByteBuffer bb = ByteBuffer.allocate(0x100);
+				bb.order(ByteOrder.LITTLE_ENDIAN);
+				fc.read(bb);
+				String data = new String(bb.array());
+				int  i = 0;
+				while (data.charAt(i) != '\0') {
+					i++;
+				}
+				String maNV = data.substring(0,i);
+				txtMaNV.setText(maNV);
+				is.close();
+			}			
+		} catch (IOException e) {
+			AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+		}
 	}
 }
