@@ -252,6 +252,16 @@ public class PnlNhanVien extends JPanel {
 						Date ngVLRaw = txtNgVLCN.getDate();
 						String vaiTro = txtVaiTroCN.getText();
 						
+						//kiem tra nhap
+						if (hoTen.equals("")||vaiTro.equals("")||soDT.equals("")) {
+							AppHelper.thongBao(getRootPane(), "Vui lòng nhập đầy đủ thông tin!");
+							return;
+						}
+						if (ngVLRaw == null) {
+							AppHelper.thongBao(getRootPane(), "Ngày không hợp lệ. Vui lòng ấn nút bên phải để chọn ngày!");
+							return;
+						}
+						
 						//update database
 						java.sql.Date ngVL = new java.sql.Date(ngVLRaw.getTime());
 						nvHienTai.setHoTen(hoTen);
@@ -637,7 +647,7 @@ public class PnlNhanVien extends JPanel {
 		lblNewLabel_2.setBounds(10, 11, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnHC = new JButton("NV có DS cao nhất      ");
+		JButton btnHC = new JButton("NV có DS cao nhất            ");
 		btnHC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listNV = nvDB.topNVCoDoanhSoCaoNhat(1);
@@ -654,7 +664,7 @@ public class PnlNhanVien extends JPanel {
 		btnHC.setBounds(10, 44, 296, 49);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("TOP5 DS cao nhất       ");
+		JButton btnHC_2 = new JButton("TOP 5 có DS cao nhất       ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listNV = nvDB.topNVCoDoanhSoCaoNhat(5);
@@ -671,7 +681,7 @@ public class PnlNhanVien extends JPanel {
 		btnHC_2.setBounds(10, 164, 296, 49);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("TOP5 DS thấp nhất      ");
+		JButton btnHC_2_1 = new JButton("TOP 5 có DS thấp nhất      ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlNhanVien.class.getResource("/hinhAnh/IconNhanVien.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -688,7 +698,7 @@ public class PnlNhanVien extends JPanel {
 		btnHC_2_1.setBounds(10, 224, 296, 49);
 		panel_2.add(btnHC_2_1);
 		
-		JButton btnHC_2_2 = new JButton("NV có DS thấp nhất     ");
+		JButton btnHC_2_2 = new JButton("NV có DS thấp nhất           ");
 		btnHC_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listNV = nvDB.topNVCoDoanhSoThapNhat(1);
@@ -778,12 +788,12 @@ public class PnlNhanVien extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("MÃ NV");
-		dtm.addColumn("HỌ TÊN");
-		dtm.addColumn("SỐ ĐT");
-		dtm.addColumn("NGÀY VL");
-		dtm.addColumn("VAI TRÒ");
-		dtm.addColumn("DOANH SỐ");
+		dtm.addColumn(AppConstants.COT_MANV);
+		dtm.addColumn(AppConstants.COT_HOTEN);
+		dtm.addColumn(AppConstants.COT_SODT);
+		dtm.addColumn(AppConstants.COT_NGVL);
+		dtm.addColumn(AppConstants.COT_VAITRO);
+		dtm.addColumn(AppConstants.COT_DOANHSO);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listNV != null) {

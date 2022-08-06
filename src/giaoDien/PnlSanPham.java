@@ -34,6 +34,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
@@ -172,7 +173,7 @@ public class PnlSanPham extends JPanel {
 		lblNewLabel_2.setBounds(10, 11, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnHC = new JButton("SP mua nhiều nhất      ");
+		JButton btnHC = new JButton("SP mua nhiều nhất        ");
 		btnHC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -193,7 +194,7 @@ public class PnlSanPham extends JPanel {
 		btnHC.setBounds(10, 44, 296, 49);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("TOP10 mua nhiều nhất ");
+		JButton btnHC_2 = new JButton("TOP 10 mua nhiều nhất ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -214,7 +215,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2.setBounds(10, 164, 296, 49);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("TOP10 mua ít nhất        ");
+		JButton btnHC_2_1 = new JButton("TOP 10 mua ít nhất        ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlSanPham.class.getResource("/hinhAnh/IconSanPham.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -235,7 +236,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2_1.setBounds(10, 224, 296, 49);
 		panel_2.add(btnHC_2_1);
 		
-		JButton btnHC_2_2 = new JButton("SP mua ít nhất             ");
+		JButton btnHC_2_2 = new JButton("SP mua ít nhất               ");
 		btnHC_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -359,7 +360,22 @@ public class PnlSanPham extends JPanel {
 						String tenSP = txtTenSPCN.getText();
 						String dvt = (String) cboDVTCN.getSelectedItem();
 						String nuocSX = (String) cboNuocSXCN.getSelectedItem();
+						
+						//kiem tra nhap
+						if (tenSP.equals("")||nuocSX.equals("")||nuocSX.equals(AppConstants.EMPTY)||txtGiaCN.getText().equals("")) {
+							AppHelper.thongBao(getRootPane(), "Vui lòng nhập đầy đủ thông tin!");
+							return;
+						}
+
 						double giaBan = Double.parseDouble(txtGiaCN.getText());
+						if (giaBan <= 0) {
+							AppHelper.thongBao(getRootPane(), "Giá bán phải lớn hơn 0. Vui lòng kiểm tra lại!");
+							return;
+						}
+						if (dvt.equals(AppConstants.EMPTY)) {
+							AppHelper.thongBao(getRootPane(), "Vui lòng chọn đơn vị tính!");
+							return;
+						}
 						
 						//update database
 						spHienTai.setTenSP(tenSP);
@@ -385,6 +401,7 @@ public class PnlSanPham extends JPanel {
 					}
 				} catch (Exception e2) {
 					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					e2.printStackTrace();
 				}	
 			}
 		});
@@ -765,18 +782,20 @@ public class PnlSanPham extends JPanel {
 			       return false;
 			   }
 			};
-		dtm.addColumn("STT");
-		dtm.addColumn("MÃ SP");
-		dtm.addColumn("TÊN SP");
-		dtm.addColumn("ĐVT");
-		dtm.addColumn("NƯỚC SX");
-		dtm.addColumn("GIÁ");
+		dtm.addColumn(AppConstants.COT_STT);
+		dtm.addColumn(AppConstants.COT_MASP);
+		dtm.addColumn(AppConstants.COT_TENSP);
+		dtm.addColumn(AppConstants.COT_DVT);
+		dtm.addColumn(AppConstants.COT_NUOCSX);
+		dtm.addColumn(AppConstants.COT_DONGIA);
+		dtm.addColumn(AppConstants.COT_SLDABAN);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listSP != null) {
 			int i = 1;
 			for (SanPham item : listSP) {
-				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),nf.format(item.getGiaBan())+" VNĐ"};
+				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),
+						nf.format(item.getGiaBan())+" VNĐ", spDB.soLuongSPDaBan(item.getMaSP())};
 				dtm.addRow(data);
 			}
 		}
@@ -785,6 +804,10 @@ public class PnlSanPham extends JPanel {
 		tblHienThi.getColumnModel().getColumn(0).setMinWidth(60);
 		tblHienThi.getColumnModel().getColumn(0).setMaxWidth(60);
 		tblHienThi.setRowHeight(40);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment( JLabel.RIGHT );
+		tblHienThi.getColumnModel().getColumn(5).setCellRenderer(renderer);
+		tblHienThi.getColumnModel().getColumn(6).setCellRenderer(renderer);
 		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
 		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));;
 		

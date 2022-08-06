@@ -282,6 +282,16 @@ public class PnlKhachHang extends JPanel {
 						String diaChi = txtDiaChiCN.getText();
 						String soDT = txtSoDTCN.getText();
 						
+						//kiem tra nhap
+						if (hoTen.equals("")||diaChi.equals("")||soDT.equals("")||loaiKH.equals("")) {
+							AppHelper.thongBao(getRootPane(), "Vui lòng nhập đầy đủ thông tin!");
+							return;
+						}
+						if (ngSinhRaw == null||ngDKRaw == null) {
+							AppHelper.thongBao(getRootPane(), "Ngày không hợp lệ. Vui lòng ấn nút bên phải để chọn ngày!");
+							return;
+						}
+						
 						//update database
 						java.sql.Date ngSinh = new java.sql.Date(ngSinhRaw.getTime());
 						java.sql.Date ngDK = new java.sql.Date(ngDKRaw.getTime());
@@ -759,7 +769,7 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMax.setBounds(10, 102, 296, 45);
 		panel_2.add(btnKHCoDSMax);
 		
-		JButton btnKHCoDSMax5 = new JButton("5 KH có DS\r\n cao nhất   ");
+		JButton btnKHCoDSMax5 = new JButton("TOP 5 có DS cao nhất  ");
 		btnKHCoDSMax5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listKH = khDB.topKhachHangMuaNhieuNhat(5);
@@ -776,7 +786,7 @@ public class PnlKhachHang extends JPanel {
 		btnKHCoDSMax5.setBounds(10, 208, 296, 45);
 		panel_2.add(btnKHCoDSMax5);
 		
-		JButton btnKHCoDSMin5 = new JButton("5 KH có DS thấp nhất  ");
+		JButton btnKHCoDSMin5 = new JButton("TOP 5 có DS thấp nhất ");
 		btnKHCoDSMin5.setIcon(new ImageIcon(PnlKhachHang.class.getResource("/hinhAnh/IconKhachHang.png")));
 		btnKHCoDSMin5.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -907,14 +917,14 @@ public class PnlKhachHang extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("MÃ KH");
-		dtm.addColumn("HỌ TÊN");
-		dtm.addColumn("ĐỊA CHỈ");
-		dtm.addColumn("SỐ ĐT");
-		dtm.addColumn("NGÀY SINH");
-		dtm.addColumn("NGÀY ĐK");
-		dtm.addColumn("LOẠI KH");
-		dtm.addColumn("DOANH SỐ");
+		dtm.addColumn(AppConstants.COT_MAKH);
+		dtm.addColumn(AppConstants.COT_HOTEN);
+		dtm.addColumn(AppConstants.COT_DIACHI);
+		dtm.addColumn(AppConstants.COT_SODT);
+		dtm.addColumn(AppConstants.COT_NGSINH);
+		dtm.addColumn(AppConstants.COT_NGDK);
+		dtm.addColumn(AppConstants.COT_LOAIKH);
+		dtm.addColumn(AppConstants.COT_DOANHSO);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listKH != null) {

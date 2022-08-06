@@ -87,6 +87,7 @@ public class PnlTrangChu extends JPanel {
 	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	private List<HoaDon> listHD = null;
 	private List<SanPham> listSP = null;
+//        private List<String> listSoLuong = null;
 	private List<KhachHang> listKH = null;
 	private ChuyenPanelTheoDanhMuc controller;
 	
@@ -710,12 +711,12 @@ public class PnlTrangChu extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("STT");
-		dtm.addColumn("SỐ HĐ");
-		dtm.addColumn("NGÀY HĐ");
-		dtm.addColumn("TT KHÁCH HÀNG");
-		dtm.addColumn("TT NHÂN VIÊN");
-		dtm.addColumn("TRỊ GIÁ");
+		dtm.addColumn(AppConstants.COT_STT);
+		dtm.addColumn(AppConstants.COT_SOHD);
+		dtm.addColumn(AppConstants.COT_NGHD);
+		dtm.addColumn(AppConstants.COT_TTKH);
+		dtm.addColumn(AppConstants.COT_TTNV);
+		dtm.addColumn(AppConstants.COT_TRIGIA);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		int i = 1;
@@ -747,19 +748,26 @@ public class PnlTrangChu extends JPanel {
 	}
 	
 	private void hienThiSanPham() {
-		DefaultTableModel dtm = new DefaultTableModel();
-		dtm.addColumn("STT");
-		dtm.addColumn("MÃ SP");
-		dtm.addColumn("TÊN SP");
-		dtm.addColumn("ĐVT");
-		dtm.addColumn("NƯỚC SX");
-		dtm.addColumn("GIÁ");
+		DefaultTableModel dtm = new DefaultTableModel(){
+			   @Override
+			   public boolean isCellEditable(int row, int column) {
+			       return false;
+			   }
+			};
+		dtm.addColumn(AppConstants.COT_STT);
+		dtm.addColumn(AppConstants.COT_MASP);
+		dtm.addColumn(AppConstants.COT_TENSP);
+		dtm.addColumn(AppConstants.COT_DVT);
+		dtm.addColumn(AppConstants.COT_NUOCSX);
+		dtm.addColumn(AppConstants.COT_DONGIA);
+		dtm.addColumn(AppConstants.COT_SLDABAN);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listSP != null) {
 			int i = 1;
 			for (SanPham item : listSP) {
-				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),nf.format(item.getGiaBan())+" VNĐ"};
+				Object[] data = {i++,item.getMaSP(),item.getTenSP(),item.getDonViTinh(),item.getNuocSX(),
+						nf.format(item.getGiaBan()) + " VNĐ", spDB.soLuongSPDaBan(item.getMaSP())};
 				dtm.addRow(data);
 			}
 		}
@@ -767,6 +775,10 @@ public class PnlTrangChu extends JPanel {
 		tblHienThi.getColumnModel().getColumn(0).setMaxWidth(40);
 		tblHienThi.getColumnModel().getColumn(1).setMaxWidth(60);
 		tblHienThi.setRowHeight(40);
+		DefaultTableCellRenderer renderer = new DefaultTableCellRenderer();
+		renderer.setHorizontalAlignment( JLabel.RIGHT );
+		tblHienThi.getColumnModel().getColumn(5).setCellRenderer(renderer);
+		tblHienThi.getColumnModel().getColumn(6).setCellRenderer(renderer);
 		tblHienThi.setFont(new Font("Arial", Font.PLAIN, 18));
 		tblHienThi.getTableHeader().setFont(new Font("Arial", Font.BOLD, 16));
 	}
@@ -778,15 +790,15 @@ public class PnlTrangChu extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("STT");
-		dtm.addColumn("MÃ KH");
-		dtm.addColumn("HỌ TÊN");
-		dtm.addColumn("ĐỊA CHỈ");
-		dtm.addColumn("SỐ ĐT");
-		dtm.addColumn("NGÀY SINH");
-		dtm.addColumn("NGÀY ĐK");
-		dtm.addColumn("LOẠI KH");
-		dtm.addColumn("DOANH SỐ");
+		dtm.addColumn(AppConstants.COT_STT);
+		dtm.addColumn(AppConstants.COT_MAKH);
+		dtm.addColumn(AppConstants.COT_HOTEN);
+		dtm.addColumn(AppConstants.COT_DIACHI);
+		dtm.addColumn(AppConstants.COT_SODT);
+		dtm.addColumn(AppConstants.COT_NGSINH);
+		dtm.addColumn(AppConstants.COT_NGDK);
+		dtm.addColumn(AppConstants.COT_LOAIKH);
+		dtm.addColumn(AppConstants.COT_DOANHSO);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		int i = 1;

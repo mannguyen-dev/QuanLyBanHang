@@ -274,42 +274,42 @@ public class PnlCTHD extends JPanel {
 		
 		pnlEditCTHD = new JPanel();
 		pnlEditCTHD.setVisible(false);
-		pnlEditCTHD.setBounds(10, 150, 381, 384);
+		pnlEditCTHD.setBounds(10, 150, 381, 369);
 		panel_1.add(pnlEditCTHD);
 		pnlEditCTHD.setLayout(null);
 		
 		JLabel lblChiTitHa = new JLabel("CHI TIẾT HÓA ĐƠN");
-		lblChiTitHa.setBounds(10, 11, 358, 51);
+		lblChiTitHa.setBounds(10, 11, 252, 51);
 		pnlEditCTHD.add(lblChiTitHa);
 		lblChiTitHa.setForeground(Color.BLACK);
 		lblChiTitHa.setFont(new Font("Arial", Font.BOLD, 24));
 		
 		JLabel lblSnPhm = new JLabel("Sản phẩm:");
-		lblSnPhm.setBounds(10, 58, 107, 43);
+		lblSnPhm.setBounds(10, 68, 107, 43);
 		pnlEditCTHD.add(lblSnPhm);
 		lblSnPhm.setForeground(Color.BLACK);
 		lblSnPhm.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		JLabel lblnGi = new JLabel("Đơn giá:");
-		lblnGi.setBounds(10, 112, 96, 43);
+		lblnGi.setBounds(10, 122, 96, 43);
 		pnlEditCTHD.add(lblnGi);
 		lblnGi.setForeground(Color.BLACK);
 		lblnGi.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		lblDonGia = new JLabel("...");
-		lblDonGia.setBounds(116, 112, 252, 43);
+		lblDonGia.setBounds(116, 122, 252, 43);
 		pnlEditCTHD.add(lblDonGia);
 		lblDonGia.setForeground(Color.BLACK);
 		lblDonGia.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		JLabel lblSnPhm_1 = new JLabel("Số lượng:");
-		lblSnPhm_1.setBounds(10, 163, 96, 43);
+		lblSnPhm_1.setBounds(10, 176, 96, 43);
 		pnlEditCTHD.add(lblSnPhm_1);
 		lblSnPhm_1.setForeground(Color.BLACK);
 		lblSnPhm_1.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		cboSanPham = new JComboBox();
-		cboSanPham.setBounds(117, 58, 251, 43);
+		cboSanPham.setBounds(117, 68, 251, 43);
 		pnlEditCTHD.add(cboSanPham);
 		cboSanPham.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
@@ -354,7 +354,7 @@ public class PnlCTHD extends JPanel {
 		cboSanPham.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		JButton btnGiam = new JButton("");
-		btnGiam.setBounds(116, 163, 78, 43);
+		btnGiam.setBounds(116, 176, 78, 43);
 		pnlEditCTHD.add(btnGiam);
 		btnGiam.setIcon(new ImageIcon(PnlCTHD.class.getResource("/hinhAnh/IconNhoHon.png")));
 		btnGiam.addActionListener(new ActionListener() {
@@ -388,7 +388,7 @@ public class PnlCTHD extends JPanel {
 		btnGiam.setAlignmentX(0.5f);
 		
 		JButton btnTang = new JButton("");
-		btnTang.setBounds(290, 163, 78, 43);
+		btnTang.setBounds(290, 176, 78, 43);
 		pnlEditCTHD.add(btnTang);
 		btnTang.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -420,13 +420,13 @@ public class PnlCTHD extends JPanel {
 		btnTang.setAlignmentX(0.5f);
 		
 		JLabel lblTmTnh = new JLabel("Trị giá:");
-		lblTmTnh.setBounds(10, 217, 96, 43);
+		lblTmTnh.setBounds(10, 230, 96, 43);
 		pnlEditCTHD.add(lblTmTnh);
 		lblTmTnh.setForeground(Color.BLACK);
 		lblTmTnh.setFont(new Font("Arial", Font.PLAIN, 20));
 		
 		lblTriGia = new JLabel("...");
-		lblTriGia.setBounds(116, 217, 252, 43);
+		lblTriGia.setBounds(116, 230, 252, 43);
 		pnlEditCTHD.add(lblTriGia);
 		lblTriGia.setForeground(Color.BLACK);
 		lblTriGia.setFont(new Font("Arial", Font.BOLD, 20));
@@ -446,7 +446,7 @@ public class PnlCTHD extends JPanel {
 				}
 			}
 		});
-		btnXoa.setBounds(10, 294, 152, 65);
+		btnXoa.setBounds(10, 284, 152, 65);
 		pnlEditCTHD.add(btnXoa);
 		btnXoa.setVisible(false);
 		btnXoa.setForeground(Color.WHITE);
@@ -457,7 +457,7 @@ public class PnlCTHD extends JPanel {
 		btnXoa.setAlignmentX(0.5f);
 		
 		btnThem = new JButton(" Thêm mới");
-		btnThem.setBounds(172, 294, 195, 65);
+		btnThem.setBounds(172, 284, 195, 65);
 		pnlEditCTHD.add(btnThem);
 		btnThem.setVisible(false);
 		btnThem.addActionListener(new ActionListener() {
@@ -502,7 +502,7 @@ public class PnlCTHD extends JPanel {
 		btnThem.setAlignmentX(0.5f);
 		
 		txtSoLuong = new JTextField();
-		txtSoLuong.setBounds(203, 163, 77, 43);
+		txtSoLuong.setBounds(203, 176, 77, 43);
 		pnlEditCTHD.add(txtSoLuong);
 		txtSoLuong.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -590,12 +590,12 @@ public class PnlCTHD extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("STT");
-		dtm.addColumn("SẢN PHẨM");
-		dtm.addColumn("ĐVT");
-		dtm.addColumn("ĐƠN GIÁ");
-		dtm.addColumn("SỐ LƯỢNG");
-		dtm.addColumn("TRỊ GIÁ");
+		dtm.addColumn(AppConstants.COT_STT);
+		dtm.addColumn(AppConstants.COT_SANPHAM);
+		dtm.addColumn(AppConstants.COT_DVT);
+		dtm.addColumn(AppConstants.COT_DONGIA);
+		dtm.addColumn(AppConstants.COT_SL);
+		dtm.addColumn(AppConstants.COT_TRIGIA);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		double tongTriGia = 0;

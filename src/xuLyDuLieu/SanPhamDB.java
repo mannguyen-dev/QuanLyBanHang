@@ -1,11 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package xuLyDuLieu;
 
 
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import model.SanPham;
 /**
@@ -202,8 +199,8 @@ public class SanPhamDB {
     	ArrayList<SanPham> list = new ArrayList<SanPham>();
         
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
-        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
-        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        String query = "select top "+top+" with ties abc.tong as soluongln, sp.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc right join sanpham sp "
         		+ "on abc.masp = sp.masp where sp.IS_DELETED is null or abc.tong is null order by soluongln desc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
@@ -219,12 +216,33 @@ public class SanPhamDB {
         return list;
     }
     
+//    public ArrayList<String> slSanPhamBanChay(int top){
+//    	ArrayList<String> list = new ArrayList();
+//        
+//        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+//        String query = "select top "+top+" with ties abc.tong as soluongln "
+//        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+//        		+ "on abc.masp = sp.masp order by soluongln desc";
+//        ResultSet rs = csdl.getDuLieu(query);
+//        try {
+//            while (rs.next()) {                
+//                list.add(String.valueOf(rs.getInt("soluongln")));
+//            }
+//            csdl.getStmt().close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally{
+//            csdl.offStatement();
+//        }
+//        return list;
+//    }
+    
     public ArrayList<SanPham> topSanPhamBanCham(int top){
     	ArrayList<SanPham> list = new ArrayList<SanPham>();
         
         //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
-        String query = "select top "+top+" with ties abc.tong as soluongln, abc.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
-        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+        String query = "select top "+top+" with ties abc.tong as soluongln, sp.masp, sp.tensp, sp.nuocsx, sp.DVT, sp.GIA "
+        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc right join sanpham sp "
         		+ "on abc.masp = sp.masp where IS_DELETED is null or abc.tong is null order by soluongln asc";
         ResultSet rs = csdl.getDuLieu(query);
         try {
@@ -240,12 +258,48 @@ public class SanPhamDB {
         return list;
     }
     
-//    public static void main(String[] args) {
-//        SanPhamDB sp = new SanPhamDB();
-//        //SanPham p = new SanPham("XXX", "dâcpnhat", "cây", "Việt Nam", 5000);
+//    public ArrayList<String> slSanPhamBanCham(int top){
+//    	ArrayList<String> list = new ArrayList();
+//        
+//        //rs include tabs =  soluongsanphamdaban /t masp /t tensp /t nuocsx
+//        String query = "select top "+top+" with ties abc.tong as soluongnn "
+//        		+ "from (select cthd.masp, sum (sl) as 'tong' from cthd group by masp) abc join sanpham sp "
+//        		+ "on abc.masp = sp.masp order by soluongnn asc";
+//        ResultSet rs = csdl.getDuLieu(query);
+//        try {
+//            while (rs.next()) {                
+//                list.add(String.valueOf(rs.getInt("soluongnn")));
+//            }
+//            csdl.getStmt().close();
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        } finally{
+//            csdl.offStatement();
+//        }
+//        return list;
+//    }
+    
+    public int soLuongSPDaBan(String maSP) {
+    	String query = "select * from (select CTHD.MASP, sum (CTHD.SL) as SOLUONG from CTHD group by MASP) A, "
+    			+ "SANPHAM sp where A.masp = sp.MASP and sp.MASP = '"+maSP+"'";
+        ResultSet rs = csdl.getDuLieu(query);
+        try {
+        	if (rs.next()) {
+				return rs.getInt("SOLUONG");
+        	}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+        return 0;
+    }
+    
+    public static void main(String[] args) {
+        SanPhamDB sp = new SanPhamDB();
+        //SanPham p = new SanPham("XXX", "dâcpnhat", "cây", "Việt Nam", 5000);
 //        sp.xoaSanPham("XXX");
+        System.out.println(sp.soLuongSPDaBan("BB06"));
 //        ArrayList<SanPham> list = new ArrayList<>();
 //        list = sp.tatCa();
 //        list.forEach(s->System.out.println(s.getMaSP() + ", " + s.getTenSP()));
-//    }
+    }
 }

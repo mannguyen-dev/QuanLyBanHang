@@ -327,17 +327,4 @@ public class HoaDonDB {
         }
         return list;
     }
-    
-
-    public static void main(String[] args) {
-        HoaDonDB kh = new HoaDonDB();
-//        //HoaDon p = new HoaDon(1111, java.sql.Date.valueOf("2010-10-10"), "KH01", "NV01", 10210.25);
-//        //kh.themHoaDon(p);
-//        //kh.xoaHoaDon(1111);
-//        double tong = kh.tongDoanhSo();
-//        System.out.println("tong la: " + tong);
-        ArrayList<HoaDon> list = kh.timTheoTenKH("A");
-        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getMaNhanVien()));
-        
-    }
 }

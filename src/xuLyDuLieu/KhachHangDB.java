@@ -338,16 +338,16 @@ public class KhachHangDB {
     }
    
    
-    public static void main(String[] args) {
-        KhachHangDB kh = new KhachHangDB();
-        //KhachHang p = new KhachHang("XXX", "dacapnhat", "dacapnhat", "dacapnhat", java.sql.Date.valueOf("1993-10-10"), java.sql.Date.valueOf("2006-10-10"), 598632.23, "XXXXX");
-        //kh.xoaKhachHang("XXX");
+//    public static void main(String[] args) {
+//        KhachHangDB kh = new KhachHangDB();
+//        //KhachHang p = new KhachHang("XXX", "dacapnhat", "dacapnhat", "dacapnhat", java.sql.Date.valueOf("1993-10-10"), java.sql.Date.valueOf("2006-10-10"), 598632.23, "XXXXX");
+//        //kh.xoaKhachHang("XXX");
 //        int tong = kh.tongSoLuongKhachHang();
 //        System.out.println("tong = " + tong);
 //        ArrayList<KhachHang> list = new ArrayList<>();
 //        list = kh.tatCa();
 //        list.forEach(s->System.out.println(s.getMaKH()+ ", " + s.getHoTen()+", " + s.getNgaySinh()+", " + s.getDoanhSo()));
-        kh.tatCa().forEach(s->System.out.println(s.getHoTen()));;
-        
-    }
+//        kh.tatCa().forEach(s->System.out.println(s.getHoTen()));;
+//        
+//    }
 }

@@ -34,14 +34,14 @@ public class AppConstants {
 	public final static String CHON_HOA_DON	= "<Vui lòng chọn hóa đơn để hiển thị>";
 	public final static String EMPTY		= "<trống>";
 	public final static String NO_INFO		= "...";
-	public final static String HOA_DON_GAN_NHAT		= "10 hóa đơn gần nhất";
-	public final static String HOA_DON_CU_NHAT		= "10 hóa đơn cũ nhất";
-	public final static String HOA_DON_CAO_NHAT		= "10 hóa đơn có trị giá cao nhất";
-	public final static String HOA_DON_THAP_NHAT	= "10 hóa đơn có trị giá thấp nhất";
-	public final static String SAN_PHAM_BAN_CHAY	= "10 sản phẩm bán chạy nhất";
-	public final static String SAN_PHAM_BAN_CHAM	= "10 sản phẩm bán chậm nhất";
-	public final static String KHACH_HANG_DS_CAO_NHAT	= "10 khách hàng có doanh số cao nhất";
-	public final static String KHACH_HANG_DS_THAP_NHAT	= "10 khách hàng có doanh số thấp nhất";
+	public final static String HOA_DON_GAN_NHAT		= "TOP 10 hóa đơn gần nhất";
+	public final static String HOA_DON_CU_NHAT		= "TOP 10 hóa đơn cũ nhất";
+	public final static String HOA_DON_CAO_NHAT		= "TOP 10 hóa đơn có trị giá cao nhất";
+	public final static String HOA_DON_THAP_NHAT	= "TOP 10 hóa đơn có trị giá thấp nhất";
+	public final static String SAN_PHAM_BAN_CHAY	= "TOP 10 sản phẩm bán chạy nhất";
+	public final static String SAN_PHAM_BAN_CHAM	= "TOP 10 sản phẩm bán chậm nhất";
+	public final static String KHACH_HANG_DS_CAO_NHAT	= "TOP 10 khách hàng có doanh số cao nhất";
+	public final static String KHACH_HANG_DS_THAP_NHAT	= "TOP 10 khách hàng có doanh số thấp nhất";
 	
 	//ten truong
 	public final static String SO_HOA_DON	= "Số hóa đơn";
@@ -90,6 +90,39 @@ public class AppConstants {
 	public final static String DD_NGAY		= "dd/MM/yyyy";
 	public final static String DD_THANG		= "MM/yyyy";
 	public final static String DD_NAM		= "yyyy";
+	
+	//Ten cot
+	public final static String COT_STT		= "STT";
+	public final static String COT_HOTEN	= "HỌ TÊN";
+	
+	public final static String COT_SOHD		= "SỐ HĐ";
+	public final static String COT_NGHD		= "NGÀY HĐ";
+	public final static String COT_TTKH		= "TT KHÁCH HÀNG";
+	public final static String COT_TTNV		= "TT NHÂN VIÊN";
+	public final static String COT_TRIGIA	= "TRỊ GIÁ";
+	
+	public final static String COT_MASP		= "MÃ SP";
+	public final static String COT_TENSP	= "TÊN SP";
+	public final static String COT_DVT		= "ĐVT";
+	public final static String COT_NUOCSX	= "NƯỚC SX";
+	public final static String COT_DONGIA	= "ĐƠN GIÁ";
+	public final static String COT_SLDABAN	= "SL ĐÃ BÁN";
+	
+	public final static String COT_MAKH		= "MÃ KH";
+	public final static String COT_DIACHI	= "ĐỊA CHỈ";
+	public final static String COT_SODT		= "SỐ ĐT";
+	public final static String COT_NGSINH	= "NGÀY SINH";
+	public final static String COT_NGDK		= "NGÀY ĐK";
+	public final static String COT_LOAIKH	= "LOẠI KH";
+	public final static String COT_DOANHSO	= "DOANH SỐ";
+	
+	public final static String COT_SANPHAM	= "SẢN PHẨM";
+	public final static String COT_SL		= "SỐ LƯỢNG";
+	
+	public final static String COT_MANV		= "MÃ NV";
+	public final static String COT_VAITRO	= "VAI TRÒ";
+	public final static String COT_NGVL		= "NGÀY VL";
+
 	
 	//orther
 	public final static double THUE			= 0.1;

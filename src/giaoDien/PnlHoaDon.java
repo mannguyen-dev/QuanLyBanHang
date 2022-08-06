@@ -227,7 +227,7 @@ public class PnlHoaDon extends JPanel {
 		lblNewLabel_2.setBounds(10, 11, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnHC = new JButton("HĐ có trị giá cao nhất      ");
+		JButton btnHC = new JButton("HĐ có trị giá cao nhất        ");
 		btnHC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listHD = hdDB.topHoaDonCaoNhat(1);
@@ -244,7 +244,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC.setBounds(10, 106, 296, 46);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("TOP10 trị giá cao nhất      ");
+		JButton btnHC_2 = new JButton("TOP 10 có trị giá cao nhất  ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listHD = hdDB.topHoaDonCaoNhat(10);
@@ -261,7 +261,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2.setBounds(10, 220, 296, 46);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("TOP10 trị giá thấp nhất     ");
+		JButton btnHC_2_1 = new JButton("TOP 10 có trị giá thấp nhất ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlHoaDon.class.getResource("/hinhAnh/IconHoaDon.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -278,7 +278,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2_1.setBounds(10, 277, 296, 46);
 		panel_2.add(btnHC_2_1);
 		
-		JButton btnHC_2_2 = new JButton("HĐ có trị giá thấp nhất     ");
+		JButton btnHC_2_2 = new JButton("HĐ có trị giá thấp nhất       ");
 		btnHC_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listHD = hdDB.topHoaDonThapNhat(1);
@@ -295,7 +295,7 @@ public class PnlHoaDon extends JPanel {
 		btnHC_2_2.setBounds(10, 163, 296, 46);
 		panel_2.add(btnHC_2_2);
 		
-		JButton btnHanCa = new JButton("Hóa đơn của tôi                ");
+		JButton btnHanCa = new JButton("Hóa đơn của tôi                  ");
 		btnHanCa.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				listHD = hdDB.timTheoMaNV(user.getMaNV());
@@ -731,11 +731,11 @@ public class PnlHoaDon extends JPanel {
 		       return false;
 		   }
 		};
-		dtm.addColumn("SỐ HĐ");
-		dtm.addColumn("NGÀY HĐ");
-		dtm.addColumn("TT KHÁCH HÀNG");
-		dtm.addColumn("TT NHÂN VIÊN");
-		dtm.addColumn("TRỊ GIÁ");
+		dtm.addColumn(AppConstants.COT_SOHD);
+		dtm.addColumn(AppConstants.COT_NGHD);
+		dtm.addColumn(AppConstants.COT_TTKH);
+		dtm.addColumn(AppConstants.COT_TTNV);
+		dtm.addColumn(AppConstants.COT_TRIGIA);
 		Locale lc = new Locale("vi","VN");
 		NumberFormat nf = NumberFormat.getInstance(lc);
 		if (listHD != null) {
