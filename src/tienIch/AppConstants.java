@@ -21,6 +21,7 @@ public class AppConstants {
 	public final static int MAU_XANH_LA 	= Integer.parseInt("0ca678",16);
 	public final static int MAU_CAM 		= Integer.parseInt("f08c00",16);
 	public final static int VIOLET 			= Integer.parseInt("7048e8",16);
+	public final static int MAU_TRANG		= Integer.parseInt("ffffff",16);
 	
 	//Kinds
 	public final static String TRANG_CHU 	= "TrangChu";
@@ -43,7 +44,7 @@ public class AppConstants {
 	public final static String KHACH_HANG_DS_CAO_NHAT	= "TOP 10 khách hàng có doanh số cao nhất";
 	public final static String KHACH_HANG_DS_THAP_NHAT	= "TOP 10 khách hàng có doanh số thấp nhất";
 	
-	//ten truong
+	//ten truong cho cbo tim kiem
 	public final static String SO_HOA_DON	= "Số hóa đơn";
 	public final static String MA_NV		= "Mã nhân viên";
 	public final static String TEN_NV		= "Tên nhân viên";
@@ -68,8 +69,8 @@ public class AppConstants {
 	public final static String TEN_SP		= "Tên sản phẩm";
 	public final static String DVT			= "ĐVT (cây, hộp, cái, quyển, chục)";
 	public final static String NUOC_SX		= "Nước sản xuất";
-	public final static String GIA_CAOHON	= "Giá cao hơn";
-	public final static String GIA_THAPHON	= "Giá thấp hơn";
+	public final static String GIA_CAOHON	= "Đơn giá cao hơn";
+	public final static String GIA_THAPHON	= "Đơn giá thấp hơn";
 	public final static String NGAY_VL		= "Ngày VL (dd/MM/yyyy)";
 	public final static String THANG_VL		= "Tháng VL (MM/yyyy)";
 	public final static String NAM_VL		= "Năm VL (yyyy)";
@@ -123,8 +124,7 @@ public class AppConstants {
 	public final static String COT_VAITRO	= "VAI TRÒ";
 	public final static String COT_NGVL		= "NGÀY VL";
 
-	
-	//orther
+	//other
 	public final static double THUE			= 0.1;
 	public final static String MATKHAU_MACDINH		= "12345678";
 	public final static String NOI_LUU_TK_DANG_NHAP = "src/DangNhap.dat";

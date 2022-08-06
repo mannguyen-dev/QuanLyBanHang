@@ -1,38 +1,32 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.BorderLayout;
 import java.awt.Color;
-import javax.swing.JTextField;
-
-import tienIch.AppConstants;
-import tienIch.AppHelper;
-import xuLyDuLieu.ChiTietHoaDonDB;
-import xuLyDuLieu.HoaDonDB;
-import xuLyDuLieu.KhachHangDB;
-import xuLyDuLieu.NhanVienDB;
-import xuLyDuLieu.SanPhamDB;
-
 import java.awt.Font;
-import javax.swing.JButton;
-import javax.swing.JFormattedTextField.AbstractFormatter;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.JPasswordField;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.text.NumberFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.Properties;
-import java.awt.event.ActionEvent;
+import java.util.Locale;
+
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import com.toedter.calendar.JDateChooser;
 
@@ -40,19 +34,13 @@ import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
 import model.SanPham;
-
-import java.util.Locale;
-import java.awt.Component;
-import java.awt.Rectangle;
-import javax.swing.BoxLayout;
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.DefaultComboBoxModel;
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.ChiTietHoaDonDB;
+import xuLyDuLieu.HoaDonDB;
+import xuLyDuLieu.KhachHangDB;
+import xuLyDuLieu.NhanVienDB;
+import xuLyDuLieu.SanPhamDB;
 
 public class PnlTrangChu extends JPanel {
 	private JTextField txtHoTenCapNhat;

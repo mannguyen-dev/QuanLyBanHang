@@ -1,13 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package xuLyDuLieu;
 
 
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
+
 import model.ChiTietHoaDon;
 /**
  *
@@ -21,12 +17,12 @@ public class ChiTietHoaDonDB {
     }
     
     private ChiTietHoaDon getChiTietHoaDon(ResultSet rs) throws Exception{
-        return new ChiTietHoaDon(rs.getInt("sohd"), rs.getString("masp"), rs.getInt("sl"));
+        return new ChiTietHoaDon(rs.getInt("SOHD"), rs.getString("MASP"), rs.getInt("SL"));
     }
     
     public ArrayList<ChiTietHoaDon> tatCa(){
         ArrayList<ChiTietHoaDon> list = new ArrayList<>();
-        String query = "select * from cthd";
+        String query = "select * from CTHD";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -43,8 +39,7 @@ public class ChiTietHoaDonDB {
     
     public ArrayList<ChiTietHoaDon> timTheoSoHD(int soHD){
         ArrayList<ChiTietHoaDon> list = new ArrayList<ChiTietHoaDon>();
-        String query = "select * from cthd where sohd = '"
-                + soHD + "'";
+        String query = "select * from CTHD where SOHD = '" + soHD + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -61,8 +56,7 @@ public class ChiTietHoaDonDB {
     
     public ArrayList<ChiTietHoaDon> timTheoMaSP(String maSP){
         ArrayList<ChiTietHoaDon> list = new ArrayList<ChiTietHoaDon>();
-        String query = "select * from cthd where masp = '"
-                + maSP + "'";
+        String query = "select * from CTHD where MASP = '" + maSP + "'";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             while (rs.next()) {                
@@ -79,8 +73,7 @@ public class ChiTietHoaDonDB {
     
     public ChiTietHoaDon timTheoSoHDVaMaSP(int soHD, String maSP){
         ChiTietHoaDon cthd = null;
-        String query = "select * from cthd where masp = '"
-                + maSP + "' and sohd = "+soHD;
+        String query = "select * from CTHD where MASP = '" + maSP + "' and SOHD = "+soHD;
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
@@ -96,29 +89,29 @@ public class ChiTietHoaDonDB {
     }
     
     public void themCTHD(ChiTietHoaDon cthd){
-        String query = "insert into cthd (sohd,masp,sl) values "
-	+ "('"+cthd.getSoHoaDon()+"','"+cthd.getMaSP()+"','"+cthd.getSoLuong()+"')";
+        String query = "insert into CTHD (SOHD,MASP,SL) values ('" + cthd.getSoHoaDon() + "','"
+        					+ cthd.getMaSP() + "','" + cthd.getSoLuong() + "')";
         csdl.setDuLieu(query);
     }
     
     public void capNhatThongTin(ChiTietHoaDon cthd){
-        String query = "update cthd set sl = '" +cthd.getSoLuong()+
-                "' where sohd = '" +cthd.getSoHoaDon()+"' and masp = '" + cthd.getMaSP()+"'";
+        String query = "update CTHD set SL = '" +cthd.getSoLuong()+
+                "' where SOHD = '" +cthd.getSoHoaDon()+"' and MASP = '" + cthd.getMaSP()+"'";
         csdl.setDuLieu(query);
     }
     
     public void xoaCTHD(int mahd, String masp){
-        String query = "delete from cthd where sohd = '"+mahd+"' and masp = '" + masp + "'";
+        String query = "delete from CTHD where SOHD = '"+mahd+"' and MASP = '" + masp + "'";
         csdl.setDuLieu(query);
     }
     
     public int getSoLuongSPDaBan(){
         int tong = 0;
-        String query = "select SUM(cthd.sl) tong from cthd";
+        String query = "select SUM(CTHD.SL) TONG from CTHD";
         ResultSet rs = csdl.getDuLieu(query);
         try {
             if (rs.next()) {                
-                tong = tong + rs.getInt("tong");
+                tong = tong + rs.getInt("TONG");
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -127,15 +120,4 @@ public class ChiTietHoaDonDB {
         }
         return tong;
     }
-    
-    
-//    public static void main(String[] args) {
-//        ChiTietHoaDonDB kh = new ChiTietHoaDonDB();
-//        ChiTietHoaDon p = new ChiTietHoaDon(1023, "ST01", 222);
-//        //kh.themCTHD(p);
-//        kh.xoaCTHD(1023, "ST01");
-//        ArrayList<ChiTietHoaDon> list = new ArrayList<>();
-//        list = kh.tatCa();
-//        list.forEach(s->System.out.println(s.getSoHoaDon()+ ", " + s.getMaSP()+", " + s.getSoLuong()));
-//    }
 }

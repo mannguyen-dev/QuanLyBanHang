@@ -126,8 +126,6 @@ public class ChuyenPanelTheoDanhMuc {
 		PnlSanPham pnlSP = new PnlSanPham();
 		root.removeAll();
 		root.setLayout(new BorderLayout());
-//		pnlSP.setController(frmMain.getController());
-//		pnlHD.setUser(user);
 		pnlSP.hienThiSanPham(sp);
 		root.add(pnlSP);
 		root.validate();
@@ -145,7 +143,6 @@ public class ChuyenPanelTheoDanhMuc {
 		root.removeAll();
 		root.setLayout(new BorderLayout());
 		pnlKH.setController(frmMain.getController());
-//		pnlKH.setUser(user);
 		pnlKH.hienThiKhachHang(kh);
 		root.add(pnlKH);
 		root.validate();
@@ -215,12 +212,10 @@ public class ChuyenPanelTheoDanhMuc {
 					node = new PnlTrangChu(user);
 					PnlTrangChu nodeTC = (PnlTrangChu) node;
 					nodeTC.setController(frmMain.getController());
-//					nodeTC.setUser(frmMain.getUser());
 					break;
 				case AppConstants.HOA_DON:
 					node = new PnlHoaDon();
 					PnlHoaDon nodeHD = (PnlHoaDon) node;
-//					nodeHD.setJpnView(root);
 					nodeHD.setController(frmMain.getController());
 					nodeHD.setUser(user);
 					break;

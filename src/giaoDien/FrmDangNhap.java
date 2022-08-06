@@ -1,10 +1,31 @@
 package giaoDien;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.channels.FileChannel;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 
 import model.NhanVien;
@@ -12,63 +33,12 @@ import tienIch.AppConstants;
 import tienIch.AppHelper;
 import xuLyDuLieu.NhanVienDB;
 
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JTextField;
-import java.awt.Font;
-import java.awt.Image;
-
-import javax.swing.JPasswordField;
-import javax.swing.JButton;
-import java.awt.Component;
-import javax.swing.JCheckBox;
-import javax.swing.SwingConstants;
-import java.awt.Color;
-import java.awt.SystemColor;
-import java.awt.Toolkit;
-
-import javax.swing.Icon;
-import javax.swing.ImageIcon;
-import java.awt.Window.Type;
-import java.awt.event.ActionListener;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.channels.FileChannel;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.awt.event.ActionEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class FrmDangNhap extends JFrame {
 
 	private JPanel contentPane;
 	private JTextField txtMaNV;
 	private JPasswordField txtMatKhau;
 	private JCheckBox cboLuuDangNhap;
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-//					FrmDangNhap frame = new FrmDangNhap();
-//					
-//					frame.setVisible(true);
-//					frame.setResizable(false);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.

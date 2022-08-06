@@ -1,27 +1,5 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
-import model.ChiTietHoaDon;
-import model.HoaDon;
-import model.KhachHang;
-import model.NhanVien;
-import model.SanPham;
-import tienIch.AppConstants;
-import tienIch.AppHelper;
-import xuLyDuLieu.ChiTietHoaDonDB;
-import xuLyDuLieu.HoaDonDB;
-import xuLyDuLieu.KhachHangDB;
-import xuLyDuLieu.NhanVienDB;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
@@ -42,6 +20,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
+import com.toedter.calendar.JDateChooser;
+
+import model.KhachHang;
+import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.KhachHangDB;
 
 public class PnlKhachHang extends JPanel {
 	

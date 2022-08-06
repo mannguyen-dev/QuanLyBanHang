@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package xuLyDuLieu;
 
 
@@ -19,9 +15,9 @@ import java.sql.SQLException;
  */
 public class KetNoiCSDL {
 	private String dbURL = "jdbc:sqlserver://localhost:1433;"
-            + "DatabaseName="+AppConstants.DB_NAME+";"
-            + "user="+AppConstants.DB_USERNAME+";"
-            + "password="+AppConstants.DB_PASSWORD+";";
+            + "DatabaseName=" + AppConstants.DB_NAME+";"
+            + "user=" + AppConstants.DB_USERNAME+";"
+            + "password=" + AppConstants.DB_PASSWORD+";";
     private Connection conn;
     private Statement stmt;
 

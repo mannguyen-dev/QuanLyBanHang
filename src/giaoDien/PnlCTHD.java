@@ -1,15 +1,31 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.ItemEvent;
+import java.awt.event.ItemListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.text.NumberFormat;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Locale;
+
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import java.awt.Color;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
-
-import com.toedter.calendar.JDateChooser;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import model.ChiTietHoaDon;
 import model.HoaDon;
@@ -24,28 +40,6 @@ import xuLyDuLieu.KhachHangDB;
 import xuLyDuLieu.NhanVienDB;
 import xuLyDuLieu.SanPhamDB;
 
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.text.NumberFormat;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import java.util.Locale;
-
-import javax.swing.JComboBox;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import java.awt.event.ItemListener;
-import java.awt.event.ItemEvent;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-
 public class PnlCTHD extends JPanel {
 	private JButton btnHienCN;
 	private JTable tblCHTD;
@@ -56,15 +50,6 @@ public class PnlCTHD extends JPanel {
 	private JLabel lblTenKH;
 	private JLabel lblTenNV;
 	private JLabel lblMaHD2;
-	
-	//data
-	private HoaDon hdHienTai = null;
-	private List<ChiTietHoaDon> listCTHD = null;
-	private HoaDonDB hdDB = new HoaDonDB();
-	private KhachHangDB khDB = new KhachHangDB();
-	private NhanVienDB nvDB = new NhanVienDB();
-	private SanPhamDB spDB = new SanPhamDB();
-	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	private JLabel lblTongTriGia;
 	private JLabel lblThue;
 	private JLabel lblThanhTien;
@@ -74,6 +59,15 @@ public class PnlCTHD extends JPanel {
 	private JButton btnXoa;
 	private JButton btnThem;
 	private JPanel pnlEditCTHD;
+	
+	//data
+	private HoaDon hdHienTai = null;
+	private List<ChiTietHoaDon> listCTHD = null;
+	private HoaDonDB hdDB = new HoaDonDB();
+	private KhachHangDB khDB = new KhachHangDB();
+	private NhanVienDB nvDB = new NhanVienDB();
+	private SanPhamDB spDB = new SanPhamDB();
+	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	
 	public void setHdHienTai(HoaDon hdHienTai) {
 		this.hdHienTai = hdHienTai;
@@ -92,7 +86,7 @@ public class PnlCTHD extends JPanel {
 		panel.setBounds(0, 0, 743, 814);
 		add(panel);
 		
-		cboChonHD = new JComboBox();
+		cboChonHD = new JComboBox<String>();
 		cboChonHD.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				String selected = (String) cboChonHD.getSelectedItem();
@@ -113,7 +107,7 @@ public class PnlCTHD extends JPanel {
 				hienThi(false);
 			}
 		});
-		cboChonHD.setModel(new DefaultComboBoxModel(new String[] {"HD01", "HD02", "HD03"}));
+		cboChonHD.setModel(new DefaultComboBoxModel<String>(new String[] {"HD01", "HD02", "HD03"}));
 		cboChonHD.setFont(new Font("Arial", Font.PLAIN, 20));
 		cboChonHD.setBounds(264, 11, 469, 43);
 		panel.add(cboChonHD);
@@ -308,13 +302,13 @@ public class PnlCTHD extends JPanel {
 		lblSnPhm_1.setForeground(Color.BLACK);
 		lblSnPhm_1.setFont(new Font("Arial", Font.PLAIN, 20));
 		
-		cboSanPham = new JComboBox();
+		cboSanPham = new JComboBox<String>();
 		cboSanPham.setBounds(117, 68, 251, 43);
 		pnlEditCTHD.add(cboSanPham);
 		cboSanPham.addItemListener(new ItemListener() {
 			public void itemStateChanged(ItemEvent e) {
 				if (listCTHD == null) {
-//					AppHelper.thongBao(getRootPane(), "Vui lòng chọn hóa đơn hiển thị!");
+					AppHelper.thongBao(getRootPane(), "Vui lòng chọn hóa đơn hiển thị!");
 				}else {
 				
 					String sl = (String) cboSanPham.getSelectedItem();

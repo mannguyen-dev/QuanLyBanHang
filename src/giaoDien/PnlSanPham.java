@@ -1,27 +1,13 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-
-import com.toedter.calendar.JDateChooser;
-
-import model.HoaDon;
-import model.KhachHang;
-import model.NhanVien;
-import model.SanPham;
-import tienIch.AppConstants;
-import tienIch.AppHelper;
-import xuLyDuLieu.SanPhamDB;
-
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Locale;
@@ -33,11 +19,18 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+
+import model.SanPham;
+import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.SanPhamDB;
 
 public class PnlSanPham extends JPanel {
 	
@@ -62,15 +55,15 @@ public class PnlSanPham extends JPanel {
 	private JLabel lblDVT;
 	private JLabel lblNuocSX;
 	private JLabel lblGia;
+	private JComboBox<String> cboNuocSXCN;
+	private JComboBox cboDVTCN;
+	private JComboBox<String> cboNuocSXThem;
+	private JComboBox cboDVTThem;
 	
 	//data
 	private List<SanPham> listSP;
 	private SanPhamDB spDB = new SanPhamDB();
 	private SanPham spHienTai = null;
-	private JComboBox<String> cboNuocSXCN;
-	private JComboBox cboDVTCN;
-	private JComboBox<String> cboNuocSXThem;
-	private JComboBox cboDVTThem;
 	/**
 	 * Create the panel.
 	 */
@@ -516,7 +509,6 @@ public class PnlSanPham extends JPanel {
 						}
 						
 						//update database
-
 						spHienTai = new SanPham(maSP, tenSP, dvt, nuocSX, gia);			
 						spDB.themSanPham(spHienTai);
 				
@@ -564,9 +556,9 @@ public class PnlSanPham extends JPanel {
 		cboDVTThem.setBounds(142, 101, 229, 35);
 		pnlThemSP.add(cboDVTThem);
 		
-		cboNuocSXThem = new JComboBox();
+		cboNuocSXThem = new JComboBox<String>();
 		cboNuocSXThem.setEditable(true);
-		cboNuocSXThem.setModel(new DefaultComboBoxModel(new String[] {AppConstants.EMPTY}));
+		cboNuocSXThem.setModel(new DefaultComboBoxModel<String>(new String[] {AppConstants.EMPTY}));
 		cboNuocSXThem.setFont(new Font("Arial", Font.PLAIN, 16));
 		cboNuocSXThem.setBounds(142, 147, 229, 35);
 		pnlThemSP.add(cboNuocSXThem);

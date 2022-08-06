@@ -63,8 +63,4 @@ public class AppHelper {
 		}
 		return date;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(kiemTraNgayHopLe(null,"2022",AppConstants.DD_NAM));
-	}
 }

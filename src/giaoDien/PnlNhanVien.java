@@ -1,30 +1,12 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.JTextField;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-
-import com.toedter.calendar.JDateChooser;
-
-import model.ChiTietHoaDon;
-import model.HoaDon;
-import model.KhachHang;
-import model.NhanVien;
-import tienIch.AppConstants;
-import tienIch.AppHelper;
-import xuLyDuLieu.ChiTietHoaDonDB;
-import xuLyDuLieu.KhachHangDB;
-import xuLyDuLieu.NhanVienDB;
-
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -38,9 +20,20 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import com.toedter.calendar.JDateChooser;
+
+import model.NhanVien;
+import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.NhanVienDB;
 
 public class PnlNhanVien extends JPanel {
 	

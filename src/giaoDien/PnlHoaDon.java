@@ -1,51 +1,45 @@
 package giaoDien;
 
-import javax.swing.JPanel;
-import javax.swing.JPasswordField;
-
-import tienIch.AppConstants;
-import tienIch.AppHelper;
-import xuLyDuLieu.ChiTietHoaDonDB;
-import xuLyDuLieu.HoaDonDB;
-import xuLyDuLieu.KhachHangDB;
-import xuLyDuLieu.NhanVienDB;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
+import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Font;
-import javax.swing.ImageIcon;
-import javax.swing.SwingConstants;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.JButton;
-import javax.swing.JComboBox;
-import javax.swing.DefaultComboBoxModel;
+import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-
 import java.text.NumberFormat;
-import java.awt.event.ActionEvent;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Locale;
+
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JComboBox;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
+
 import com.toedter.calendar.JDateChooser;
 
 import model.ChiTietHoaDon;
 import model.HoaDon;
 import model.KhachHang;
 import model.NhanVien;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import javax.swing.JTextField;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import java.awt.BorderLayout;
+import tienIch.AppConstants;
+import tienIch.AppHelper;
+import xuLyDuLieu.ChiTietHoaDonDB;
+import xuLyDuLieu.HoaDonDB;
+import xuLyDuLieu.KhachHangDB;
+import xuLyDuLieu.NhanVienDB;
 
 public class PnlHoaDon extends JPanel {
 	private JPanel pnlDoiTTHD;
@@ -55,8 +49,6 @@ public class PnlHoaDon extends JPanel {
 	private JButton btnHienCN;
 	private JButton btnHienThem;
 	private JLabel lblChuyenCTHD;
-//	private JPanel jpnView;
-	private ChuyenPanelTheoDanhMuc controller;
 	private JLabel lblSoHD;
 	private JLabel lblNgHD;
 	private JLabel lblNhanVien;
@@ -67,21 +59,19 @@ public class PnlHoaDon extends JPanel {
 	private JLabel lblHDTriGiaMin;
 	private JLabel lblTriGiaTB;
 	private JLabel lblTongTriGia;
-	
-	//data
-	private List<HoaDon> listHD = null;
-	private HoaDon hdHienTai = null;
 	private JDateChooser txtNgHDCapNhat;
 	private JComboBox<String> cboNhanVienCN;
 	private JComboBox<String> cboKhachHangCN;
 	private JComboBox<String> cboKhachHangThem;
+	
+	//data
+	private ChuyenPanelTheoDanhMuc controller;
+	private List<HoaDon> listHD = null;
+	private HoaDon hdHienTai = null;
 	private NhanVien user;
 	private HoaDonDB hdDB = new HoaDonDB();
 
 
-//	public void setJpnView(JPanel jpnView) {
-//		this.jpnView = jpnView;
-//	}
 	public void setController(ChuyenPanelTheoDanhMuc controller) {
 		this.controller = controller;
 	}

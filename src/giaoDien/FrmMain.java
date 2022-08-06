@@ -1,36 +1,26 @@
 package giaoDien;
 
 import java.awt.BorderLayout;
-import java.awt.EventQueue;
-
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-
-import model.DanhMucBean;
-import model.NhanVien;
-
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
-import java.awt.Font;
-import javax.swing.ImageIcon;
 import java.awt.Color;
-import net.miginfocom.swing.MigLayout;
-import tienIch.AppConstants;
-
-import java.awt.FlowLayout;
-import java.awt.Component;
+import java.awt.Font;
 import java.awt.Toolkit;
-import javax.swing.BoxLayout;
-import javax.swing.SpringLayout;
-import javax.swing.SwingConstants;
-import javax.swing.border.BevelBorder;
-import javax.swing.UIManager;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.swing.ImageIcon;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.UIManager;
+import javax.swing.border.EmptyBorder;
+
+import model.DanhMucBean;
+import model.NhanVien;
+import tienIch.AppConstants;
 
 public class FrmMain extends JFrame {
 
@@ -71,24 +61,6 @@ public class FrmMain extends JFrame {
 	public NhanVien getUser() {
 		return user;
 	}
-
-	/**
-	 * Launch the application.
-	 */
-//	public static void main(String[] args) {
-//		EventQueue.invokeLater(new Runnable() {
-//			public void run() {
-//				try {
-////					FrmMain frame = new FrmMain();
-////					System.out.println("DEBUG");
-////					frame.setVisible(true);
-////					frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//				}
-//			}
-//		});
-//	}
 
 	/**
 	 * Create the frame.
@@ -267,8 +239,8 @@ public class FrmMain extends JFrame {
 	}
 	
 	private void initFrame() {
-		changeBackgroundDanhMuc(8818326);
-		changeFontColorDanhMuc(16777215);
+		changeBackgroundDanhMuc(AppConstants.MAU_XAM_NHAT_2);
+		changeFontColorDanhMuc(AppConstants.MAU_TRANG);
 
 		controller = new ChuyenPanelTheoDanhMuc(this);
 		controller.setView(pnlTrangChu, lblTrangChu);
