@@ -75,7 +75,6 @@ public class PnlTrangChu extends JPanel {
 	private ChiTietHoaDonDB cthdDB = new ChiTietHoaDonDB();
 	private List<HoaDon> listHD = null;
 	private List<SanPham> listSP = null;
-//        private List<String> listSoLuong = null;
 	private List<KhachHang> listKH = null;
 	private ChuyenPanelTheoDanhMuc controller;
 	
@@ -94,10 +93,10 @@ public class PnlTrangChu extends JPanel {
 	/**
 	 * Create the panel.
 	 */
-	public PnlTrangChu(NhanVien user) {
+	public PnlTrangChu(NhanVien loginUser) {
 		setLayout(null);
 		
-		this.user = nvDB.timTheoMaNV(user.getMaNV());
+		this.user = nvDB.timTheoMaNV(loginUser.getMaNV());
 		JPanel panel = new JPanel();
 		panel.setBackground(new Color(AppConstants.MAU_XAM_NHAT));
 		panel.setBounds(0, 0, 767, 814);
@@ -516,6 +515,7 @@ public class PnlTrangChu extends JPanel {
 						user.setSoDT(soDT);
 						if(nvDB.capNhatThongTin(user)!= 0) {
 							// update panel
+							
 							loadUserInfo();
 							pnlCapNhat.setVisible(false);	
 							btnHienCN.setBackground(Color.WHITE);
@@ -524,7 +524,6 @@ public class PnlTrangChu extends JPanel {
 					}
 				}catch (Exception e1) {
 					AppHelper.thongBaoLoiCapNhat(getRootPane());
-					e1.printStackTrace();
 				}
 			}
 		});

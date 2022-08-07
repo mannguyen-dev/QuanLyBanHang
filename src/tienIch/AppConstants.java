@@ -2,7 +2,7 @@ package tienIch;
 
 public class AppConstants {
 	//tai khoan ket noi database
-	public final static String DB_NAME			= "QLBH4";
+	public final static String DB_NAME			= "QLBH";
 	public final static String DB_USERNAME		= "sa";
 	public final static String DB_PASSWORD		= "sa";
 	
@@ -127,5 +127,5 @@ public class AppConstants {
 	//other
 	public final static double THUE			= 0.1;
 	public final static String MATKHAU_MACDINH		= "12345678";
-	public final static String NOI_LUU_TK_DANG_NHAP = "src/DangNhap.dat";
+	public final static String NOI_LUU_TK_DANG_NHAP = "src/tienIch/DangNhap.dat";
 }

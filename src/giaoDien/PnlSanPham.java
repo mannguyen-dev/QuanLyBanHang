@@ -166,7 +166,7 @@ public class PnlSanPham extends JPanel {
 		lblNewLabel_2.setBounds(10, 11, 99, 33);
 		panel_2.add(lblNewLabel_2);
 		
-		JButton btnHC = new JButton("SP mua nhiều nhất        ");
+		JButton btnHC = new JButton("SP bán nhiều nhất        ");
 		btnHC.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -187,7 +187,7 @@ public class PnlSanPham extends JPanel {
 		btnHC.setBounds(10, 44, 296, 49);
 		panel_2.add(btnHC);
 		
-		JButton btnHC_2 = new JButton("TOP 10 mua nhiều nhất ");
+		JButton btnHC_2 = new JButton("TOP 10 bán nhiều nhất ");
 		btnHC_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
@@ -208,7 +208,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2.setBounds(10, 164, 296, 49);
 		panel_2.add(btnHC_2);
 		
-		JButton btnHC_2_1 = new JButton("TOP 10 mua ít nhất        ");
+		JButton btnHC_2_1 = new JButton("TOP 10 bán ít nhất        ");
 		btnHC_2_1.setIcon(new ImageIcon(PnlSanPham.class.getResource("/hinhAnh/IconSanPham.png")));
 		btnHC_2_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -229,7 +229,7 @@ public class PnlSanPham extends JPanel {
 		btnHC_2_1.setBounds(10, 224, 296, 49);
 		panel_2.add(btnHC_2_1);
 		
-		JButton btnHC_2_2 = new JButton("SP mua ít nhất               ");
+		JButton btnHC_2_2 = new JButton("SP bán ít nhất               ");
 		btnHC_2_2.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				try {
