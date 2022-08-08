@@ -139,17 +139,16 @@ public class PnlNhanVien extends JPanel {
 						listNV = new ArrayList<NhanVien>();
 						listNV.add(nvHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
-//						Locale lc = new Locale("vi","VN");
-//						NumberFormat nf = NumberFormat.getInstance(lc);
 						resetInfo();
 						pnlThemNV.setVisible(false);
 						btnHienThem.setBackground(Color.WHITE);
 						AppHelper.thongBao(getRootPane(), "Đã tạo nhân viên mới với mật khẩu mặc định là "+AppConstants.MATKHAU_MACDINH+"!");
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiThem(getRootPane());
+					AppHelper.thongBaoLoiThem(getRootPane(), e2);
 				}	
 			}
 		});
@@ -267,10 +266,9 @@ public class PnlNhanVien extends JPanel {
 						listNV = new ArrayList<NhanVien>();
 						listNV.add(nvHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
-//						Locale lc = new Locale("vi","VN");
-//						NumberFormat nf = NumberFormat.getInstance(lc);
 						lblMaNV.setText(nvHienTai.getMaNV());
 						lblHoTen.setText(nvHienTai.getHoTen());
 						lblNgVL.setText(nvHienTai.getNgayVLToString());
@@ -280,7 +278,7 @@ public class PnlNhanVien extends JPanel {
 						btnHienCN.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(), e2);
 				}	
 			}
 		});
@@ -433,7 +431,7 @@ public class PnlNhanVien extends JPanel {
 						hienThi();
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}	
 			}
 		});
@@ -591,7 +589,7 @@ public class PnlNhanVien extends JPanel {
 					}
 					hienThi();
 				}catch (Exception e1) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e1);
 					e1.printStackTrace();
 				}
 			}

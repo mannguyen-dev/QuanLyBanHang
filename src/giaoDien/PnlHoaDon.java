@@ -161,7 +161,7 @@ public class PnlHoaDon extends JPanel {
 					}
 					hienThi();
 				}catch (Exception e1) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e1);
 				}
 			}
 		});
@@ -513,11 +513,12 @@ public class PnlHoaDon extends JPanel {
 						listHD = new ArrayList<HoaDon>();
 						listHD.add(hdHienTai);
 						hienThi();
+						tblHoaDon.setRowSelectionInterval(0, 0);
 						pnlDoiTTHD.setVisible(false);
 						btnHienCN.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(),e2);
 				}	
 			}
 		});
@@ -590,7 +591,7 @@ public class PnlHoaDon extends JPanel {
 						hienThi();
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}	
 			}
 		});
@@ -771,11 +772,14 @@ public class PnlHoaDon extends JPanel {
 			KhachHang kh = khDB.timTheoMaKH(hdHienTai.getMaKhachKhang());
 			NhanVien nv = nvDB.timTheoMaNV(hdHienTai.getMaNhanVien());
 			
+			Locale lc = new Locale("vi","VN");
+			NumberFormat nf = NumberFormat.getInstance(lc);
+			
 			lblSoHD.setText(String.valueOf(hdHienTai.getSoHoaDon()));
 			lblNgHD.setText(hdHienTai.getNgayHoaDonToString());
 			lblNhanVien.setText(nv==null?AppConstants.EMPTY:nv.getMaNV()+" - "+nv.getHoTen());
 			lblKhachHang.setText(kh==null?AppConstants.EMPTY:kh.getMaKH()+" - "+ kh.getHoTen());
-			lblTriGia.setText(String.valueOf(hdHienTai.getTriGia()));
+			lblTriGia.setText(nf.format((hdHienTai.getTriGia()))+" VNĐ");
 		}
 	}
 	
@@ -816,7 +820,7 @@ public class PnlHoaDon extends JPanel {
 		DefaultComboBoxModel<String> dcmNV = new DefaultComboBoxModel<>();
 		dcmNV.addElement(AppConstants.EMPTY);
 		for(NhanVien nv: listNV) {
-			if (!nv.getVaiTro().equals(AppConstants.VT_ADMIN)) dcmNV.addElement(nv.getMaNV()+" - "+nv.getHoTen());
+			dcmNV.addElement(nv.getMaNV()+" - "+nv.getHoTen());
 		}
 		cboNhanVienCN.setModel(dcmNV);
 		
@@ -853,10 +857,11 @@ public class PnlHoaDon extends JPanel {
 				listHD.add(hdHienTai);
 				resetInfo();
 				hienThi();
+				tblHoaDon.setRowSelectionInterval(0, 0);
 				flag = true;
 			}
 		} catch (Exception e2) {
-			AppHelper.thongBaoLoiThem(getRootPane());
+			AppHelper.thongBaoLoiThem(getRootPane(), e2);
 		}	
 		return flag;
 	}

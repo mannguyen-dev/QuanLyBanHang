@@ -117,7 +117,7 @@ public class PnlSanPham extends JPanel {
 					hienThi();
 				}catch (Exception e1) {
 					e1.printStackTrace();
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e1);
 				}
 			}
 		});
@@ -173,7 +173,7 @@ public class PnlSanPham extends JPanel {
 					listSP = spDB.topSanPhamBanChay(1);
 					hienThi();
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -194,7 +194,7 @@ public class PnlSanPham extends JPanel {
 					listSP = spDB.topSanPhamBanChay(10);
 					hienThi();
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -216,7 +216,7 @@ public class PnlSanPham extends JPanel {
 					listSP = spDB.topSanPhamBanCham(10);
 					hienThi();
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -236,7 +236,7 @@ public class PnlSanPham extends JPanel {
 					listSP = spDB.topSanPhamBanCham(1);
 					hienThi();
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -381,6 +381,7 @@ public class PnlSanPham extends JPanel {
 						listSP = new ArrayList<SanPham>();
 						listSP.add(spHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
 						Locale lc = new Locale("vi","VN");
@@ -393,7 +394,7 @@ public class PnlSanPham extends JPanel {
 						btnHienCN.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(), e2);
 					e2.printStackTrace();
 				}	
 			}
@@ -516,6 +517,7 @@ public class PnlSanPham extends JPanel {
 						listSP = new ArrayList<SanPham>();
 						listSP.add(spHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
 						resetInfo();
@@ -523,7 +525,7 @@ public class PnlSanPham extends JPanel {
 						btnHienThem.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiThem(getRootPane());
+					AppHelper.thongBaoLoiThem(getRootPane(), e2);
 				}	
 			}
 		});
@@ -715,7 +717,7 @@ public class PnlSanPham extends JPanel {
 						hienThi();
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}	
 			}
 		});

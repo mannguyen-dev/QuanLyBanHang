@@ -119,46 +119,50 @@ public class FrmDangNhap extends JFrame {
 		btnDangNhap.setBorder(null);
 		btnDangNhap.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-			
-				// Dang nhap
-				String maNV = txtMaNV.getText();
-				String matKhau = String.valueOf(txtMatKhau.getPassword());
-				if (maNV.equals("")) {
-					JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập mã nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				}else if (matKhau.equals("")){
-					JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-				}else {
-					NhanVienDB nvDB = new NhanVienDB();
-					NhanVien nv = nvDB.timTheoMaNV(maNV);
-					
-					if (nv == null) {
-						JOptionPane.showMessageDialog(rootPane, "Nhân viên không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					} else if (!nv.getMatKhau().equals(matKhau)) {
-						JOptionPane.showMessageDialog(rootPane, "Sai mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
-					} else {
-						FrmMain frmMain = new FrmMain(nv);
-						frmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
-						frmMain.setVisible(true);
-						setVisible(false);
+				try {
+					// Dang nhap
+					String maNV = txtMaNV.getText();
+					String matKhau = String.valueOf(txtMatKhau.getPassword());
+					if (maNV.equals("")) {
+						JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập mã nhân viên!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					}else if (matKhau.equals("")){
+						JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập mật khẩu!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+					}else {
+						NhanVienDB nvDB = new NhanVienDB();
+						NhanVien nv = nvDB.timTheoMaNV(maNV);
 						
-						// Luu dang nhap
-						try {
-							File file = new File(AppConstants.NOI_LUU_TK_DANG_NHAP);
-							if (cboLuuDangNhap.isSelected()) {
-								FileOutputStream os = null;
-								if (!file.isFile()) {
-										file.createNewFile();
+						if (nv == null) {
+							JOptionPane.showMessageDialog(rootPane, "Nhân viên không tồn tại!", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						} else if (!nv.getMatKhau().equals(matKhau)) {
+							JOptionPane.showMessageDialog(rootPane, "Sai mật khẩu", "Lỗi", JOptionPane.ERROR_MESSAGE);
+						} else {
+							FrmMain frmMain = new FrmMain(nv);
+							frmMain.setExtendedState(JFrame.MAXIMIZED_BOTH);
+							frmMain.setVisible(true);
+							setVisible(false);
+							
+							// Luu dang nhap
+							try {
+								File file = new File(AppConstants.NOI_LUU_TK_DANG_NHAP);
+								if (cboLuuDangNhap.isSelected()) {
+									FileOutputStream os = null;
+									if (!file.isFile()) {
+											file.createNewFile();
+									}
+									os = new FileOutputStream(file);
+									os.write(maNV.getBytes());								
+									os.close();
+								}else {
+									file.delete();
 								}
-								os = new FileOutputStream(file);
-								os.write(maNV.getBytes());								
-								os.close();
-							}else {
-								file.delete();
+							} catch (IOException e1) {
+								AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e1);
 							}
-						} catch (IOException e1) {
-							AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+						
 						}
 					}
+				}catch (Exception e2) {
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -213,7 +217,7 @@ public class FrmDangNhap extends JFrame {
 				is.close();
 			}			
 		} catch (IOException e) {
-			AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+			AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e);
 		}
 	}
 }

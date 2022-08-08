@@ -147,6 +147,7 @@ public class PnlKhachHang extends JPanel {
 						listKH = new ArrayList<KhachHang>();
 						listKH.add(khHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
 						resetInfo();
@@ -154,7 +155,7 @@ public class PnlKhachHang extends JPanel {
 						btnHienThem.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiThem(getRootPane());
+					AppHelper.thongBaoLoiThem(getRootPane(), e2);
 				}	
 			}
 		});
@@ -299,6 +300,7 @@ public class PnlKhachHang extends JPanel {
 						listKH = new ArrayList<KhachHang>();
 						listKH.add(khHienTai);
 						hienThi();
+						tblHienThi.setRowSelectionInterval(0, 0);
 						
 						// set info
 						Locale lc = new Locale("vi","VN");
@@ -315,7 +317,7 @@ public class PnlKhachHang extends JPanel {
 						btnHienCN.setBackground(Color.WHITE);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(), e2);
 				}	
 			}
 		});
@@ -527,7 +529,7 @@ public class PnlKhachHang extends JPanel {
 						hienThi();
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}	
 			}
 		});
@@ -693,7 +695,7 @@ public class PnlKhachHang extends JPanel {
 					}
 					hienThi();
 				}catch (Exception e1) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e1);
 				}
 			}
 		});

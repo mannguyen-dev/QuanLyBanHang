@@ -436,7 +436,7 @@ public class PnlCTHD extends JPanel {
 						hienThi(true);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -483,7 +483,7 @@ public class PnlCTHD extends JPanel {
 						hienThi(true);
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 					e2.printStackTrace();
 				}
 			}

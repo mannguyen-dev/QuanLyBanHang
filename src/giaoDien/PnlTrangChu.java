@@ -291,7 +291,7 @@ public class PnlTrangChu extends JPanel {
 							break;
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 				}
 			}
 		});
@@ -343,7 +343,7 @@ public class PnlTrangChu extends JPanel {
 							break;
 					}
 				} catch (Exception e2) {
-					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane());
+					AppHelper.thongBaoLoiQuaTrinhXuLy(getRootPane(), e2);
 					e2.printStackTrace();
 				}
 			}
@@ -523,7 +523,7 @@ public class PnlTrangChu extends JPanel {
 						}
 					}
 				}catch (Exception e1) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(), e1);
 				}
 			}
 		});
@@ -608,7 +608,7 @@ public class PnlTrangChu extends JPanel {
 						}
 					}
 				}catch (Exception e1) {
-					AppHelper.thongBaoLoiCapNhat(getRootPane());
+					AppHelper.thongBaoLoiCapNhat(getRootPane(), e1);
 					e1.printStackTrace();
 				}
 			}

@@ -12,18 +12,18 @@ public class AppHelper {
 	public static String CANH_BAO = "Cảnh báo";
 	public static String XAC_NHAN = "Xác nhận";
 	
-	public static void thongBaoLoiQuaTrinhXuLy(Component component) {
-		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình xử lý!", LOI, 
+	public static void thongBaoLoiQuaTrinhXuLy(Component component, Exception e) {
+		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình xử lý!\n\n"+ e.getMessage(), LOI, 
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
-	public static void thongBaoLoiCapNhat(Component component) {
-		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình cập nhật!", LOI, 
+	public static void thongBaoLoiCapNhat(Component component, Exception e) {
+		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình cập nhật!\n\n"+ e.getMessage(), LOI, 
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
-	public static void thongBaoLoiThem(Component component) {
-		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình thêm!", LOI, 
+	public static void thongBaoLoiThem(Component component, Exception e) {
+		JOptionPane.showMessageDialog(component, "Đã có lỗi trong quá trình thêm!\n\n"+ e.getMessage(), LOI, 
 				JOptionPane.ERROR_MESSAGE);
 	}
 	
